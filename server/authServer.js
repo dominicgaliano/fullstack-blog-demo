@@ -66,6 +66,8 @@ async function signToken(username, tokenType) {
     return await new jose.SignJWT({ name: username })
       .setProtectedHeader({ alg })
       .setIssuedAt()
+      .setAudience("")
+      .setIssuer("")
       .setExpirationTime(expiresIn)
       .sign(secret);
   } catch (error) {
