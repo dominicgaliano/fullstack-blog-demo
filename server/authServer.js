@@ -1,6 +1,5 @@
 const { authenticateUser, signToken } = require("./util/auth");
-const path = require("path");
-const fs = require("fs");
+const { getUsers } = require("./util/users");
 const express = require("express");
 const app = express();
 const port = 4001;
@@ -8,9 +7,9 @@ const port = 4001;
 app.use(express.json());
 
 app.post("/login", async (req, res) => {
-  // rudimentary authenticate user
   const { username, password } = req.body;
 
+  // validate input
   if (!username || !password) {
     return res.status(400).json({
       error: "Bad Request",
@@ -18,10 +17,19 @@ app.post("/login", async (req, res) => {
     });
   }
 
-  const users = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "./data/users.json"))
-  );
+  // fetch users from server
+  let users;
+  try {
+    users = await getUsers();
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while authenticating user",
+    });
+  }
 
+  // authenticate user
   if (!authenticateUser(username, password, users)) {
     return res
       .status(401)
