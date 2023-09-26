@@ -3,10 +3,18 @@ const express = require("express");
 const app = express();
 const port = 4001;
 
-const user = {
-  username: "exampleUser",
-  password: "examplePassword",
-};
+const users = [
+  {
+    id: 1,
+    username: "exampleUser",
+    password: "examplePassword",
+  },
+  {
+    id: 2,
+    username: "exampleUser1",
+    password: "examplePassword",
+  },
+];
 
 app.use(express.json());
 
@@ -21,7 +29,7 @@ app.post("/login", async (req, res) => {
     });
   }
 
-  if (!authenticateUser(username, password)) {
+  if (!authenticateUser(username, password, users)) {
     return res
       .status(401)
       .json({ error: "Unauthorized", message: "Invalid username or password" });

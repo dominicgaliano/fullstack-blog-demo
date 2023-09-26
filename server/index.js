@@ -3,11 +3,6 @@ const express = require("express");
 const app = express();
 const port = 3001;
 
-const user = {
-  username: "exampleUser",
-  password: "examplePassword",
-};
-
 const posts = {
   posts: [
     {
