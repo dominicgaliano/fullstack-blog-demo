@@ -23,7 +23,7 @@ app.post("/login", async (req, res) => {
     users = await getUsers();
   } catch (error) {
     console.log("Error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       error: "Internal Server Error",
       message: "An error occurred while authenticating user",
     });
