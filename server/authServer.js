@@ -15,7 +15,16 @@ app.post("/login", (req, res) => {
   // rudimentary authenticate user
   const { username, password } = req.body;
 
-  if (username !== user.username || password !== user.password) {
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({
+        error: "Bad Request",
+        message: "Username and password are required.",
+      });
+  }
+
+  if (!authenticateUser(username, password)) {
     return res
       .status(401)
       .json({ error: "Unauthorized", message: "Invalid username or password" });
@@ -47,3 +56,7 @@ app.post("/login", (req, res) => {
 app.listen(port, () => {
   console.log(`Auth server listening on port ${port}`);
 });
+
+function authenticateUser(username, password) {
+  return !(username !== user.username || password !== user.password);
+}
