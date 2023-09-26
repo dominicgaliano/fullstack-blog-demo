@@ -70,6 +70,8 @@ const posts = {
   ],
 };
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.status(200).json(posts);
 });
@@ -79,7 +81,7 @@ app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (username !== user.username || password !== user.password) {
-    res
+    return res
       .status(401)
       .json({ error: "Unauthorized", message: "Invalid username or password" });
   }
