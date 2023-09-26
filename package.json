@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npm start --prefix server",
+    "server": "npm --prefix server run start",
+    "serverAuth": "npm --prefix server run startAuth",
     "client": "npm --prefix client run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run serverAuth\" \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
