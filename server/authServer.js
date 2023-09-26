@@ -30,7 +30,8 @@ app.post("/login", async (req, res) => {
   }
 
   // authenticate user
-  if (!authenticateUser(username, password, users)) {
+  const user = authenticateUser(username, password, users);
+  if (!user) {
     return res
       .status(401)
       .json({ error: "Unauthorized", message: "Invalid username or password" });
@@ -38,8 +39,8 @@ app.post("/login", async (req, res) => {
 
   // create JWT
   try {
-    const accessToken = await signToken(username, "access");
-    const refreshToken = await signToken(username, "refresh");
+    const accessToken = await signToken(user, "access");
+    const refreshToken = await signToken(user, "refresh");
     res
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });

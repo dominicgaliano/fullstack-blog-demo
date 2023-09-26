@@ -17,8 +17,10 @@ function authenticateToken(req, res, next) {
 
     try {
       const { payload, protectedHeader } = await jose.jwtVerify(token, secret, {
+        alg: "HS256",
         issuer: "urn:example:issuer",
         audience: "urn:example:audience",
+        requiredClaims: ["user_id"],
       });
       console.log("Server authenticated user:", payload.username);
       next();
@@ -29,7 +31,7 @@ function authenticateToken(req, res, next) {
   })();
 }
 
-async function signToken(username, tokenType) {
+async function signToken(user, tokenType) {
   const secret = new TextEncoder().encode(
     tokenType === "access"
       ? process.env.ACCESS_TOKEN_SECRET
@@ -40,7 +42,7 @@ async function signToken(username, tokenType) {
   const expiresIn = tokenType === "access" ? "2h" : "10w";
 
   try {
-    return await new jose.SignJWT({ username: username })
+    return await new jose.SignJWT({ user_id: user.id })
       .setProtectedHeader({ alg })
       .setIssuedAt()
       .setAudience("urn:example:audience")
