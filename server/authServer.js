@@ -1,6 +1,5 @@
-require("dotenv").config();
+const { authenticateUser, signToken } = require("./util/auth");
 const express = require("express");
-const jose = require("jose");
 const app = express();
 const port = 4001;
 
@@ -47,31 +46,3 @@ app.post("/login", async (req, res) => {
 app.listen(port, () => {
   console.log(`Auth server listening on port ${port}`);
 });
-
-function authenticateUser(username, password) {
-  return !(username !== user.username || password !== user.password);
-}
-
-async function signToken(username, tokenType) {
-  const secret = new TextEncoder().encode(
-    tokenType === "access"
-      ? process.env.ACCESS_TOKEN_SECRET
-      : process.env.REFRESH_TOKEN_SECRET
-  );
-  const alg = "HS256";
-
-  const expiresIn = tokenType === "access" ? "2h" : "10w";
-
-  try {
-    return await new jose.SignJWT({ name: username })
-      .setProtectedHeader({ alg })
-      .setIssuedAt()
-      .setAudience("")
-      .setIssuer("")
-      .setExpirationTime(expiresIn)
-      .sign(secret);
-  } catch (error) {
-    console.error("Error:", error);
-    throw new Error("An error occurred while generating JWT");
-  }
-}
