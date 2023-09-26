@@ -4,6 +4,11 @@ const jose = require("jose");
 const app = express();
 const port = 4001;
 
+const user = {
+  username: "exampleUser",
+  password: "examplePassword",
+};
+
 app.use(express.json());
 
 app.post("/login", (req, res) => {
