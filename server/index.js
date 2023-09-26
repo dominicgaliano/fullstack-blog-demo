@@ -92,11 +92,9 @@ app.post("/login", (req, res) => {
     const alg = "HS256";
 
     try {
-      const jwt = await new jose.SignJWT({ "urn:example:claim": true })
+      const jwt = await new jose.SignJWT({})
         .setProtectedHeader({ alg })
         .setIssuedAt()
-        .setIssuer("urn:example:issuer")
-        .setAudience("urn:example:audience")
         .setExpirationTime("2h")
         .sign(secret);
 
