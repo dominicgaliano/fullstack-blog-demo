@@ -72,7 +72,7 @@ const posts = {
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/", authenticateToken, (req, res) => {
   res.status(200).json(posts);
 });
 
@@ -112,3 +112,23 @@ app.post("/login", (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) return res.sendStatus(401);
+  (async () => {
+    const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
+
+    try {
+      const { payload, protectedHeader } = await jose.jwtVerify(token, secret, {
+        user: user.username,
+      });
+      next();
+    } catch (error) {
+      console.error("Error:", error);
+      return res.sendStatus(403);
+    }
+  })();
+}
