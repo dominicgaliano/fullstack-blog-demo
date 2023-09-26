@@ -30,8 +30,11 @@ app.post("/login", async (req, res) => {
 
   // create JWT
   try {
-    const jwt = await generateJWT(username);
-    res.status(200).json({ accessToken: jwt });
+    const accessToken = await signToken(username, "access");
+    const refreshToken = await signToken(username, "refresh");
+    res
+      .status(200)
+      .json({ accessToken: accessToken, refreshToken: refreshToken });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
@@ -49,20 +52,24 @@ function authenticateUser(username, password) {
   return !(username !== user.username || password !== user.password);
 }
 
-async function generateJWT(username) {
-  {
-    const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
-    const alg = "HS256";
+async function signToken(username, tokenType) {
+  const secret = new TextEncoder().encode(
+    tokenType === "access"
+      ? process.env.ACCESS_TOKEN_SECRET
+      : process.env.REFRESH_TOKEN_SECRET
+  );
+  const alg = "HS256";
 
-    try {
-      return (jwt = await new jose.SignJWT({ name: username })
-        .setProtectedHeader({ alg })
-        .setIssuedAt()
-        .setExpirationTime("2h")
-        .sign(secret));
-    } catch (error) {
-      console.error("Error:", error);
-      throw new Error("An error occurred while generating JWT");
-    }
+  const expiresIn = tokenType === "access" ? "2h" : "10w";
+
+  try {
+    return await new jose.SignJWT({ name: username })
+      .setProtectedHeader({ alg })
+      .setIssuedAt()
+      .setExpirationTime(expiresIn)
+      .sign(secret);
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("An error occurred while generating JWT");
   }
 }
