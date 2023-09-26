@@ -39,7 +39,7 @@ async function signToken(user, tokenType) {
   );
   const alg = "HS256";
 
-  const expiresIn = tokenType === "access" ? "2h" : "10w";
+  const expiresIn = tokenType === "access" ? "10m" : "10w";
 
   try {
     return await new jose.SignJWT({ user_id: user.id })
