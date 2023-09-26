@@ -17,8 +17,10 @@ function authenticateToken(req, res, next) {
 
     try {
       const { payload, protectedHeader } = await jose.jwtVerify(token, secret, {
-        user: user.username,
+        issuer: "urn:example:issuer",
+        audience: "urn:example:audience",
       });
+      console.log("Server authenticated user:", payload.username);
       next();
     } catch (error) {
       console.error("Error:", error);
@@ -38,11 +40,11 @@ async function signToken(username, tokenType) {
   const expiresIn = tokenType === "access" ? "2h" : "10w";
 
   try {
-    return await new jose.SignJWT({ name: username })
+    return await new jose.SignJWT({ username: username })
       .setProtectedHeader({ alg })
       .setIssuedAt()
-      .setAudience("")
-      .setIssuer("")
+      .setAudience("urn:example:audience")
+      .setIssuer("urn:example:issuer")
       .setExpirationTime(expiresIn)
       .sign(secret);
   } catch (error) {
