@@ -1,20 +1,9 @@
 const { authenticateUser, signToken } = require("./util/auth");
+const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const app = express();
 const port = 4001;
-
-const users = [
-  {
-    id: 1,
-    username: "exampleUser",
-    password: "examplePassword",
-  },
-  {
-    id: 2,
-    username: "exampleUser1",
-    password: "examplePassword",
-  },
-];
 
 app.use(express.json());
 
@@ -28,6 +17,10 @@ app.post("/login", async (req, res) => {
       message: "Username and password are required.",
     });
   }
+
+  const users = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "./data/users.json"))
+  );
 
   if (!authenticateUser(username, password, users)) {
     return res
