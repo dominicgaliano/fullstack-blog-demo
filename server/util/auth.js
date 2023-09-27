@@ -22,7 +22,7 @@ function verifyToken(req, res, next) {
         audience: "urn:example:audience",
         requiredClaims: ["user_id"],
       });
-      console.log("Server authenticated user:", payload.username);
+      console.log("Server authenticated user:", payload.user_id);
       next();
     } catch (error) {
       console.error("Error:", error);
