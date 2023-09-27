@@ -1,14 +1,25 @@
+require("dotenv").config();
 const {
   authenticateUser,
   signToken,
   verifyRefreshToken,
+  verifyToken,
 } = require("./util/auth");
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
-const app = express();
-const port = 4001;
+const redisClient = require("./util/redis");
 
+const PORT = process.env.AUTH_PORT || 4001;
+
+const app = express();
 app.use(express.json());
+
+redisClient.connect();
+
+app.use((req, res, next) => {
+  req.redisClient = redisClient;
+  next();
+});
 
 app.post("/users", (req, res) => {
   // TODO: implement registration
@@ -50,6 +61,10 @@ app.post("/login", async (req, res) => {
   try {
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
+
+    // add refresh token to cache
+    await redisClient.set(user.id.toString(), refreshToken);
+
     res
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });
@@ -59,6 +74,16 @@ app.post("/login", async (req, res) => {
       error: "Internal Server Error",
       message: "An error occurred while generating the JWT.",
     });
+  }
+});
+
+app.post("/logout", verifyToken, async (req, res) => {
+  // remove token from cache
+  try {
+    await redisClient.del(req.user_id.toString());
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500);
   }
 });
 
@@ -70,6 +95,10 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
   try {
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
+
+    // add refresh token to cache
+    await redisClient.set(user.id.toString(), refreshToken);
+
     res
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });
@@ -82,6 +111,6 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Auth server listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Auth server listening on PORT ${PORT}`);
 });
