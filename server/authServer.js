@@ -77,8 +77,14 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.delete("/login", verifyToken, async (req, res) => {
-  // remove token from
+app.post("/logout", verifyToken, async (req, res) => {
+  // remove token from cache
+  try {
+    await redisClient.del(req.user_id.toString());
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
 });
 
 app.post("/token", verifyRefreshToken, async (req, res, next) => {
