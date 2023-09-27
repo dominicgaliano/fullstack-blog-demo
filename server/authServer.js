@@ -6,7 +6,9 @@ const {
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
 const app = express();
-const port = 4001;
+
+const PORT = process.env.AUTH_PORT || 4001;
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
 app.use(express.json());
 
@@ -82,6 +84,6 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Auth server listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Auth server listening on PORT ${PORT}`);
 });
