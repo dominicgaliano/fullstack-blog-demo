@@ -3,7 +3,7 @@ const {
   signToken,
   verifyRefreshToken,
 } = require("./util/auth");
-const { getUsers } = require("./util/users");
+const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
 const app = express();
 const port = 4001;
@@ -57,20 +57,22 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/token", (req, res, next) => {
-  try {
-    // validate req body
-    const { refreshToken } = req.body;
-    if (!refreshToken) return res.sendStatus(400);
+app.post("/token", verifyRefreshToken, async (req, res, next) => {
+  const user_id = req.userId;
+  const user = await getUserById(user_id);
 
-    // verify refresh token
-    // TODO: implement
-    req.sendStatus(501);
+  // send new tokens
+  try {
+    const accessToken = await signToken(user, "access");
+    const refreshToken = await signToken(user, "refresh");
+    res
+      .status(200)
+      .json({ accessToken: accessToken, refreshToken: refreshToken });
   } catch (error) {
-    console.log("Error:", error);
+    console.error("Error:", error);
     res.status(500).json({
       error: "Internal Server Error",
-      message: "An error occurred while refreshing token.",
+      message: "An error occurred while generating the JWT.",
     });
   }
 });

@@ -31,7 +31,36 @@ function verifyToken(req, res, next) {
   })();
 }
 
-async function verifyRefreshToken(refreshToken) {}
+async function verifyRefreshToken(req, res, next) {
+  // validate req body
+  const { refreshToken } = req.body;
+  if (!refreshToken) return res.sendStatus(400);
+
+  // verify token
+  if (!refreshToken) return res.sendStatus(401);
+  (async () => {
+    const secret = new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET);
+
+    try {
+      const { payload, protectedHeader } = await jose.jwtVerify(
+        refreshToken,
+        secret,
+        {
+          alg: "HS256",
+          issuer: "urn:example:issuer",
+          audience: "urn:example:audience",
+          requiredClaims: ["user_id"],
+        }
+      );
+      console.log("Server verified refresh token for user:", payload.user_id);
+      req.user_id = payload.user_id;
+      next();
+    } catch (error) {
+      console.error("Error:", error);
+      return res.sendStatus(403);
+    }
+  })();
+}
 
 async function signToken(user, tokenType) {
   const secret = new TextEncoder().encode(

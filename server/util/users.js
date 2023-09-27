@@ -7,4 +7,9 @@ async function getUsers() {
   );
 }
 
-module.exports = { getUsers };
+async function getUserById(user_id) {
+  const users = await getUsers();
+  return users.find((user) => user.user_id === user_id);
+}
+
+module.exports = { getUsers, getUserById };
