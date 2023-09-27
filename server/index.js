@@ -1,4 +1,4 @@
-const { authenticateToken } = require("./util/auth");
+const { verifyToken } = require("./util/auth");
 const { getPosts } = require("./util/posts");
 const express = require("express");
 const app = express();
@@ -67,7 +67,7 @@ const port = 3001;
 
 app.use(express.json());
 
-app.get("/", authenticateToken, async (req, res) => {
+app.get("/", verifyToken, async (req, res) => {
   // fetch posts from server
   let posts;
   try {

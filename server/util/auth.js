@@ -7,7 +7,7 @@ function authenticateUser(username, password, users) {
   );
 }
 
-function authenticateToken(req, res, next) {
+function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
@@ -31,9 +31,7 @@ function authenticateToken(req, res, next) {
   })();
 }
 
-async function authenticateRefreshToken(refreshToken) {
-
-}
+async function verifyRefreshToken(refreshToken) {}
 
 async function signToken(user, tokenType) {
   const secret = new TextEncoder().encode(
@@ -59,4 +57,9 @@ async function signToken(user, tokenType) {
   }
 }
 
-module.exports = { authenticateUser, authenticateToken, signToken, authenticateRefreshToken };
+module.exports = {
+  authenticateUser,
+  verifyToken,
+  signToken,
+  verifyRefreshToken,
+};

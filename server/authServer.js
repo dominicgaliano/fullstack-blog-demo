@@ -1,7 +1,7 @@
 const {
   authenticateUser,
   signToken,
-  authenticateRefreshToken,
+  verifyRefreshToken,
 } = require("./util/auth");
 const { getUsers } = require("./util/users");
 const express = require("express");
