@@ -57,7 +57,7 @@ app.post("/login", async (req, res) => {
     const refreshToken = await signToken(user, "refresh");
 
     // add refresh token to cache
-    client.set(user.id.toString(), refreshToken);
+    await client.set(user.id.toString(), refreshToken);
 
     res
       .status(200)
