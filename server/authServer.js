@@ -53,6 +53,19 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.post("/token", (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) return res.sendStatus(400);
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An error occurred while refreshing token.",
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Auth server listening on port ${port}`);
 });
