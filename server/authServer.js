@@ -6,11 +6,11 @@ const {
 } = require("./util/auth");
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
+const client = require("./util/redis");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
 const app = express();
-
 app.use(express.json());
 
 app.post("/users", (req, res) => {
