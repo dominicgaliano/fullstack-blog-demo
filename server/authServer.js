@@ -84,6 +84,10 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
   try {
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
+
+    // add refresh token to cache
+    await redisClient.set(user.id.toString(), refreshToken);
+
     res
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });
