@@ -6,14 +6,19 @@ const {
 } = require("./util/auth");
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
-const client = require("./util/redis");
+const redisClient = require("./util/redis");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
 const app = express();
 app.use(express.json());
 
-client.connect();
+redisClient.connect();
+
+app.use((req, res, next) => {
+  req.redisClient = redisClient;
+  next();
+});
 
 app.post("/users", (req, res) => {
   // TODO: implement registration
@@ -57,7 +62,7 @@ app.post("/login", async (req, res) => {
     const refreshToken = await signToken(user, "refresh");
 
     // add refresh token to cache
-    await client.set(user.id.toString(), refreshToken);
+    await redisClient.set(user.id.toString(), refreshToken);
 
     res
       .status(200)
