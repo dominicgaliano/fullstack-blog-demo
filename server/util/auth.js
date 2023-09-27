@@ -31,6 +31,10 @@ function authenticateToken(req, res, next) {
   })();
 }
 
+async function authenticateRefreshToken(refreshToken) {
+
+}
+
 async function signToken(user, tokenType) {
   const secret = new TextEncoder().encode(
     tokenType === "access"
@@ -55,4 +59,4 @@ async function signToken(user, tokenType) {
   }
 }
 
-module.exports = { authenticateUser, authenticateToken, signToken };
+module.exports = { authenticateUser, authenticateToken, signToken, authenticateRefreshToken };

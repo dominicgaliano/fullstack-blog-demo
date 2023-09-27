@@ -1,4 +1,8 @@
-const { authenticateUser, signToken } = require("./util/auth");
+const {
+  authenticateUser,
+  signToken,
+  authenticateRefreshToken,
+} = require("./util/auth");
 const { getUsers } = require("./util/users");
 const express = require("express");
 const app = express();
@@ -55,8 +59,13 @@ app.post("/login", async (req, res) => {
 
 app.post("/token", (req, res, next) => {
   try {
+    // validate req body
     const { refreshToken } = req.body;
     if (!refreshToken) return res.sendStatus(400);
+
+    // verify refresh token
+    // TODO: implement
+    req.sendStatus(501);
   } catch (error) {
     console.log("Error:", error);
     res.status(500).json({
