@@ -10,6 +10,11 @@ const port = 4001;
 
 app.use(express.json());
 
+app.post("/users", (req, res) => {
+  // TODO: implement registration
+  res.sendStatus(501);
+});
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 

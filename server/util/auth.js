@@ -2,6 +2,7 @@ require("dotenv").config();
 const jose = require("jose");
 
 function authenticateUser(username, password, users) {
+  // TODO: implement actual authentication
   return users.find(
     (user) => user.username === username && user.password === password
   );
