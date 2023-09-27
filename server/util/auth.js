@@ -33,6 +33,8 @@ function verifyToken(req, res, next) {
 }
 
 async function verifyRefreshToken(req, res, next) {
+  const redisClient = req.redisClient;
+
   // validate req body
   const { refreshToken } = req.body;
   if (!refreshToken) return res.sendStatus(400);
@@ -54,8 +56,9 @@ async function verifyRefreshToken(req, res, next) {
         }
       );
 
-      // TODO: check db to ensure token not blacklisted
-      //       and/or token is whitelisted
+      // verify token is whitelisted
+      const storedRefToken = await redisClient.get(payload.user_id.toString());
+      if (refreshToken !== storedRefToken) return res.sendStatus(403);
 
       console.log("Server verified refresh token for user:", payload.user_id);
       req.user_id = payload.user_id;
