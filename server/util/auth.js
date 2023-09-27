@@ -24,6 +24,7 @@ function verifyToken(req, res, next) {
         requiredClaims: ["user_id"],
       });
       console.log("Server authenticated user:", payload.user_id);
+      req.user_id = payload.user_id;
       next();
     } catch (error) {
       console.error("Error:", error);

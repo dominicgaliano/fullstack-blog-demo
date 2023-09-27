@@ -3,6 +3,7 @@ const {
   authenticateUser,
   signToken,
   verifyRefreshToken,
+  verifyToken,
 } = require("./util/auth");
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
@@ -74,6 +75,10 @@ app.post("/login", async (req, res) => {
       message: "An error occurred while generating the JWT.",
     });
   }
+});
+
+app.delete("/login", verifyToken, async (req, res) => {
+  // remove token from
 });
 
 app.post("/token", verifyRefreshToken, async (req, res, next) => {
