@@ -13,6 +13,8 @@ const PORT = process.env.AUTH_PORT || 4001;
 const app = express();
 app.use(express.json());
 
+client.connect();
+
 app.post("/users", (req, res) => {
   // TODO: implement registration
   res.sendStatus(501);
