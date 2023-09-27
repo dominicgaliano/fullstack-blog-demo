@@ -52,6 +52,10 @@ async function verifyRefreshToken(req, res, next) {
           requiredClaims: ["user_id"],
         }
       );
+
+      // TODO: check db to ensure token not blacklisted
+      //       and/or token is whitelisted
+
       console.log("Server verified refresh token for user:", payload.user_id);
       req.user_id = payload.user_id;
       next();
