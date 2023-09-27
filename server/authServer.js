@@ -1,3 +1,4 @@
+require("dotenv").config();
 const {
   authenticateUser,
   signToken,
@@ -5,12 +6,8 @@ const {
 } = require("./util/auth");
 const { getUsers, getUserById } = require("./util/users");
 const express = require("express");
-const redis = require("redis");
 
 const PORT = process.env.AUTH_PORT || 4001;
-const REDIS_PORT = process.env.REDIS_PORT || 6379;
-
-const client = redis.createClient(REDIS_PORT);
 
 const app = express();
 
