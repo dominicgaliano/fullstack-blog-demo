@@ -9,11 +9,13 @@ const { getUsers, createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 const bcrypt = require("bcrypt");
+const morgan = require("morgan");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
 const app = express();
 app.use(express.json());
+app.use(morgan("tiny"));
 
 redisClient.connect();
 

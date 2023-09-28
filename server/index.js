@@ -7,6 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
+app.use(morgan("tiny"));
 
 app.use(async (err, req, res, next) => {
   res.status(err.status || 500);
