@@ -68,7 +68,7 @@ app.post("/login", async (req, res) => {
   }
 
   // authenticate user
-  const user = authenticateUser(username, password, users);
+  const user = await authenticateUser(username, password, users);
   if (!user) {
     return res
       .status(401)
