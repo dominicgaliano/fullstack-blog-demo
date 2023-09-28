@@ -5,7 +5,7 @@ const {
   verifyRefreshToken,
   verifyToken,
 } = require("./util/auth");
-const { getUsers, getUserById } = require("./util/users");
+const { getUsers, writeUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 
@@ -21,9 +21,26 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/users", (req, res) => {
-  // TODO: implement registration
-  res.sendStatus(501);
+app.post("/users", async (req, res) => {
+  const { username, password } = req.body;
+
+  // validate input
+  if (!username || !password) {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Username and password are required.",
+    });
+  }
+
+  // register user
+  try {
+    await writeUser(username, password);
+  } catch (error) {
+    console.log("Error:", error);
+    return res.sendStatus(500);
+  }
+
+  res.status(200).send();
 });
 
 app.post("/login", async (req, res) => {
