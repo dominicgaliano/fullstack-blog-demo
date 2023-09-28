@@ -7,7 +7,7 @@ async function getUsers() {
   );
 }
 
-async function createUser(username, password) {
+async function createUser(username, hashedPassword) {
   // TODO: add username validation
   // TODO: convert to db call
   let users = await getUsers();
@@ -16,7 +16,7 @@ async function createUser(username, password) {
   const newUser = {
     id: users.slice(-1) + 1 || 1,
     username: username,
-    password: password,
+    password: hashedPassword,
   };
 
   users.push(newUser);

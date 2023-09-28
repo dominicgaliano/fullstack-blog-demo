@@ -8,6 +8,7 @@ const {
 const { getUsers, createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
+const bcrypt = require("bcrypt");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -34,7 +35,7 @@ app.post("/users", async (req, res) => {
 
   // register user
   try {
-    await createUser(username, password);
+    await createUser(username, await bcrypt.hash(password, 10));
   } catch (error) {
     console.log("Error:", error);
     return res.sendStatus(500);
