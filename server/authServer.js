@@ -5,9 +5,10 @@ const {
   verifyRefreshToken,
   verifyToken,
 } = require("./util/auth");
-const { getUsers, getUserById } = require("./util/users");
+const { getUsers, createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
+const bcrypt = require("bcrypt");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -21,9 +22,26 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/users", (req, res) => {
-  // TODO: implement registration
-  res.sendStatus(501);
+app.post("/users", async (req, res) => {
+  const { username, password } = req.body;
+
+  // validate input
+  if (!username || !password) {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Username and password are required.",
+    });
+  }
+
+  // register user
+  try {
+    await createUser(username, await bcrypt.hash(password, 10));
+  } catch (error) {
+    console.log("Error:", error);
+    return res.sendStatus(500);
+  }
+
+  res.status(200).send();
 });
 
 app.post("/login", async (req, res) => {
@@ -50,7 +68,7 @@ app.post("/login", async (req, res) => {
   }
 
   // authenticate user
-  const user = authenticateUser(username, password, users);
+  const user = await authenticateUser(username, password, users);
   if (!user) {
     return res
       .status(401)

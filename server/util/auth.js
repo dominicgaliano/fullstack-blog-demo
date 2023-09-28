@@ -1,11 +1,16 @@
 require("dotenv").config();
 const jose = require("jose");
+const bcrypt = require("bcrypt");
 
-function authenticateUser(username, password, users) {
-  // TODO: implement actual authentication
-  return users.find(
-    (user) => user.username === username && user.password === password
-  );
+async function authenticateUser(username, password, users) {
+  const user = users.find((user) => user.username === username);
+  try {
+    if (await bcrypt.compare(password, user.password)) {
+      return user;
+    }
+  } catch (error) {
+    console.log("Error:", error);
+  }
 }
 
 function verifyToken(req, res, next) {
