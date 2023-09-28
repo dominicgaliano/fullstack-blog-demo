@@ -5,7 +5,7 @@ const {
   verifyRefreshToken,
   verifyToken,
 } = require("./util/auth");
-const { getUsers, writeUser, getUserById } = require("./util/users");
+const { getUsers, createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 
@@ -34,7 +34,7 @@ app.post("/users", async (req, res) => {
 
   // register user
   try {
-    await writeUser(username, password);
+    await createUser(username, password);
   } catch (error) {
     console.log("Error:", error);
     return res.sendStatus(500);

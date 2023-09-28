@@ -7,7 +7,7 @@ async function getUsers() {
   );
 }
 
-async function writeUser(username, password) {
+async function createUser(username, password) {
   // TODO: add username validation
   // TODO: convert to db call
   let users = await getUsers();
@@ -31,4 +31,4 @@ async function getUserById(user_id) {
   return users.find((user) => user.user_id === user_id);
 }
 
-module.exports = { getUsers, writeUser, getUserById };
+module.exports = { getUsers, createUser, getUserById };
