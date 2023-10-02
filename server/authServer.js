@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
 
-const mongoose = require("./db/initialize.js");
+require("./db/initialize.js");
 redisClient.connect();
 
 app.use((req, res, next) => {
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/users", async (req, res) => {
+app.post("/users", async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -35,7 +35,7 @@ app.post("/users", async (req, res) => {
     if (!email || !password) throw createError.BadRequest();
 
     // verify email not already used
-    const doesExist = await user.findOne({ email: email });
+    const doesExist = await User.findOne({ email: email });
     if (doesExist) throw createError.Conflict(`${email} is already in use`);
 
     // register user
