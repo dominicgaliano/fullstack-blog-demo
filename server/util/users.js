@@ -9,7 +9,7 @@ async function createUser(email, hashedPassword) {
 }
 
 async function getUserById(user_id) {
-  const user = User.findOne({ id: user_id });
+  const user = await User.findOne({ _id: user_id });
   return user;
 }
 
