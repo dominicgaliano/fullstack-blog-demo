@@ -30,6 +30,8 @@ app.use((req, res, next) => {
 
 app.post("/users", async (req, res, next) => {
   try {
+    const { email, password } = req.body;
+
     // validate input
     const result = await authSchema.validateAsync(req.body);
 
