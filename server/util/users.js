@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs").promises;
+const User = require("../models/user_model");
 
 async function getUsers() {
   return JSON.parse(
@@ -8,22 +9,8 @@ async function getUsers() {
 }
 
 async function createUser(email, hashedPassword) {
-  // TODO: add email validation
-  // TODO: convert to db call
-  let users = await getUsers();
-
-  // get last user id
-  const newUser = {
-    id: users.slice(-1) + 1 || 1,
-    email: email,
-    password: hashedPassword,
-  };
-
-  users.push(newUser);
-  await fs.writeFile(
-    path.join(__dirname, "../data/users.json"),
-    JSON.stringify(users)
-  );
+  const user = new User({ email, hashedPassword });
+  const savedUser = await user.save();
 }
 
 async function getUserById(user_id) {

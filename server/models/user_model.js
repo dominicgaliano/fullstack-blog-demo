@@ -11,11 +11,9 @@ const UserSchema = new Schema({
     required: "Email address is required",
     validate: [isEmail, "Please fill a valid email address"],
   },
-  password: {
+  hashedPassword: {
     type: String,
     required: true,
-    minLength: 10,
-    maxLength: 40,
   },
 });
 

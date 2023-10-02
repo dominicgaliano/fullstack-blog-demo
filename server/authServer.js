@@ -40,6 +40,7 @@ app.post("/users", async (req, res, next) => {
 
     // register user
     await createUser(email, await bcrypt.hash(password, 10));
+    next();
   } catch (error) {
     next(error);
   }
