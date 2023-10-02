@@ -50,7 +50,7 @@ app.post("/login", async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({
       error: "Bad Request",
-      message: "Username and password are required.",
+      message: "email and password are required.",
     });
   }
 
@@ -67,11 +67,11 @@ app.post("/login", async (req, res) => {
   }
 
   // authenticate user
-  const user = await authenticateUser(username, password, users);
+  const user = await authenticateUser(email, password, users);
   if (!user) {
     return res
       .status(401)
-      .json({ error: "Unauthorized", message: "Invalid username or password" });
+      .json({ error: "Unauthorized", message: "Invalid email or password" });
   }
 
   // create JWT
