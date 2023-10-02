@@ -9,7 +9,9 @@ const { getUsers, createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 const bcrypt = require("bcrypt");
+const createError = require("http-errors");
 const morgan = require("morgan");
+const User = require("../models/user.model");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -26,32 +28,26 @@ app.use((req, res, next) => {
 });
 
 app.post("/users", async (req, res) => {
-  const { username, password } = req.body;
-
-  // validate input
-  if (!username || !password) {
-    return res.status(400).json({
-      error: "Bad Request",
-      message: "Username and password are required.",
-    });
-  }
-
-  // register user
   try {
-    await createUser(username, await bcrypt.hash(password, 10));
-  } catch (error) {
-    console.log("Error:", error);
-    return res.sendStatus(500);
-  }
+    const { email, password } = req.body;
 
-  res.status(200).send();
+    // validate input
+    if (!email || !password) throw createError.BadRequest();
+
+    const doesExist = await user.findOne({ email: email });
+    if (doesExist) throw createError.Conflict(`${email} is already in use`);
+    // register user
+    await createUser(email, await bcrypt.hash(password, 10));
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   // validate input
-  if (!username || !password) {
+  if (!email || !password) {
     return res.status(400).json({
       error: "Bad Request",
       message: "Username and password are required.",
