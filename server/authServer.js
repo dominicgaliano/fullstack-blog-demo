@@ -12,6 +12,7 @@ const bcrypt = require("bcrypt");
 const createError = require("http-errors");
 const morgan = require("morgan");
 const User = require("./models/user_model.js");
+const { authSchema } = require("./schemas/validation_schema");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -29,10 +30,8 @@ app.use((req, res, next) => {
 
 app.post("/users", async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-
     // validate input
-    if (!email || !password) throw createError.BadRequest();
+    const result = await authSchema.validateAsync(req.body);
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
