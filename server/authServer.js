@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
 
-require("./db/initialize.js");
+const mongoose = require("./db/initialize.js");
 redisClient.connect();
 
 app.use((req, res, next) => {
