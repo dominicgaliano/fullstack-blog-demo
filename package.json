@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.1",
-    "joi": "^17.10.2",
     "mongoose": "^7.5.3",
     "validator": "^13.11.0"
   }
