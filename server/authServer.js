@@ -5,11 +5,14 @@ const {
   verifyRefreshToken,
   verifyToken,
 } = require("./util/auth");
-const { getUsers, createUser, getUserById } = require("./util/users");
+const { createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 const bcrypt = require("bcrypt");
+const createError = require("http-errors");
 const morgan = require("morgan");
+const User = require("./models/user_model.js");
+const { authSchema } = require("./schemas/validation_schema");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -17,6 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
 
+require("./db/initialize.js");
 redisClient.connect();
 
 app.use((req, res, next) => {
@@ -24,61 +28,37 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/users", async (req, res) => {
-  const { username, password } = req.body;
-
-  // validate input
-  if (!username || !password) {
-    return res.status(400).json({
-      error: "Bad Request",
-      message: "Username and password are required.",
-    });
-  }
-
-  // register user
+app.post("/users", async (req, res, next) => {
   try {
-    await createUser(username, await bcrypt.hash(password, 10));
-  } catch (error) {
-    console.log("Error:", error);
-    return res.sendStatus(500);
-  }
+    const { email, password } = req.body;
 
-  res.status(200).send();
+    // validate input
+    await authSchema.validateAsync(req.body);
+
+    // verify email not already used
+    const doesExist = await User.findOne({ email: email });
+    if (doesExist) throw createError.Conflict(`${email} is already in use`);
+
+    // register user
+    const savedUser = await createUser(email, await bcrypt.hash(password, 10));
+    res.status(201).send(savedUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  // validate input
-  if (!username || !password) {
-    return res.status(400).json({
-      error: "Bad Request",
-      message: "Username and password are required.",
-    });
-  }
-
-  // fetch users from server
-  let users;
+app.post("/login", async (req, res, next) => {
   try {
-    users = await getUsers();
-  } catch (error) {
-    console.log("Error:", error);
-    return res.status(500).json({
-      error: "Internal Server Error",
-      message: "An error occurred while authenticating user",
-    });
-  }
+    // validate input
+    const { email, password } = req.body;
+    await authSchema.validateAsync(req.body);
 
-  // authenticate user
-  const user = await authenticateUser(username, password, users);
-  if (!user) {
-    return res
-      .status(401)
-      .json({ error: "Unauthorized", message: "Invalid username or password" });
-  }
+    // authenticate user
+    const user = await authenticateUser(email, password);
+    if (!user) {
+      throw createError(401, "Invalid email or password");
+    }
 
-  // create JWT
-  try {
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
 
@@ -89,11 +69,7 @@ app.post("/login", async (req, res) => {
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({
-      error: "Internal Server Error",
-      message: "An error occurred while generating the JWT.",
-    });
+    next(error);
   }
 });
 
@@ -129,6 +105,17 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
       message: "An error occurred while generating the JWT.",
     });
   }
+});
+
+// error handler
+app.use(async (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
 });
 
 app.listen(PORT, () => {

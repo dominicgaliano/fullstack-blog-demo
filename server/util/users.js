@@ -1,34 +1,16 @@
 const path = require("path");
 const fs = require("fs").promises;
+const User = require("../models/user_model");
 
-async function getUsers() {
-  return JSON.parse(
-    await fs.readFile(path.join(__dirname, "../data/users.json"))
-  );
-}
-
-async function createUser(username, hashedPassword) {
-  // TODO: add username validation
-  // TODO: convert to db call
-  let users = await getUsers();
-
-  // get last user id
-  const newUser = {
-    id: users.slice(-1) + 1 || 1,
-    username: username,
-    password: hashedPassword,
-  };
-
-  users.push(newUser);
-  await fs.writeFile(
-    path.join(__dirname, "../data/users.json"),
-    JSON.stringify(users)
-  );
+async function createUser(email, hashedPassword) {
+  const user = new User({ email, hashedPassword });
+  const savedUser = await user.save();
+  return savedUser;
 }
 
 async function getUserById(user_id) {
-  const users = await getUsers();
-  return users.find((user) => user.user_id === user_id);
+  const user = await User.findOne({ _id: user_id });
+  return user;
 }
 
-module.exports = { getUsers, createUser, getUserById };
+module.exports = { createUser, getUserById };

@@ -24,6 +24,7 @@ client.on("end", () => {
 
 process.on("SIGINT", () => {
   client.quit();
+  process.exit(0);
 });
 
 module.exports = client;
