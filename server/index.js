@@ -9,16 +9,6 @@ const port = 3001;
 app.use(express.json());
 app.use(morgan("tiny"));
 
-app.use(async (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
-  });
-});
-
 app.get("/", verifyToken, async (req, res) => {
   // fetch posts from server
   let posts;
@@ -33,6 +23,17 @@ app.get("/", verifyToken, async (req, res) => {
   }
 
   res.status(200).json(posts);
+});
+
+// error handler
+app.use(async (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
 });
 
 app.listen(port, () => {

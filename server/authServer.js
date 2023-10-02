@@ -36,6 +36,7 @@ app.post("/users", async (req, res, next) => {
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
+    throw new Error(test);
     if (doesExist) throw createError.Conflict(`${email} is already in use`);
 
     // register user
@@ -128,6 +129,17 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
       message: "An error occurred while generating the JWT.",
     });
   }
+});
+
+// error handler
+app.use(async (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
 });
 
 app.listen(PORT, () => {
