@@ -33,7 +33,7 @@ app.post("/users", async (req, res, next) => {
     const { email, password } = req.body;
 
     // validate input
-    const result = await authSchema.validateAsync(req.body);
+    await authSchema.validateAsync(req.body);
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
@@ -47,39 +47,18 @@ app.post("/users", async (req, res, next) => {
   }
 });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  // validate input
-  if (!email || !password) {
-    return res.status(400).json({
-      error: "Bad Request",
-      message: "email and password are required.",
-    });
-  }
-
-  // fetch users from server
-  let users;
+app.post("/login", async (req, res, next) => {
   try {
-    users = await getUsers();
-  } catch (error) {
-    console.log("Error:", error);
-    return res.status(500).json({
-      error: "Internal Server Error",
-      message: "An error occurred while authenticating user",
-    });
-  }
+    // validate input
+    const { email, password } = req.body;
+    await authSchema.validateAsync(req.body);
 
-  // authenticate user
-  const user = await authenticateUser(email, password, users);
-  if (!user) {
-    return res
-      .status(401)
-      .json({ error: "Unauthorized", message: "Invalid email or password" });
-  }
+    // authenticate user
+    const user = await authenticateUser(email, password);
+    if (!user) {
+      throw createError(401, "Invalid email or password");
+    }
 
-  // create JWT
-  try {
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
 
@@ -90,11 +69,7 @@ app.post("/login", async (req, res) => {
       .status(200)
       .json({ accessToken: accessToken, refreshToken: refreshToken });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({
-      error: "Internal Server Error",
-      message: "An error occurred while generating the JWT.",
-    });
+    next(error);
   }
 });
 

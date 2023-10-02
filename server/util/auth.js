@@ -1,15 +1,13 @@
 require("dotenv").config();
 const jose = require("jose");
 const bcrypt = require("bcrypt");
+const User = require("../models/user_model");
 
-async function authenticateUser(email, password, users) {
-  const user = users.find((user) => user.email === email);
-  try {
-    if (await bcrypt.compare(password, user.password)) {
-      return user;
-    }
-  } catch (error) {
-    console.log("Error:", error);
+async function authenticateUser(email, password) {
+  const user = await User.findOne({ email: email });
+
+  if (user && (await bcrypt.compare(password, user.hashedPassword))) {
+    return user;
   }
 }
 
