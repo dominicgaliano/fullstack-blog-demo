@@ -35,8 +35,12 @@ app.post("/", verifyToken, async (req, res, next) => {
       throw createError(500, "User not found");
     }
 
-    // TODO: accept content from
-    const post = await createPost(user, "content");
+    const content = req.body.content;
+    if (!content) {
+      throw createError(400, "No post content found");
+    }
+
+    const post = await createPost(user, content);
 
     res.status(201).json(post);
   } catch (err) {
