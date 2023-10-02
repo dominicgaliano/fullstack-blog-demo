@@ -5,7 +5,7 @@ const {
   verifyRefreshToken,
   verifyToken,
 } = require("./util/auth");
-const { getUsers, createUser, getUserById } = require("./util/users");
+const { createUser, getUserById } = require("./util/users");
 const express = require("express");
 const redisClient = require("./util/redis");
 const bcrypt = require("bcrypt");
