@@ -36,7 +36,6 @@ app.post("/users", async (req, res, next) => {
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
-    throw new Error(test);
     if (doesExist) throw createError.Conflict(`${email} is already in use`);
 
     // register user
