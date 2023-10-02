@@ -5,7 +5,7 @@ const isEmail = require("validator").isEmail;
 const PostSchema = new Schema(
   {
     author: {
-      user_id: Number,
+      user_id: String,
       email: {
         type: String,
         trim: true,
@@ -20,7 +20,7 @@ const PostSchema = new Schema(
       {
         comment_id: Number,
         author: {
-          user_id: mongoose.ObjectId,
+          user_id: String,
           email: {
             type: String,
             trim: true,
