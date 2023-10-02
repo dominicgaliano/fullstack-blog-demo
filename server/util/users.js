@@ -11,6 +11,7 @@ async function getUsers() {
 async function createUser(email, hashedPassword) {
   const user = new User({ email, hashedPassword });
   const savedUser = await user.save();
+  return savedUser;
 }
 
 async function getUserById(user_id) {

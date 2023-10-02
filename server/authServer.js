@@ -39,8 +39,8 @@ app.post("/users", async (req, res, next) => {
     if (doesExist) throw createError.Conflict(`${email} is already in use`);
 
     // register user
-    await createUser(email, await bcrypt.hash(password, 10));
-    next();
+    const savedUser = await createUser(email, await bcrypt.hash(password, 10));
+    res.status(201).send(savedUser);
   } catch (error) {
     next(error);
   }
