@@ -11,7 +11,7 @@ const redisClient = require("./util/redis");
 const bcrypt = require("bcrypt");
 const createError = require("http-errors");
 const morgan = require("morgan");
-const User = require("../models/user.model");
+const User = require("./models/user_model.js");
 
 const PORT = process.env.AUTH_PORT || 4001;
 
@@ -34,8 +34,10 @@ app.post("/users", async (req, res) => {
     // validate input
     if (!email || !password) throw createError.BadRequest();
 
+    // verify email not already used
     const doesExist = await user.findOne({ email: email });
     if (doesExist) throw createError.Conflict(`${email} is already in use`);
+
     // register user
     await createUser(email, await bcrypt.hash(password, 10));
   } catch (error) {
