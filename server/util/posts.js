@@ -35,7 +35,7 @@ async function updatePost(post_id, newContent) {
     const filter = { _id: post_id };
     const update = { content: newContent };
 
-    const newPost = await Post.findOneAndUpdate(filter, update);
+    await Post.findOneAndUpdate(filter, update);
   } catch (err) {
     // catch malformed content or id
     throw createError(400);
