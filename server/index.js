@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const errorHandler = require("./util/errorHandler");
-const { verifyToken } = require("../util/auth");
+const { verifyToken } = require("./util/auth");
 
 const app = express();
 const port = 3001;
