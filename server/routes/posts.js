@@ -1,4 +1,3 @@
-const { verifyToken } = require("../util/auth");
 const {
   getPostsController,
   createPostController,
@@ -7,15 +6,15 @@ const {
 const express = require("express");
 const router = express.Router();
 
-router.get("/", verifyToken, getPostsController);
+router.get("/", getPostsController);
 
-router.post("/", verifyToken, createPostController);
+router.post("/", createPostController);
 
-router.get("/:id", verifyToken, getPostByIdController);
+router.get("/:id", getPostByIdController);
 
-router.put("/:id", verifyToken, updatePostByIdController);
+router.put("/:id", updatePostByIdController);
 
-router.delete("/:id", verifyToken, deletePostByIdController);
+router.delete("/:id", deletePostByIdController);
 
 // - [ ] POST, PUT, DELETE /posts/:id/comments
 
