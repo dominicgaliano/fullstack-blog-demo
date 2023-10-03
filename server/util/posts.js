@@ -1,5 +1,3 @@
-const path = require("path");
-const fs = require("fs").promises;
 const Post = require("../models/post_model");
 const createError = require("http-errors");
 
