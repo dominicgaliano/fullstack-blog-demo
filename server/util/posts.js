@@ -42,4 +42,13 @@ async function updatePost(post_id, newContent) {
   }
 }
 
-module.exports = { getPosts, createPost, getPost, updatePost };
+async function deletePost(post_id) {
+  try {
+    const res = await Post.deleteOne({ _id: post_id });
+    return res.deletedCount === 1;
+  } catch (err) {
+    throw createError(400);
+  }
+}
+
+module.exports = { getPosts, createPost, getPost, updatePost, deletePost };

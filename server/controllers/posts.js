@@ -1,4 +1,10 @@
-const { getPosts, createPost, getPost, updatePost } = require("../util/posts");
+const {
+  getPosts,
+  createPost,
+  getPost,
+  updatePost,
+  deletePost,
+} = require("../util/posts");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
 
@@ -92,6 +98,31 @@ const updatePostByIdController = async (req, res, next) => {
 };
 const deletePostByIdController = async (req, res, next) => {
   try {
+    // validate input
+    const user_id = req.user_id;
+    const post_id = req.params.id;
+    if (!user_id) {
+      throw createError(500, "User not found");
+    }
+    if (!post_id) {
+      throw createError(404, "No post found");
+    }
+
+    // validate that user requesting deletion is post owner and post exists
+    const post = await getPost(post_id);
+    if (!post) {
+      throw createError(404, "No post found");
+    }
+    if (post.author.user_id != user_id) {
+      throw createError(403);
+    }
+
+    // perform deletion
+    const deleted = await deletePost(post_id);
+    if (!deleted) {
+      throw createError(500);
+    }
+    res.sendStatus(204);
   } catch (err) {
     next(err);
   }
