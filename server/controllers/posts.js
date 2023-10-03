@@ -1,4 +1,4 @@
-const { getPosts, createPost } = require("../util/posts");
+const { getPosts, createPost, getPost } = require("../util/posts");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
 
@@ -39,7 +39,23 @@ const createPostController = async (req, res, next) => {
   }
 };
 
-const getPostByIdController = async (req, res, next) => {};
+const getPostByIdController = async (req, res, next) => {
+  try {
+    const post_id = req.params.id;
+    if (!post_id) {
+      throw createError(404, "No post found");
+    }
+
+    const post = await getPost(post_id);
+    if (!post) {
+      throw createError(404, "No post found");
+    }
+
+    res.status(200).json(post);
+  } catch (err) {
+    next(err);
+  }
+};
 const updatePostByIdController = async (req, res, next) => {};
 const deletePostByIdController = async (req, res, next) => {};
 
