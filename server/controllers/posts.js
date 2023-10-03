@@ -87,11 +87,15 @@ const updatePostByIdController = async (req, res, next) => {
 
     res.status(200).json(newPost);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
-const deletePostByIdController = async (req, res, next) => {};
+const deletePostByIdController = async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   getPostsController,
