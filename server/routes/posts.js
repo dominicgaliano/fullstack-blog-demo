@@ -4,8 +4,8 @@ const { getPostsController, createPostController } = require("../controllers");
 const express = require("express");
 const router = express.Router();
 
-router.get("/posts", verifyToken, getPostsController);
+router.get("/", verifyToken, getPostsController);
 
-router.post("/posts", verifyToken, createPostController);
+router.post("/", verifyToken, createPostController);
 
 module.exports = router;
