@@ -48,21 +48,65 @@ To run this project locally, follow the following commands (npm required):
 Frameworks and Packages:
 
 Frontend Packages:
+
 [![React][React.js]][React-url]
 [![Typescript][Typescript.js]][Typescript-url]
 [![Vite][Vite.js]][Vite-url]
 
 Backend Packages:
 
--
+- bcrypt
+- express
+- http-error
+- joi
+- jose
+- morgan
+- redis
+- mongoose
+- validator
 
 Additional Packages:
+
+- concurrently
 
 ## License
 
 Distributed under the MIT License. See `LICENSE.md` for more information.
 
 ## Features
+
+### Implemented
+
+Frontend
+
+- [x] Placeholder frontend
+
+Backend
+
+- [x] Node-based backend with dedicated authentication server
+- [x] Authentication using Blowfish encryption algorithm
+- [x] API authorization using JWTs and refresh JWTs
+- [x] Refresh JWT cache implemented using redis
+- [x] Partial MongoDB CRUD operations implemented using Mongoose
+- [x] Login and registration validation using joi and validator
+- [x] Server-side logging using morgan
+
+Database
+
+- [x] User data and post data stored in MongoDB Atlas cluster
+
+### Future Plans/Todo
+
+Frontend
+
+- [ ] Draft proof frontend of concept
+- [ ] Create frontend (more details soon)
+
+Backend
+
+- [ ] Update, Delete Post
+- [ ] Create, Update, Delete Comments
+- [ ] Full coverage of http-error package
 
 See the [open issues](https://github.com/dominicgaliano/jwt-demo/issues) for a full list of proposed features (and known issues).
 
