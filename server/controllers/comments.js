@@ -1,4 +1,4 @@
-const {} = require("../util/comments");
+const { createComment } = require("../util/comments");
 const createError = require("http-errors");
 
 const createCommentController = async (req, res, next) => {
