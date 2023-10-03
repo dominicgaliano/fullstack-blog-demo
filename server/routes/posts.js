@@ -16,6 +16,6 @@ router.put("/:id", updatePostByIdController);
 
 router.delete("/:id", deletePostByIdController);
 
-// - [ ] POST, PUT, DELETE /posts/:id/comments
+router.use("/:id/comments/:comment_id", require("comments.js"));
 
 module.exports = router;
