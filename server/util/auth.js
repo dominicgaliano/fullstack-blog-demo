@@ -85,7 +85,7 @@ async function signToken(user, tokenType) {
   const expiresIn = tokenType === "access" ? "10m" : "10w";
 
   try {
-    return await new jose.SignJWT({ user_id: user.id })
+    return await new jose.SignJWT({ user_id: user._id })
       .setProtectedHeader({ alg })
       .setIssuedAt()
       .setAudience("urn:example:audience")
