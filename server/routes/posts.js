@@ -19,6 +19,6 @@ router.put("/:id", updatePostByIdController);
 
 router.delete("/:id", deletePostByIdController);
 
-router.use("/:id/comments", require("comments.js"));
+router.use("/:id/comments", require("./comments"));
 
 module.exports = router;
