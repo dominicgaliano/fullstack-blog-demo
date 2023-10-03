@@ -11,4 +11,12 @@ router.get("/", verifyToken, getPostsController);
 
 router.post("/", verifyToken, createPostController);
 
+router.get("/:id", verifyToken, getPostByIdController);
+
+router.put("/:id", verifyToken, updatePostByIdController);
+
+router.delete("/:id", verifyToken, deletePostByIdController);
+
+// - [ ] POST, PUT, DELETE /posts/:id/comments
+
 module.exports = router;
