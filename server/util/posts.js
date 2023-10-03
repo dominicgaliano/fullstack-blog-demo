@@ -42,4 +42,4 @@ async function updatePost(post_id, newContent) {
   }
 }
 
-module.exports = { getPosts, createPost, getPost };
+module.exports = { getPosts, createPost, getPost, updatePost };

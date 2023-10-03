@@ -1,4 +1,4 @@
-const { getPosts, createPost, getPost } = require("../util/posts");
+const { getPosts, createPost, getPost, updatePost } = require("../util/posts");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
 
@@ -72,21 +72,22 @@ const updatePostByIdController = async (req, res, next) => {
       throw createError(400, "No post content");
     }
 
-    // validate that user requesting update is post owner
+    const post = await getPost(post_id);
+    // validate that user requesting update is post owner and post exists
+    if (!post) {
+      throw createError(404, "No post found");
+    }
     if (post.author.user_id != user_id) {
       throw createError(403);
     }
 
     // update post
-    const post = await updatePost(post_id, content);
-    if (!post) {
-      throw createError(404, "No post found");
-    }
-
+    await updatePost(post_id, content);
     const newPost = await getPost(post_id);
 
     res.status(200).json(newPost);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
