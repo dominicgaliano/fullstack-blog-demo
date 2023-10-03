@@ -1,15 +1,14 @@
 const { createComment } = require("../util/comments");
+const { getUserById } = require("../util/users");
 const createError = require("http-errors");
 
 const createCommentController = async (req, res, next) => {
   try {
-    console.log("test");
-
     // validate input
-    const user_id = req.user_id;
+    const user = await getUserById(req.user_id);
     const post_id = req.params.id;
     const commentBody = req.body.commentBody;
-    if (!user_id) {
+    if (!user) {
       throw createError(500, "User not found");
     }
     if (!post_id) {
@@ -20,7 +19,12 @@ const createCommentController = async (req, res, next) => {
     }
 
     // create comment
-    await createComment(user_id, post_id, commentBody);
+    const modifiedCount = await createComment(user, post_id, commentBody);
+    if (!modifiedCount) {
+      throw createError(404);
+    }
+
+    res.sendStatus(201);
   } catch (err) {
     next(err);
   }
