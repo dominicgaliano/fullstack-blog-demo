@@ -47,27 +47,28 @@ To run this project locally, follow the following commands (npm required):
 
 Frameworks and Packages:
 
-Frontend Packages:
+Frontend:
 
 [![React][React.js]][React-url]
 [![Typescript][Typescript.js]][Typescript-url]
 [![Vite][Vite.js]][Vite-url]
 
-Backend Packages:
+Backend:
 
-- bcrypt
-- express
-- http-error
-- joi
-- jose
-- morgan
-- redis
-- mongoose
-- validator
+[![express][express.js]][express-url]
+[![bcrypt][bcrypt.js]][bcrypt-url]
+[![http-err][http-err.js]][http-err-url]
+[![joi][joi.js]][joi-url]
+[![jose][jose.js]][jose-url]
+[![morgan][morgan.js]][morgan-url]
+[![mongoose][mongoose.js]][mongoose-url]
+[![validator][validator.js]][validator-url]
 
 Additional Packages:
 
-- concurrently
+[![mongo][mongodb]][mongodb-url]
+[![redis][redis.js]][redis-url]
+[![concurrently][concurrently.js]][concurrently-url]
 
 ## License
 
@@ -107,6 +108,13 @@ Backend
 - [ ] Update, Delete Post
 - [ ] Create, Update, Delete Comments
 - [ ] Full coverage of http-error package
+- [ ] Convert to TS for better dev process
+- [ ] (Maybe) Server Side Rendering
+
+Other
+
+- [ ] Containerization
+- [ ] Deploy App
 
 See the [open issues](https://github.com/dominicgaliano/jwt-demo/issues) for a full list of proposed features (and known issues).
 
@@ -141,9 +149,25 @@ Don't forget to give the project a star! Thanks again!
 [Typescript-url]: https://www.typescriptlang.org/
 [Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev/
-[Day.js]: https://img.shields.io/badge/Day.js-20232A?style=for-the-badge
-[Dayjs-url]: https://day.js.org/
-[RMM.js]: https://img.shields.io/badge/react%20micro%20modal-20232A?style=for-the-badge
-[React-micromodal-url]: https://www.npmjs.com/package/react-micro-modal
-[RS.js]: https://img.shields.io/badge/react%20select-20232A?style=for-the-badge
-[react-select-url]: https://react-select.com/
+[bcrypt.js]: https://img.shields.io/badge/bcrypt-20232A?style=for-the-badge
+[bcrypt-url]: https://www.npmjs.com/package/bcrypt
+[express.js]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB
+[express-url]: https://expressjs.com/
+[http-err.js]: https://shields.io/badge/httperr-20232A?style=for-the-badge
+[http-err-url]: https://www.npmjs.com/package/http-errors
+[joi.js]: https://shields.io/badge/joi-20232A?style=for-the-badge
+[joi-url]: https://www.npmjs.com/package/joi
+[jose.js]: https://shields.io/badge/jose-20232A?style=for-the-badge
+[jose-url]: https://www.npmjs.com/package/jose
+[morgan.js]: https://shields.io/badge/morgan-20232A?style=for-the-badge
+[morgan-url]: https://www.npmjs.com/package/morgan
+[redis.js]: https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white
+[redis-url]: https://www.npmjs.com/package/redis
+[mongoose.js]: https://shields.io/badge/mongoose-20232A?style=for-the-badge
+[mongoose-url]: https://www.npmjs.com/package/mongoose
+[validator.js]: https://shields.io/badge/validator-20232A?style=for-the-badge
+[validator-url]: https://www.npmjs.com/package/validator
+[mongodb]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
+[mongodb-url]: https://mongodb.com
+[concurrently.js]: https://shields.io/badge/concurrently-20232A?style=for-the-badge
+[concurrently-url]: https://www.npmjs.com/package/concurrently
