@@ -1,6 +1,9 @@
 const {
   getPostsController,
   createPostController,
+  getPostByIdController,
+  updatePostByIdController,
+  deletePostByIdController,
 } = require("../controllers/posts");
 
 const express = require("express");
@@ -16,6 +19,6 @@ router.put("/:id", updatePostByIdController);
 
 router.delete("/:id", deletePostByIdController);
 
-router.use("/:id/comments/:comment_id", require("comments.js"));
+router.use("/:id/comments", require("comments.js"));
 
 module.exports = router;

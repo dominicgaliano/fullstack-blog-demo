@@ -39,4 +39,14 @@ const createPostController = async (req, res, next) => {
   }
 };
 
-module.exports = { getPostsController, createPostController };
+const getPostByIdController = async (req, res, next) => {};
+const updatePostByIdController = async (req, res, next) => {};
+const deletePostByIdController = async (req, res, next) => {};
+
+module.exports = {
+  getPostsController,
+  createPostController,
+  getPostByIdController,
+  updatePostByIdController,
+  deletePostByIdController,
+};
