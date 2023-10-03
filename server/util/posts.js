@@ -30,4 +30,16 @@ async function createPost(user, content) {
   // throw new Error("not implemented");
 }
 
+async function updatePost(post_id, newContent) {
+  try {
+    const filter = { _id: post_id };
+    const update = { content: newContent };
+
+    const newPost = await Post.findOneAndUpdate(filter, update);
+  } catch (err) {
+    // catch malformed content or id
+    throw createError(400);
+  }
+}
+
 module.exports = { getPosts, createPost, getPost };

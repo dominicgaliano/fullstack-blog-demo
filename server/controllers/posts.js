@@ -41,6 +41,40 @@ const createPostController = async (req, res, next) => {
 
 const getPostByIdController = async (req, res, next) => {
   try {
+    // validate input
+    const user_id = req.user_id;
+    const post_id = req.params.id;
+    const content = req.body.content;
+    if (!user_id) {
+      throw createError(500, "User not found");
+    }
+    if (!post_id) {
+      throw createError(404, "No post found");
+    }
+    if (!content) {
+      throw createError(400, "No post content");
+    }
+
+    // validate that user requesting update is post owner
+    if (post.author.user_id != user_id) {
+      throw createError(403);
+    }
+
+    // update post
+    const post = await updatePost(post_id, content);
+    if (!post) {
+      throw createError(404, "No post found");
+    }
+
+    const newPost = await getPost(post_id);
+
+    res.status(200).json(newPost);
+  } catch (err) {
+    next(err);
+  }
+};
+const updatePostByIdController = async (req, res, next) => {
+  try {
     const post_id = req.params.id;
     if (!post_id) {
       throw createError(404, "No post found");
@@ -51,12 +85,11 @@ const getPostByIdController = async (req, res, next) => {
       throw createError(404, "No post found");
     }
 
-    res.status(200).json(post);
+    const newPost = res.status(200).json(post);
   } catch (err) {
     next(err);
   }
 };
-const updatePostByIdController = async (req, res, next) => {};
 const deletePostByIdController = async (req, res, next) => {};
 
 module.exports = {
