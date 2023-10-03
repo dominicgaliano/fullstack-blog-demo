@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const errorHandler = require("./util/errorHandler");
 
 const app = express();
 const port = 3001;
@@ -15,15 +16,7 @@ app.use(morgan("tiny"));
 app.use("/", require("./routes"));
 
 // error handler
-app.use(async (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
-  });
-});
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
