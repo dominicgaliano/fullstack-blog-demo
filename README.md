@@ -11,7 +11,11 @@
 
 ## Description
 
+Originally created as frontend-backend demo to learn how to use [JWTs](jwt.io), this project has increased in scope to become a fullstack CRUD blog.
+
 ## Installation
+
+This repo contains both the frontend and backend code which can be run separate or together. Future plans include containerizing the entire project.
 
 To run this project locally, follow the following commands (npm required):
 
@@ -22,15 +26,20 @@ To run this project locally, follow the following commands (npm required):
    cd {repo-name}/
    ```
 
-2. Install NPM packages
+2. Install NPM packages in parent, server, and client directories.
 
    ```sh
    npm i
+   cd client
+   npm i
+   cd ../server
+   npm i
    ```
 
-3. Run local development server
+3. Run local development server from parent directory
 
    ```sh
+   cd ..
    npm run dev
    ```
 
@@ -38,10 +47,16 @@ To run this project locally, follow the following commands (npm required):
 
 Frameworks and Packages:
 
+Frontend Packages:
 [![React][React.js]][React-url]
 [![Typescript][Typescript.js]][Typescript-url]
 [![Vite][Vite.js]][Vite-url]
-TODO: ...
+
+Backend Packages:
+
+-
+
+Additional Packages:
 
 ## License
 
