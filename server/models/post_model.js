@@ -2,6 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const isEmail = require("validator").isEmail;
 
+const CommentSchema = new Schema({
+  author: {
+    user_id: String,
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      validate: [isEmail, "Please fill a valid email address"],
+    },
+  },
+  text: String,
+});
+
 const PostSchema = new Schema(
   {
     author: {
@@ -16,21 +29,9 @@ const PostSchema = new Schema(
     content: String,
     timestamp: { type: Date, default: Date.now },
     likes: Number,
-    comments: [
-      {
-        comment_id: Number,
-        author: {
-          user_id: String,
-          email: {
-            type: String,
-            trim: true,
-            lowercase: true,
-            validate: [isEmail, "Please fill a valid email address"],
-          },
-        },
-        text: String,
-      },
-    ],
+    comments: {
+      type: [CommentSchema],
+    },
   },
   { collection: "posts" }
 );
