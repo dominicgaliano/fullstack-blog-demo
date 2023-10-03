@@ -7,10 +7,10 @@ const {
 const express = require("express");
 const router = express.Router();
 
-router.post("/", createPostController);
+router.post("/", createCommentController);
 
-router.put("/:comment_id", updatePostByIdController);
+router.put("/:comment_id", updateCommentByIdController);
 
-router.delete("/:comment_id", deletePostByIdController);
+router.delete("/:comment_id", deleteCommentByIdController);
 
 module.exports = router;
