@@ -5,12 +5,12 @@ const {
 } = require("../controllers/comments");
 
 const express = require("express");
-const router = express.Router();
+const commentsRouter = express.Router({ mergeParams: true });
 
-router.post("/", createCommentController);
+commentsRouter.post("/", createCommentController);
 
-router.put("/:comment_id", updateCommentByIdController);
+commentsRouter.put("/:comment_id", updateCommentByIdController);
 
-router.delete("/:comment_id", deleteCommentByIdController);
+commentsRouter.delete("/:comment_id", deleteCommentByIdController);
 
-module.exports = router;
+module.exports = commentsRouter;

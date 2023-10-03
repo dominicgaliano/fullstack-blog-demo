@@ -1,7 +1,10 @@
 const {} = require("../util/comments");
+const createError = require("http-errors");
 
 const createCommentController = async (req, res, next) => {
   try {
+    console.log("test");
+
     // validate input
     const user_id = req.user_id;
     const post_id = req.params.id;

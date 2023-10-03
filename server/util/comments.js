@@ -1,3 +1,5 @@
+const createError = require("http-errors");
+
 const createComment = async (user, post_id, commentBody) => {
   const newComment = {
     author: {
