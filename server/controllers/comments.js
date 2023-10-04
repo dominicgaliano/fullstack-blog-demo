@@ -68,34 +68,38 @@ const createCommentController = async (req, res, next) => {
 };
 
 const updateCommentByIdController = async (req, res, next) => {
-  // validate input
-  const user = await getUserById(req.user_id);
-  const post_id = req.params.id;
-  const comment_id = req.params.comment_id;
-  const commentBody = req.body.commentBody;
-  if (!user) {
-    throw createError(500, "User not found");
-  }
-  if (!post_id || !comment_id) {
-    throw createError(404, "Not found");
-  }
-  if (!commentBody) {
-    throw createError(400, "No post commentBody");
-  }
+  try {
+    // validate input
+    const user = await getUserById(req.user_id);
+    const post_id = req.params.id;
+    const comment_id = req.params.comment_id;
+    const commentBody = req.body.commentBody;
+    if (!user) {
+      throw createError(500, "User not found");
+    }
+    if (!post_id || !comment_id) {
+      throw createError(404, "Not found");
+    }
+    if (!commentBody) {
+      throw createError(400, "No post commentBody");
+    }
 
-  // verify that user "owns" comment
-  const comment = await getComment(post_id, comment_id);
-  if (comment.author.user_id != user._id) {
-    throw createError(403);
-  }
+    // verify that user "owns" comment
+    const comment = await getComment(post_id, comment_id);
+    if (comment.author.user_id != user._id) {
+      throw createError(403);
+    }
 
-  // update comment
-  const newComment = await updateComment(post_id, comment_id, commentBody);
-  if (!newComment) {
-    throw createError(404);
-  }
+    // update comment
+    const newComment = await updateComment(post_id, comment_id, commentBody);
+    if (!newComment) {
+      throw createError(404);
+    }
 
-  res.status(200).json(newComment);
+    res.status(200).json(newComment);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const deleteCommentByIdController = async (req, res, next) => {
