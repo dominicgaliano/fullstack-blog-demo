@@ -1,10 +1,5 @@
 require("dotenv").config();
-const {
-  authenticateUser,
-  signToken,
-  verifyRefreshToken,
-  verifyToken,
-} = require("../util/auth");
+const { authenticateUser, signToken } = require("../util/auth");
 const { createUser, getUserById } = require("../util/users");
 const bcrypt = require("bcrypt");
 const createError = require("http-errors");

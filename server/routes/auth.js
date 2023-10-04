@@ -4,6 +4,7 @@ const {
   logoutUserController,
   refreshTokenController,
 } = require("../controllers/auth");
+const { verifyRefreshToken, verifyToken } = require("../util/auth");
 
 const express = require("express");
 const router = express.Router();
