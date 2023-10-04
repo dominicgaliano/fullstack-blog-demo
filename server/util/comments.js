@@ -74,8 +74,15 @@ const updateComment = async (post_id, comment_id, commentBody) => {
   }
 };
 
-const deleteComment = async (user, post_id, comment_id) => {
+const deleteComment = async (post_id, comment_id) => {
   try {
+    const post = await Post.findOneAndUpdate(
+      { _id: post_id, "comments._id": comment_id },
+      { $pull: { comments: { _id: comment_id } } }
+    );
+    if (!post) {
+      throw createError(404);
+    }
   } catch (err) {
     throw createError(500);
   }

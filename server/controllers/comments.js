@@ -114,11 +114,14 @@ const deleteCommentByIdController = async (req, res, next) => {
     throw createError(404, "No post found");
   }
 
-  // delete comment
-  const modifiedCount = await deleteComment(user, post_id, comment_id);
-  if (!modifiedCount) {
-    throw createError(404);
+  // verify that user "owns" comment
+  const comment = await getComment(post_id, comment_id);
+  if (comment.author.user_id != user._id) {
+    throw createError(403);
   }
+
+  // delete comment
+  await deleteComment(post_id, comment_id);
 
   res.sendStatus(204);
 };
