@@ -76,7 +76,7 @@ const updateCommentByIdController = async (req, res, next) => {
   if (!user) {
     throw createError(500, "User not found");
   }
-  if (!post_id || !commend_id) {
+  if (!post_id || !comment_id) {
     throw createError(404, "Not found");
   }
   if (!commentBody) {
@@ -90,12 +90,12 @@ const updateCommentByIdController = async (req, res, next) => {
   }
 
   // update comment
-  const modifiedCount = await updateComment(post_id, comment_id, commentBody);
-  if (!modifiedCount) {
+  const newComment = await updateComment(post_id, comment_id, commentBody);
+  if (!newComment) {
     throw createError(404);
   }
 
-  res.sendStatus(204);
+  res.status(200).json(newComment);
 };
 
 const deleteCommentByIdController = async (req, res, next) => {

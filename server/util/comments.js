@@ -54,15 +54,21 @@ const createComment = async (user, post_id, commentBody) => {
 
 const updateComment = async (post_id, comment_id, commentBody) => {
   try {
-    const res = await Post.findOneAndUpdate(
+    const post = await Post.findOneAndUpdate(
       { _id: post_id, "comments._id": comment_id },
       {
         $set: {
           "comments.$.text": commentBody,
         },
-      }
+      },
+      { new: true, "comments.$": 1 }
     );
-    return res.modifiedCount;
+    // post not found
+    if (!post) {
+      throw createError(404);
+    }
+    // post found, return new comment
+    return post.comments[0];
   } catch (err) {
     throw createError(500);
   }
