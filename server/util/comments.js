@@ -68,7 +68,9 @@ const updateComment = async (post_id, comment_id, commentBody) => {
       throw createError(404);
     }
     // post found, return new comment
-    return post.comments[0];
+    return post.comments.find((comment) => {
+      return comment._id.equals(comment_id);
+    });
   } catch (err) {
     throw createError(500);
   }
