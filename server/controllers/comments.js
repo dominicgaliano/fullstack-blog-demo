@@ -83,8 +83,11 @@ const updateCommentByIdController = async (req, res, next) => {
     throw createError(400, "No post commentBody");
   }
 
-  // TODO: verify that user "owns" comment
-  throw createError(501);
+  // verify that user "owns" comment
+  const comment = await getComment(post_id, comment_id);
+  if (comment.author.user_id != user._id) {
+    throw createError(403);
+  }
 
   // update comment
   const modifiedCount = await updateComment(post_id, comment_id, commentBody);
