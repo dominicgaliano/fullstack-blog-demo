@@ -8,7 +8,8 @@
     "server": "npm --prefix server run start",
     "serverAuth": "npm --prefix server run startAuth",
     "client": "npm --prefix client run dev",
-    "dev": "concurrently \"npm run serverAuth\" \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run serverAuth\" \"npm run server\" \"npm run client\"",
+    "devServer": "concurrently \"npm run serverAuth\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
