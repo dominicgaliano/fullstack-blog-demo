@@ -15,14 +15,16 @@ const morgan = require("morgan");
 const User = require("./models/user_model.js");
 const { authSchema } = require("./schemas/validation_schema");
 
+const app = express();
 const PORT = process.env.AUTH_PORT || 4001;
 
-const app = express();
-app.use(express.json());
-app.use(morgan("tiny"));
-
+// initialize databases
 require("./db/initialize.js");
 redisClient.connect();
+
+// middleware
+app.use(express.json());
+app.use(morgan("tiny"));
 
 app.use((req, res, next) => {
   req.redisClient = redisClient;
