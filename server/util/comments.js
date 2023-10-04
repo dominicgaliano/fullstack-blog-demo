@@ -15,21 +15,23 @@ const getComments = async (post_id) => {
 };
 
 const getComment = async (post_id, comment_id) => {
+  let post;
   try {
-    const post = await Post.findOne(
+    post = await Post.findOne(
       { _id: post_id, "comments._id": comment_id },
       { "comments.$": 1 }
     );
-    // post not found
-    if (!post) {
-      throw createError(404);
-    }
-    // post found, return comment
-    const comment = post.comments[0];
-    return comment;
   } catch (error) {
-    throw createError(500);
+    throw createError(400);
   }
+
+  // post not found
+  if (!post) {
+    throw createError(404);
+  }
+  // post found, return comment
+  const comment = post.comments[0];
+  return comment;
 };
 
 const createComment = async (user, post_id, commentBody) => {

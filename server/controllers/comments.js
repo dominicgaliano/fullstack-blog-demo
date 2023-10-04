@@ -103,27 +103,31 @@ const updateCommentByIdController = async (req, res, next) => {
 };
 
 const deleteCommentByIdController = async (req, res, next) => {
-  // validate input
-  const user = await getUserById(req.user_id);
-  const post_id = req.params.id;
-  const comment_id = req.params.comment_id;
-  if (!user) {
-    throw createError(500, "User not found");
-  }
-  if (!post_id || !commend_id) {
-    throw createError(404, "No post found");
-  }
+  try {
+    // validate input
+    const user = await getUserById(req.user_id);
+    const post_id = req.params.id;
+    const comment_id = req.params.comment_id;
+    if (!user) {
+      throw createError(500, "User not found");
+    }
+    if (!post_id || !comment_id) {
+      throw createError(404, "No post found");
+    }
 
-  // verify that user "owns" comment
-  const comment = await getComment(post_id, comment_id);
-  if (comment.author.user_id != user._id) {
-    throw createError(403);
+    // verify that user "owns" comment
+    const comment = await getComment(post_id, comment_id);
+    if (comment.author.user_id != user._id) {
+      throw createError(403);
+    }
+
+    // delete comment
+    await deleteComment(post_id, comment_id);
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
   }
-
-  // delete comment
-  await deleteComment(post_id, comment_id);
-
-  res.sendStatus(204);
 };
 
 module.exports = {
