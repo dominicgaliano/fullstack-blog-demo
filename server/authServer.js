@@ -19,7 +19,11 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use("/", require("./routes/auth"));
+app.use("/api/", require("./routes/auth"));
+
+app.get("*", (req, res) => {
+  res.sendStatus(404);
+});
 
 // error handler
 app.use(errorHandler);
