@@ -1,23 +1,33 @@
 const createError = require("http-errors");
 const Post = require("../models/post_model");
 
+const getComments = async (post_id) => {
+  try {
+    const post = await Post.findOne({ _id: post_id }, { comments: 1 });
+    if (!post) {
+      throw createError(404);
+    }
+    return post;
+  } catch (error) {
+    console.log(error);
+    throw createError(500);
+  }
+};
+
 const getComment = async (post_id, comment_id) => {
   try {
     const post = await Post.findOne(
       { _id: post_id, "comments._id": comment_id },
       { "comments.$": 1 }
     );
+    // post not found
     if (!post) {
-      console.log("Post not found or comment not found in the post.");
-      // Handle the case where the post or comment doesn't exist
-      return;
+      throw createError(404);
     }
+    // post found, return comment
     const comment = post.comments[0];
-    // You now have the desired comment
-    console.log("Found Comment:", comment);
     return comment;
   } catch (error) {
-    console.log(error);
     throw createError(500);
   }
 };
@@ -65,4 +75,10 @@ const deleteComment = async (user, post_id, comment_id) => {
   }
 };
 
-module.exports = { getComment, createComment, updateComment, deleteComment };
+module.exports = {
+  getComments,
+  getComment,
+  createComment,
+  updateComment,
+  deleteComment,
+};

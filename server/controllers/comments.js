@@ -1,4 +1,5 @@
 const {
+  getComments,
   getComment,
   createComment,
   updateComment,
@@ -6,6 +7,21 @@ const {
 } = require("../util/comments");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
+
+const getCommentsController = async (req, res, next) => {
+  try {
+    // validate input
+    const post_id = req.params.id;
+    if (!post_id) {
+      throw createError(400);
+    }
+
+    const comments = await getComments(post_id);
+    res.status(200).json(comments);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getCommentController = async (req, res, next) => {
   try {
@@ -101,6 +117,7 @@ const deleteCommentByIdController = async (req, res, next) => {
 };
 
 module.exports = {
+  getCommentsController,
   getCommentController,
   createCommentController,
   updateCommentByIdController,
