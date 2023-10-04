@@ -1,4 +1,8 @@
-const { createComment } = require("../util/comments");
+const {
+  createComment,
+  updateComment,
+  deleteComment,
+} = require("../util/comments");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
 
@@ -45,20 +49,37 @@ const updateCommentByIdController = async (req, res, next) => {
     throw createError(400, "No post commentBody");
   }
 
+  // TODO: verify that user "owns" comment
+  throw createError(501);
+
   // update comment
-  const modifiedCount = await updateComment(
-    user,
-    post_id,
-    comment_id,
-    commentBody
-  );
+  const modifiedCount = await updateComment(post_id, comment_id, commentBody);
   if (!modifiedCount) {
     throw createError(404);
   }
 
   res.sendStatus(204);
 };
-const deleteCommentByIdController = async (req, res, next) => {};
+const deleteCommentByIdController = async (req, res, next) => {
+  // validate input
+  const user = await getUserById(req.user_id);
+  const post_id = req.params.id;
+  const comment_id = req.params.comment_id;
+  if (!user) {
+    throw createError(500, "User not found");
+  }
+  if (!post_id || !commend_id) {
+    throw createError(404, "No post found");
+  }
+
+  // delete comment
+  const modifiedCount = await deleteComment(user, post_id, comment_id);
+  if (!modifiedCount) {
+    throw createError(404);
+  }
+
+  res.sendStatus(204);
+};
 
 module.exports = {
   createCommentController,

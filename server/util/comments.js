@@ -21,4 +21,27 @@ const createComment = async (user, post_id, commentBody) => {
   }
 };
 
-module.exports = { createComment };
+const updateComment = async (post_id, comment_id, commentBody) => {
+  try {
+    const res = await Post.findOneAndUpdate(
+      { _id: post_id, "comments._id": comment_id },
+      {
+        $set: {
+          "comments.$.text": commentBody,
+        },
+      }
+    );
+    return res.modifiedCount;
+  } catch (err) {
+    throw createError(500);
+  }
+};
+
+const deleteComment = async (user, post_id, comment_id) => {
+  try {
+  } catch (err) {
+    throw createError(500);
+  }
+};
+
+module.exports = { createComment, updateComment, deleteComment };
