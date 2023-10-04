@@ -1,10 +1,27 @@
 const {
+  getComment,
   createComment,
   updateComment,
   deleteComment,
 } = require("../util/comments");
 const { getUserById } = require("../util/users");
 const createError = require("http-errors");
+
+const getCommentController = async (req, res, next) => {
+  try {
+    // validate input
+    const post_id = req.params.id;
+    const comment_id = req.params.comment_id;
+    if (!post_id || !comment_id) {
+      throw createError(400);
+    }
+
+    const comment = await getComment(post_id, comment_id);
+    res.status(200).json(comment);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const createCommentController = async (req, res, next) => {
   try {
@@ -33,6 +50,7 @@ const createCommentController = async (req, res, next) => {
     next(err);
   }
 };
+
 const updateCommentByIdController = async (req, res, next) => {
   // validate input
   const user = await getUserById(req.user_id);
@@ -60,6 +78,7 @@ const updateCommentByIdController = async (req, res, next) => {
 
   res.sendStatus(204);
 };
+
 const deleteCommentByIdController = async (req, res, next) => {
   // validate input
   const user = await getUserById(req.user_id);
@@ -82,6 +101,7 @@ const deleteCommentByIdController = async (req, res, next) => {
 };
 
 module.exports = {
+  getCommentController,
   createCommentController,
   updateCommentByIdController,
   deleteCommentByIdController,

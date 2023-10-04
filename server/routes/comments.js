@@ -1,4 +1,5 @@
 const {
+  getCommentController,
   createCommentController,
   updateCommentByIdController,
   deleteCommentByIdController,
@@ -6,6 +7,8 @@ const {
 
 const express = require("express");
 const commentsRouter = express.Router({ mergeParams: true });
+
+commentsRouter.get("/:comment_id", getCommentController);
 
 commentsRouter.post("/", createCommentController);
 
