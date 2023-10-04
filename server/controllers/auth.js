@@ -27,6 +27,7 @@ const createUserController = async (req, res, next) => {
 
 const loginUserController = async (req, res, next) => {
   try {
+    const redisClient = req.redisClient;
     // validate input
     const { email, password } = req.body;
     await authSchema.validateAsync(req.body);
@@ -54,6 +55,7 @@ const loginUserController = async (req, res, next) => {
 const logoutUserController = async (req, res) => {
   // remove token from cache
   try {
+    const redisClient = req.redisClient;
     await redisClient.del(req.user_id.toString());
     return res.sendStatus(200);
   } catch (error) {
@@ -63,6 +65,7 @@ const logoutUserController = async (req, res) => {
 
 const refreshTokenController = async (req, res, next) => {
   try {
+    const redisClient = req.redisClient;
     const user_id = req.user_id;
     const user = await getUserById(user_id);
     if (!user) {
