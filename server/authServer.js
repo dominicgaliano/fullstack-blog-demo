@@ -1,4 +1,5 @@
 require("dotenv").config();
+const errorHandler = require("./util/errorHandler");
 const {
   authenticateUser,
   signToken,
@@ -111,15 +112,7 @@ app.post("/token", verifyRefreshToken, async (req, res, next) => {
 });
 
 // error handler
-app.use(async (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
-  });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Auth server listening on PORT ${PORT}`);
