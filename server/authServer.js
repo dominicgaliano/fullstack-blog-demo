@@ -84,11 +84,14 @@ app.post("/logout", verifyToken, async (req, res) => {
 });
 
 app.post("/token", verifyRefreshToken, async (req, res, next) => {
-  const user_id = req.userId;
-  const user = await getUserById(user_id);
-
-  // send new tokens
   try {
+    const user_id = req.user_id;
+    const user = await getUserById(user_id);
+    if (!user) {
+      throw createError("500");
+    }
+
+    // send new tokens
     const accessToken = await signToken(user, "access");
     const refreshToken = await signToken(user, "refresh");
 

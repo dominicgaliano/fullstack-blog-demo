@@ -1,9 +1,17 @@
-const path = require("path");
-const fs = require("fs").promises;
 const Post = require("../models/post_model");
+const createError = require("http-errors");
 
 async function getPosts() {
   return await Post.find({});
+}
+
+async function getPost(id) {
+  try {
+    const post = await Post.findOne({ _id: id });
+    return post;
+  } catch (err) {
+    throw createError(400);
+  }
 }
 
 async function createPost(user, content) {
@@ -20,4 +28,25 @@ async function createPost(user, content) {
   // throw new Error("not implemented");
 }
 
-module.exports = { getPosts, createPost };
+async function updatePost(post_id, newContent) {
+  try {
+    const filter = { _id: post_id };
+    const update = { content: newContent };
+
+    await Post.findOneAndUpdate(filter, update);
+  } catch (err) {
+    // catch malformed content or id
+    throw createError(400);
+  }
+}
+
+async function deletePost(post_id) {
+  try {
+    const res = await Post.deleteOne({ _id: post_id });
+    return res.deletedCount === 1;
+  } catch (err) {
+    throw createError(400);
+  }
+}
+
+module.exports = { getPosts, createPost, getPost, updatePost, deletePost };

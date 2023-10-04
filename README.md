@@ -91,6 +91,8 @@ Backend
 - [x] Partial MongoDB CRUD operations implemented using Mongoose
 - [x] Login and registration validation using joi and validator
 - [x] Server-side logging using morgan
+- [x] CRUD routes for posts
+- [x] CRUD routes for comments
 
 Database
 
@@ -105,8 +107,6 @@ Frontend
 
 Backend
 
-- [ ] Update, Delete Post
-- [ ] Create, Update, Delete Comments
 - [ ] Full coverage of http-error package
 - [ ] Convert to TS for better dev process
 - [ ] (Maybe) Server Side Rendering
