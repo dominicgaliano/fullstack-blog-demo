@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import ErrorPage from './ErrorPage';
-import Feed from './Feed';
-import Login from './Login';
-import Register from './Register';
+import ErrorPage from './views/ErrorPage';
+import Feed from './views/Feed';
+import Login from './views/Login';
+import Register from './views/Register';
 
 const router = createBrowserRouter([
   {
