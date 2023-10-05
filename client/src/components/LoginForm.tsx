@@ -11,13 +11,17 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="email">Email</label>
       <input
         type="text"
+        id="email"
         placeholder="Email"
         {...register('Email', { required: true, pattern: /^\S+@\S+$/i })}
       />
+      <label htmlFor="password">Email</label>
       <input
         type="password"
+        id="password"
         placeholder="Password"
         {...register('Password', { required: true, minLength: 8, maxLength: 100 })}
       />
