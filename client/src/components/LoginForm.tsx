@@ -1,12 +1,19 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    // not working
+    setErrorMessage(JSON.stringify(data));
+  };
+
   console.log(errors);
 
   return (
@@ -27,6 +34,7 @@ export default function LoginForm() {
       />
 
       <input type="submit" />
+      <p>{errorMessage || ''}</p>
     </form>
   );
 }
