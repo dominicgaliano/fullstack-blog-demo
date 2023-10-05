@@ -1,5 +1,12 @@
+import Nav from '../components/Nav';
+
 function Register() {
-  return <>Register</>;
+  return (
+    <>
+      <Nav />
+      Register
+    </>
+  );
 }
 
 export default Register;

@@ -1,5 +1,12 @@
+import Nav from '../components/Nav';
+
 function Feed() {
-  return <>Feed</>;
+  return (
+    <>
+      <Nav />
+      Feed
+    </>
+  );
 }
 
 export default Feed;
