@@ -19,7 +19,7 @@ export default function LoginForm() {
       <input
         type="password"
         placeholder="Password"
-        {...register('Password', { required: true, min: 8, maxLength: 100 })}
+        {...register('Password', { required: true, minLength: 8, maxLength: 100 })}
       />
 
       <input type="submit" />

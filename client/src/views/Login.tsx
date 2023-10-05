@@ -1,10 +1,11 @@
 import Nav from '../components/Nav';
+import LoginForm from '../components/LoginForm';
 
 function Login() {
   return (
     <>
       <Nav />
-      Login
+      <LoginForm />
     </>
   );
 }
