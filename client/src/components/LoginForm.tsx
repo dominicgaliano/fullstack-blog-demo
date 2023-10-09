@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import './LoginForm.css';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
   email: string;
@@ -17,24 +18,40 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="email">Email</label>
-      <input
-        type="text"
-        id="email"
-        placeholder="Email"
-        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-      />
-      {errors.email && <span>This field is required</span>}
-      <label htmlFor="password">Email</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        {...register('password', { required: true })}
-      />
-      {errors.password && <span>This field is required</span>}
+      <ul className="form">
+        <li>
+          <label htmlFor="email">Email</label>
+        </li>
 
-      <input type="submit" />
+        <li>
+          <input
+            type="text"
+            id="email"
+            placeholder="Email"
+            {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+          />
+        </li>
+
+        {errors.email && <li>This field is required</li>}
+
+        <li>
+          <label htmlFor="password">Password</label>
+        </li>
+        <li>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            {...register('password', { required: true })}
+          />
+        </li>
+
+        {errors.password && <li>This field is required</li>}
+
+        <li>
+          <input type="submit" />
+        </li>
+      </ul>
     </form>
   );
 }
