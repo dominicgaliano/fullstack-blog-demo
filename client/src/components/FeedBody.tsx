@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { useAppSelector } from '../app/hooks';
@@ -8,7 +7,9 @@ import { getPosts } from '../util/posts';
 
 export default function FeedBody() {
   const token = useAppSelector((state) => state.token.value);
-  const dispatch = useDispatch();
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
 
   const [posts, setPosts] = useState<[Post]>();
   useEffect(() => {
@@ -27,10 +28,6 @@ export default function FeedBody() {
     // call the function
     fetchData();
   }, []);
-
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
 
   return (
     <ul>
