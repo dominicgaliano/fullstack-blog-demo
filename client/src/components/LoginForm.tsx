@@ -15,12 +15,10 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const res = await loginUser(data);
     if (res.tokens) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      console.log(res.tokens!);
+      console.log(res.tokens);
       // TODO: do something with tokens
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      alert(res.errorMessage!);
+      alert(res.errorMessage || 'An error occurred.');
       // TODO: convert to visible, non-alert message
     }
   };
