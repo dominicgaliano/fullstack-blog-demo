@@ -1,18 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const authTokenSlice = createSlice({
-  name: 'authToken',
+export const tokenSlice = createSlice({
+  name: 'token',
   initialState: {
-    value: '',
+    value: {
+      authToken: '',
+      refreshToken: '',
+    },
   },
   reducers: {
     set: (state, action) => {
+      console.log(state, action);
       state.value = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { set } = authTokenSlice.actions;
+export const { set } = tokenSlice.actions;
 
-export default authTokenSlice.reducer;
+export default tokenSlice.reducer;

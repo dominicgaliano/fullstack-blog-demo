@@ -1,6 +1,8 @@
 import './LoginForm.css';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { set } from '../app/tokenSlice';
 
 import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
@@ -12,11 +14,16 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>();
 
+  const mytokens = useSelector((state) => state.tokens.value);
+  const dispatch = useDispatch();
+
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const res = await loginUser(data);
     if (res.tokens) {
       console.log(res.tokens);
-      // TODO: do something with tokens
+
+      // store in redux
+      dispatch(set(res.tokens));
     } else {
       alert(res.errorMessage || 'An error occurred.');
       // TODO: convert to visible, non-alert message
@@ -59,6 +66,10 @@ export default function LoginForm() {
           <input type="submit" />
         </li>
       </ul>
+      <div>
+        <p>Access Token: {mytokens.value && mytokens.value.accessToken}</p>
+        <p>Refresh Token: {mytokens.value && mytokens.value.refreshToken}</p>
+      </div>
     </form>
   );
 }

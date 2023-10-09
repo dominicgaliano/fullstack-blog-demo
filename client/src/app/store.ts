@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import authTokenReducer from './authTokenSlice';
-import refreshTokenReducer from './refreshTokenSlice';
+import tokenReducer from './tokenSlice';
 
 export default configureStore({
   reducer: {
-    authToken: authTokenReducer,
-    refreshToken: refreshTokenReducer,
+    tokens: tokenReducer,
   },
 });
