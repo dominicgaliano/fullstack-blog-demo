@@ -17,9 +17,11 @@ export default function LoginForm() {
     if (res.success) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       console.log(res.tokens!);
+      // TODO: do something with tokens
     } else {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       alert(res.errorMessage!);
+      // TODO: convert to visible, non-alert message
     }
   };
 
