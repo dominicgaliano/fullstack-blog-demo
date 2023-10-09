@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import LoginForm from '../components/LoginForm';
-import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
 
 function Login() {
@@ -9,7 +8,6 @@ function Login() {
 
   return (
     <>
-      <Nav />
       {isNewUser ? <RegisterForm /> : <LoginForm />}
       <button
         onClick={() => {
