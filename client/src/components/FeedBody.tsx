@@ -8,12 +8,7 @@ import { getPosts } from '../util/posts';
 export default function FeedBody() {
   const tokens = useAppSelector((state) => state.tokens.value);
 
-  if (!tokens.accessToken) {
-    return <Navigate to="/" replace />;
-  }
-
   const [posts, setPosts] = useState<[Post]>();
-
   useEffect(() => {
     const fetchData = async () => {
       // get the data from the api
@@ -29,6 +24,10 @@ export default function FeedBody() {
       // make sure to catch any error
       .catch(console.error);
   }, []);
+
+  if (!tokens.accessToken) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <ul>

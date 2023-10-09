@@ -2,7 +2,7 @@ import './LoginForm.css';
 
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTokens, setTokens } from '../app/tokenSlice';
@@ -13,10 +13,11 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
   // redux utilities
   const tokens = useAppSelector((state) => state.tokens.value);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // user should not be able to see this page if they have a token (signed in already)
   if (tokens.accessToken) {
-    return <Navigate to="/feed" replace />;
+    navigate('/feed');
   }
 
   // react-hook-form setup
@@ -38,6 +39,7 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
       dispatch(setTokens(res.tokens));
 
       // redirect to feed
+      navigate('/feed');
     } else {
       // ensure no tokens in redux
       dispatch(clearTokens());
