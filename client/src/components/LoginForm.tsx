@@ -19,7 +19,7 @@ export default function LoginForm() {
       console.log(res.tokens!);
     } else {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      console.log(res.error!);
+      alert(res.errorMessage!);
     }
   };
 
@@ -39,7 +39,7 @@ export default function LoginForm() {
           />
         </li>
 
-        {errors.email && <li>This field is required</li>}
+        {errors.email && <li>Please enter a valid email</li>}
 
         <li>
           <label htmlFor="password">Password</label>
