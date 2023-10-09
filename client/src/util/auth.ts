@@ -45,6 +45,10 @@ export const loginUser = async (loginInput: LoginInput) => {
   }
 };
 
+export const registerUser = async (loginInput: LoginInput) => {
+  throw new Error('Not implemented');
+};
+
 export const refreshToken = async () => {
   // TODO:
   throw new Error('Not implemented');
