@@ -5,11 +5,22 @@ import LoginInput from '../types/LoginInput';
 import Token from '../types/Token';
 
 export const loginUser = async (loginInput: LoginInput) => {
+  return await loginOrRegisterUser(loginInput, true);
+};
+
+export const registerUser = async (loginInput: LoginInput) => {
+  return await loginOrRegisterUser(loginInput, false);
+};
+
+const loginOrRegisterUser = async (loginInput: LoginInput, login: boolean) => {
   let accessToken: Token = '';
   let refreshToken: Token = '';
 
   try {
-    const res = await axios.post(`${AUTH_URL}/login`, loginInput);
+    const res = await axios.post(
+      `${AUTH_URL}/${login ? 'login' : 'register'}`,
+      loginInput,
+    );
 
     accessToken = res.data.accessToken;
     refreshToken = res.data.refreshToken;
@@ -43,10 +54,6 @@ export const loginUser = async (loginInput: LoginInput) => {
       errorMessage: errorMessage,
     };
   }
-};
-
-export const registerUser = async (loginInput: LoginInput) => {
-  throw new Error('Not implemented');
 };
 
 export const refreshToken = async () => {
