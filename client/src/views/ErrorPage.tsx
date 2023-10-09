@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom';
 
 function ErrorPage() {
   const error = useRouteError();
@@ -12,6 +12,7 @@ function ErrorPage() {
         <p>
           <i>{errorMessage(error)}</i>
         </p>
+        <Link to={`/feed`}>Return Home</Link>
       </div>
     </>
   );
