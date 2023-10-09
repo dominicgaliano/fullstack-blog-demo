@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 export default function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    // not working
-    setErrorMessage(JSON.stringify(data));
-  };
+  } = useForm<Inputs>();
 
-  console.log(errors);
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -23,18 +22,19 @@ export default function LoginForm() {
         type="text"
         id="email"
         placeholder="Email"
-        {...register('Email', { required: true, pattern: /^\S+@\S+$/i })}
+        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
       />
+      {errors.email && <span>This field is required</span>}
       <label htmlFor="password">Email</label>
       <input
         type="password"
         id="password"
         placeholder="Password"
-        {...register('Password', { required: true, minLength: 8, maxLength: 100 })}
+        {...register('password', { required: true })}
       />
+      {errors.password && <span>This field is required</span>}
 
       <input type="submit" />
-      <p>{errorMessage || ''}</p>
     </form>
   );
 }
