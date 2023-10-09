@@ -10,20 +10,21 @@ import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
 
 export default function LoginForm() {
+  // redux utilities
+  const tokens = useAppSelector((state) => state.tokens.value);
+  const dispatch = useAppDispatch();
+
+  // user should not be able to see this page if they have a token (signed in already)
+  if (tokens.accessToken) {
+    return <Navigate to="/feed" replace />;
+  }
+
+  // react-hook-form setup
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInput>();
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const tokens = useAppSelector((state) => state.tokens.value);
-  const dispatch = useAppDispatch();
-
-  if (tokens.accessToken) {
-    return <Navigate to="/feed" replace />;
-  }
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     setErrorMessage('');
@@ -43,6 +44,9 @@ export default function LoginForm() {
       setErrorMessage(res.errorMessage || 'An error occurred.');
     }
   };
+
+  // local component state
+  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
