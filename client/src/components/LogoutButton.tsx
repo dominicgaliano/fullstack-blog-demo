@@ -18,7 +18,7 @@ export default function LogoutButton() {
     dispatch(clearTokens());
 
     // redirect to login screen
-    navigate('/login');
+    navigate('/');
   };
 
   return <button onClick={handleLogout}>Logout</button>;

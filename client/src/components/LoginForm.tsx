@@ -3,7 +3,6 @@ import './LoginForm.css';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTokens, setTokens } from '../app/tokenSlice';
@@ -21,7 +20,6 @@ export default function LoginForm() {
 
   const tokens = useAppSelector((state) => state.tokens.value);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   if (tokens.accessToken) {
     return <Navigate to="/feed" replace />;
@@ -80,16 +78,6 @@ export default function LoginForm() {
 
         <li>
           <input type="submit" value="Login" />
-        </li>
-
-        <li>
-          <input
-            type="button"
-            onClick={() => {
-              navigate('/');
-            }}
-            value="Register"
-          />
         </li>
       </ul>
       <div>

@@ -9,7 +9,7 @@ export default function FeedBody() {
   const tokens = useAppSelector((state) => state.tokens.value);
 
   if (!tokens.accessToken) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const [posts, setPosts] = useState<[Post]>();

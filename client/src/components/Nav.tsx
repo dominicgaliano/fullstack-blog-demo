@@ -5,10 +5,7 @@ export default function Nav() {
     <nav>
       <ul>
         <li>
-          <Link to={`/`}>Register</Link>
-        </li>
-        <li>
-          <Link to={`/login`}>Login</Link>
+          <Link to={`/`}>Register/Login</Link>
         </li>
         <li>
           <Link to={`/feed`}>Feed</Link>
