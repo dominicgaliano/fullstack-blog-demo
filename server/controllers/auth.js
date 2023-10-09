@@ -47,7 +47,12 @@ const loginUserController = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ accessToken: accessToken, refreshToken: refreshToken });
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({ accessToken: accessToken });
   } catch (error) {
     next(error);
   }
@@ -82,7 +87,12 @@ const refreshTokenController = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ accessToken: accessToken, refreshToken: refreshToken });
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({ accessToken: accessToken });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
