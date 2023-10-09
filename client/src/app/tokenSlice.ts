@@ -4,7 +4,7 @@ export const tokenSlice = createSlice({
   name: 'tokens',
   initialState: {
     value: {
-      authToken: '',
+      accessToken: '',
       refreshToken: '',
     },
   },
