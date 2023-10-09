@@ -1,5 +1,6 @@
 import './LoginForm.css';
 
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -14,6 +15,8 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>();
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const tokens = useAppSelector((state) => state.tokens.value);
   const dispatch = useAppDispatch();
 
@@ -24,9 +27,10 @@ export default function LoginForm() {
 
       // store in redux
       dispatch(set(res.tokens));
+
+      // redirect to feed
     } else {
-      alert(res.errorMessage || 'An error occurred.');
-      // TODO: convert to visible, non-alert message
+      setErrorMessage(res.errorMessage || 'An error occurred.');
     }
   };
 
@@ -67,8 +71,10 @@ export default function LoginForm() {
         </li>
       </ul>
       <div>
+        {/* TODO: DEV HELP, REMOVE LATER */}
         <p>Access Token: {tokens && tokens.accessToken}</p>
         <p>Refresh Token: {tokens && tokens.refreshToken}</p>
+        <p>Error Message: {errorMessage || ''}</p>
       </div>
     </form>
   );
