@@ -1,2 +1,2 @@
-export const API_URL = 'localhost:3001/';
-export const AUTH_URL = 'localhost:4001/api/';
+export const API_URL = 'http://localhost:3001';
+export const AUTH_URL = 'http://localhost:4001/api';
