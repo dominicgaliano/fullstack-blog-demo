@@ -40,7 +40,8 @@ async function verifyRefreshToken(req, res, next) {
   const redisClient = req.redisClient;
 
   // validate req body
-  const { refreshToken } = req.body;
+  const refreshToken = req.cookies["refreshToken"];
+  console.log(refreshToken);
   if (!refreshToken) return res.sendStatus(400);
 
   // verify token
