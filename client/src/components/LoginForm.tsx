@@ -2,8 +2,8 @@ import './LoginForm.css';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { set } from '../app/tokenSlice';
 
+import { set } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
 
@@ -14,7 +14,7 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>();
 
-  const mytokens = useSelector((state) => state.tokens.value);
+  const tokens = useSelector((state) => state.tokens.value);
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
@@ -67,8 +67,8 @@ export default function LoginForm() {
         </li>
       </ul>
       <div>
-        <p>Access Token: {mytokens.value && mytokens.value.accessToken}</p>
-        <p>Refresh Token: {mytokens.value && mytokens.value.refreshToken}</p>
+        <p>Access Token: {tokens && tokens.accessToken}</p>
+        <p>Refresh Token: {tokens && tokens.refreshToken}</p>
       </div>
     </form>
   );
