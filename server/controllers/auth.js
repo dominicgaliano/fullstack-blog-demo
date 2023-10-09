@@ -19,7 +19,8 @@ const createUserController = async (req, res, next) => {
 
     // register user
     const savedUser = await createUser(email, await bcrypt.hash(password, 10));
-    res.status(201).send(savedUser);
+    // res.status(201).send(savedUser);
+    next();
   } catch (error) {
     next(error);
   }
