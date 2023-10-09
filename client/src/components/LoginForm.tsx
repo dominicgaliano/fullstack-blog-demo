@@ -1,8 +1,8 @@
 import './LoginForm.css';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { set } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
@@ -14,8 +14,8 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>();
 
-  const tokens = useSelector((state) => state.tokens.value);
-  const dispatch = useDispatch();
+  const tokens = useAppSelector((state) => state.tokens.value);
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const res = await loginUser(data);
