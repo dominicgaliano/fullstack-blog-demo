@@ -4,7 +4,7 @@ import tokenReducer from './tokenSlice';
 
 export const store = configureStore({
   reducer: {
-    tokens: tokenReducer,
+    token: tokenReducer,
   },
 });
 

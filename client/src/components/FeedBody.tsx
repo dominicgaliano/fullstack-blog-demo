@@ -7,7 +7,7 @@ import Post from '../types/Post';
 import { getPosts } from '../util/posts';
 
 export default function FeedBody() {
-  const tokens = useAppSelector((state) => state.tokens.value);
+  const token = useAppSelector((state) => state.token.value);
   const dispatch = useDispatch();
 
   const [posts, setPosts] = useState<[Post]>();
@@ -15,7 +15,7 @@ export default function FeedBody() {
     const fetchData = async () => {
       try {
         // get the data from the api
-        const data = await getPosts(tokens.accessToken);
+        const data = await getPosts(token);
 
         // set state with the result
         setPosts(data);
@@ -28,7 +28,7 @@ export default function FeedBody() {
     fetchData();
   }, []);
 
-  if (!tokens.accessToken) {
+  if (!token) {
     return <Navigate to="/" replace />;
   }
 

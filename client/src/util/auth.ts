@@ -14,19 +14,14 @@ export const registerUser = async (loginInput: LoginInput) => {
 
 const loginOrRegisterUser = async (loginInput: LoginInput, login: boolean) => {
   let accessToken: Token = '';
-  let refreshToken: Token = '';
 
   try {
     const res = await axios.post(`${AUTH_URL}/${login ? 'login' : 'users'}`, loginInput);
 
     accessToken = res.data.accessToken;
-    refreshToken = res.data.refreshToken;
 
     return {
-      tokens: {
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      },
+      token: accessToken,
     };
   } catch (error) {
     let errorMessage = '';

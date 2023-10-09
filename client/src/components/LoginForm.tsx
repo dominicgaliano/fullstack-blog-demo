@@ -2,21 +2,21 @@ import './LoginForm.css';
 
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { clearTokens, setTokens } from '../app/tokenSlice';
+import { clearToken, setToken } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
 import { loginUser, registerUser } from '../util/auth';
 
 export default function LoginRegisterForm({ login }: { login: boolean }) {
   // redux utilities
-  const tokens = useAppSelector((state) => state.tokens.value);
+  const token = useAppSelector((state) => state.token.value);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   // user should not be able to see this page if they have a token (signed in already)
-  if (tokens.accessToken) {
+  if (token) {
     navigate('/feed');
   }
 
@@ -32,17 +32,17 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
 
     const submitHandler = login ? loginUser : registerUser;
     const res = await submitHandler(data);
-    if (res.tokens) {
-      console.log(res.tokens);
+    if (res.token) {
+      console.log(res.token);
 
       // store in redux
-      dispatch(setTokens(res.tokens));
+      dispatch(setToken(res.token));
 
       // redirect to feed
       navigate('/feed');
     } else {
       // ensure no tokens in redux
-      dispatch(clearTokens());
+      dispatch(clearToken());
 
       setErrorMessage(res.errorMessage || 'An error occurred.');
     }
@@ -90,8 +90,7 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
       </ul>
       <div>
         {/* TODO: DEV HELP, REMOVE LATER */}
-        <p>Access Token: {tokens && tokens.accessToken}</p>
-        <p>Refresh Token: {tokens && tokens.refreshToken}</p>
+        <p>Access Token: {token || ''}</p>
         <p>Error Message: {errorMessage || ''}</p>
       </div>
     </form>
