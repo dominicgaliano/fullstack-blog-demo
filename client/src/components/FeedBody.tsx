@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import { useAppSelector } from '../app/hooks';
 import Post from '../types/Post';
@@ -7,9 +6,6 @@ import { getPosts } from '../util/posts';
 
 export default function FeedBody() {
   const token = useAppSelector((state) => state.token.value);
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
 
   const [posts, setPosts] = useState<[Post]>();
   useEffect(() => {
