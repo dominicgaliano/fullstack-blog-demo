@@ -3,6 +3,7 @@ import './LoginForm.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import LoginInput from '../types/LoginInput';
+import { loginUser } from '../util/auth';
 
 export default function LoginForm() {
   const {
@@ -11,7 +12,9 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>();
 
-  const onSubmit: SubmitHandler<LoginInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginInput> = async (data) => {
+    await loginUser(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
