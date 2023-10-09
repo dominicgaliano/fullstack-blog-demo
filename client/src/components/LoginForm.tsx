@@ -13,7 +13,14 @@ export default function LoginForm() {
   } = useForm<LoginInput>();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
-    await loginUser(data);
+    const res = await loginUser(data);
+    if (res.success) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      console.log(res.tokens!);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      console.log(res.error!);
+    }
   };
 
   return (

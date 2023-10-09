@@ -5,16 +5,28 @@ import LoginInput from '../types/LoginInput';
 import Token from '../types/Token';
 
 export const loginUser = async (loginInput: LoginInput) => {
-  const res = await axios.post(`${AUTH_URL}/login`, loginInput);
-  console.log(res);
+  let accessToken: Token = '';
+  let refreshToken: Token = '';
 
-  // TODO: implement error handling and actual logic
+  try {
+    const res = await axios.post(`${AUTH_URL}/login`, loginInput);
 
-  const accessToken: Token = '';
-  const refreshToken: Token = '';
+    accessToken = res.data.accessToken;
+    refreshToken = res.data.refreshToken;
 
-  return {
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  };
+    return {
+      success: true,
+      tokens: {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: {
+        error,
+      },
+    };
+  }
 };
