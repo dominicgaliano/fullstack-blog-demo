@@ -13,6 +13,8 @@
 
 Originally created as frontend-backend demo to learn how to use [JWTs](jwt.io), this project has increased in scope to become a fullstack CRUD blog.
 
+Currently stuck on how to implement client side refresh token behavior.
+
 ## Installation
 
 This repo contains both the frontend and backend code which can be run separate or together. Future plans include containerizing the entire project.
