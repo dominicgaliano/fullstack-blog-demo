@@ -39,7 +39,7 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
       dispatch(setToken(res.token));
 
       // redirect to feed
-      navigate('/feed');
+      // navigate('/feed');
     } else {
       // ensure no tokens in redux
       dispatch(clearToken());

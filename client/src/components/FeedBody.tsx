@@ -14,19 +14,15 @@ export default function FeedBody() {
   const [posts, setPosts] = useState<[Post]>();
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // get the data from the api
-        const data = await getPosts(token);
+      // get the data from the api
+      const data = await getPosts(token);
 
-        // set state with the result
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
+      // set state with the result
+      setPosts(data);
     };
 
     // call the function
-    fetchData();
+    fetchData().catch((error) => console.log(error));
   }, []);
 
   return (
