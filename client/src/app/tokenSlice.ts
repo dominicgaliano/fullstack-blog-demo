@@ -10,13 +10,18 @@ export const tokenSlice = createSlice({
   },
   reducers: {
     set: (state, action) => {
-      console.log(state, action);
       state.value = action.payload;
+    },
+    clear: (state) => {
+      state.value = {
+        accessToken: '',
+        refreshToken: '',
+      };
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { set } = tokenSlice.actions;
+export const { set, clear } = tokenSlice.actions;
 
 export default tokenSlice.reducer;

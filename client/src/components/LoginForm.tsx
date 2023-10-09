@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { set } from '../app/tokenSlice';
+import { clear, set } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
 
@@ -21,6 +21,8 @@ export default function LoginForm() {
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
+    setErrorMessage('');
+
     const res = await loginUser(data);
     if (res.tokens) {
       console.log(res.tokens);
@@ -30,6 +32,9 @@ export default function LoginForm() {
 
       // redirect to feed
     } else {
+      // ensure no tokens in redux
+      dispatch(clear());
+
       setErrorMessage(res.errorMessage || 'An error occurred.');
     }
   };
