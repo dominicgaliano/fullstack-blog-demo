@@ -67,7 +67,7 @@ export default function LoginForm() {
         </li>
       </ul>
       <div>
-        <p>Access Token: {tokens && tokens.accessToken}</p>
+        <p>Auth Token: {tokens && tokens.authToken}</p>
         <p>Refresh Token: {tokens && tokens.refreshToken}</p>
       </div>
     </form>
