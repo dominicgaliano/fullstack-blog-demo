@@ -5,20 +5,16 @@ import LoginInput from '../types/LoginInput';
 import Token from '../types/Token';
 
 export const loginUser = async (loginInput: LoginInput) => {
-  // TODO: implement actual login
-  // console.log('logging user in:', loginInput.email);
-  // await sleep(1000);
-  // console.log('logged in');
   const res = await axios.post(`${AUTH_URL}/login`, loginInput);
   console.log(res);
 
-  const authToken: Token = '';
+  // TODO: implement error handling and actual logic
+
+  const accessToken: Token = '';
   const refreshToken: Token = '';
 
   return {
-    authToken: authToken,
+    accessToken: accessToken,
     refreshToken: refreshToken,
   };
 };
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
