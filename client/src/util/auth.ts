@@ -15,7 +15,6 @@ export const loginUser = async (loginInput: LoginInput) => {
     refreshToken = res.data.refreshToken;
 
     return {
-      success: true,
       tokens: {
         accessToken: accessToken,
         refreshToken: refreshToken,
@@ -41,7 +40,6 @@ export const loginUser = async (loginInput: LoginInput) => {
     }
 
     return {
-      success: false,
       errorMessage: errorMessage,
     };
   }

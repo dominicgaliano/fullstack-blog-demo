@@ -14,7 +14,7 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const res = await loginUser(data);
-    if (res.success) {
+    if (res.tokens) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       console.log(res.tokens!);
       // TODO: do something with tokens
