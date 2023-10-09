@@ -2,19 +2,16 @@ import './LoginForm.css';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-type Inputs = {
-  email: string;
-  password: string;
-};
+import LoginInput from '../types/LoginInput';
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<LoginInput>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginInput> = (data) => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
