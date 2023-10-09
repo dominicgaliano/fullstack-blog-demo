@@ -49,3 +49,13 @@ export const refreshToken = async () => {
   // TODO:
   throw new Error('Not implemented');
 };
+
+export const logoutUser = async (accessToken: Token) => {
+  const headers = { Authorization: `Bearer ${accessToken}` };
+
+  try {
+    await axios.post(`${AUTH_URL}/logout`, { headers });
+  } catch (error) {
+    console.log(error);
+  }
+};

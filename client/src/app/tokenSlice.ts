@@ -9,10 +9,10 @@ export const tokenSlice = createSlice({
     },
   },
   reducers: {
-    set: (state, action) => {
+    setTokens: (state, action) => {
       state.value = action.payload;
     },
-    clear: (state) => {
+    clearTokens: (state) => {
       state.value = {
         accessToken: '',
         refreshToken: '',
@@ -22,6 +22,6 @@ export const tokenSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { set, clear } = tokenSlice.actions;
+export const { setTokens, clearTokens } = tokenSlice.actions;
 
 export default tokenSlice.reducer;

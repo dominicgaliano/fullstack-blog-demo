@@ -1,4 +1,5 @@
 import FeedBody from '../components/FeedBody';
+import LogoutButton from '../components/LogoutButton';
 import Nav from '../components/Nav';
 
 function Feed() {
@@ -6,6 +7,7 @@ function Feed() {
     <>
       <Nav />
       <FeedBody />
+      <LogoutButton />
     </>
   );
 }

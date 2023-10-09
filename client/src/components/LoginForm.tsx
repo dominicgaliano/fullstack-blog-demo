@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { clear, set } from '../app/tokenSlice';
+import { clearTokens, setTokens } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
 import { loginUser } from '../util/auth';
 
@@ -33,12 +33,12 @@ export default function LoginForm() {
       console.log(res.tokens);
 
       // store in redux
-      dispatch(set(res.tokens));
+      dispatch(setTokens(res.tokens));
 
       // redirect to feed
     } else {
       // ensure no tokens in redux
-      dispatch(clear());
+      dispatch(clearTokens());
 
       setErrorMessage(res.errorMessage || 'An error occurred.');
     }
