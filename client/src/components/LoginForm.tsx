@@ -2,6 +2,7 @@ import './LoginForm.css';
 
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clear, set } from '../app/tokenSlice';
@@ -19,6 +20,10 @@ export default function LoginForm() {
 
   const tokens = useAppSelector((state) => state.tokens.value);
   const dispatch = useAppDispatch();
+
+  if (tokens.accessToken) {
+    return <Navigate to="/feed" replace />;
+  }
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     setErrorMessage('');
