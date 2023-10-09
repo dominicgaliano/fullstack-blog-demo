@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
+import LoginRegisterForm from '../components/LoginForm';
 
 function Login() {
   const [isNewUser, setIsNewUser] = useState(false);
 
   return (
     <>
-      {isNewUser ? <RegisterForm /> : <LoginForm />}
+      <LoginRegisterForm login={!isNewUser} />
       <button
         onClick={() => {
           setIsNewUser(!isNewUser);

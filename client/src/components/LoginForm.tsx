@@ -7,9 +7,9 @@ import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTokens, setTokens } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
-import { loginUser } from '../util/auth';
+import { loginUser, registerUser } from '../util/auth';
 
-export default function LoginForm() {
+export default function LoginRegisterForm({ login }: { login: boolean }) {
   // redux utilities
   const tokens = useAppSelector((state) => state.tokens.value);
   const dispatch = useAppDispatch();
@@ -29,7 +29,8 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     setErrorMessage('');
 
-    const res = await loginUser(data);
+    const submitHandler = login ? loginUser : registerUser;
+    const res = await submitHandler(data);
     if (res.tokens) {
       console.log(res.tokens);
 
@@ -50,6 +51,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>{login ? 'LOGIN' : 'REGISTER'}</h1>
       <ul className="form">
         <li>
           <label htmlFor="email">Email</label>
@@ -81,7 +83,7 @@ export default function LoginForm() {
         {errors.password && <li>This field is required</li>}
 
         <li>
-          <input type="submit" value="Login" />
+          <input type="submit" value={login ? 'Login' : 'Register'} />
         </li>
       </ul>
       <div>

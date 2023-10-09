@@ -17,10 +17,7 @@ const loginOrRegisterUser = async (loginInput: LoginInput, login: boolean) => {
   let refreshToken: Token = '';
 
   try {
-    const res = await axios.post(
-      `${AUTH_URL}/${login ? 'login' : 'register'}`,
-      loginInput,
-    );
+    const res = await axios.post(`${AUTH_URL}/${login ? 'login' : 'users'}`, loginInput);
 
     accessToken = res.data.accessToken;
     refreshToken = res.data.refreshToken;
