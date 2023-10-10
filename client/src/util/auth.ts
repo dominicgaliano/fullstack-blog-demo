@@ -48,18 +48,14 @@ const loginOrRegisterUser = async (loginInput: LoginInput, login: boolean) => {
   }
 };
 
-export const refreshToken = async (refreshToken: Token) => {
+export const refreshToken = async () => {
   try {
-    const res = await axios.post(`${AUTH_URL}/token`, { refreshToken: refreshToken });
+    const res = await axios.post(`${AUTH_URL}/token`, { withCredentials: true });
 
-    const newAccessToken: Token = res.data.accessToken;
-    const newRefreshToken: Token = res.data.refreshToken;
+    const newToken: Token = res.data.accessToken;
 
     return {
-      tokens: {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-      },
+      token: newToken,
     };
   } catch (error) {
     let errorMessage = '';

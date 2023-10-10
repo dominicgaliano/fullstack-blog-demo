@@ -8,22 +8,29 @@ export default function FeedBody() {
   const token = useAppSelector((state) => state.token.value);
 
   const [posts, setPosts] = useState<[Post]>();
-  useEffect(() => {
-    const fetchData = async () => {
+
+  const fetchData = async () => {
+    try {
       // get the data from the api
       const data = await getPosts(token);
 
       // set state with the result
       setPosts(data);
-    };
+    } catch (error) {
+      return error;
+    }
+  };
 
-    // call the function
+  useEffect(() => {
     fetchData().catch((error) => console.log(error));
   }, []);
 
   return (
-    <ul>
-      {posts && posts.map((post) => <li key={post._id}>{JSON.stringify(post)}</li>)}
-    </ul>
+    <>
+      <ul>
+        {posts && posts.map((post) => <li key={post._id}>{JSON.stringify(post)}</li>)}
+      </ul>
+      <button onClick={fetchData}>manual refresh</button>
+    </>
   );
 }
