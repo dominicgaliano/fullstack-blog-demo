@@ -11,7 +11,13 @@ const createUserController = async (req, res, next) => {
     const { email, password } = req.body;
 
     // validate input
-    await authSchema.validateAsync(req.body);
+    // FIXME: not the best way to do this i'm sure, but i need this atm to verify
+    // which error is validation based
+    try {
+      await authSchema.validateAsync(req.body);
+    } catch (err) {
+      throw createError(403, "Invalid email or password");
+    }
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
