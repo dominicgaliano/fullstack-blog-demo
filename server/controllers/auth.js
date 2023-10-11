@@ -16,7 +16,7 @@ const createUserController = async (req, res, next) => {
     try {
       await authSchema.validateAsync(req.body);
     } catch (err) {
-      throw createError(403, "Invalid email or password");
+      throw createError(400, "Invalid email or password");
     }
 
     // verify email not already used
@@ -42,7 +42,7 @@ const loginUserController = async (req, res, next) => {
     try {
       await authSchema.validateAsync(req.body);
     } catch (err) {
-      throw createError(403, "Invalid email or password");
+      throw createError(400, "Invalid email or password");
     }
 
     // authenticate user
