@@ -37,7 +37,13 @@ const loginUserController = async (req, res, next) => {
     const redisClient = req.redisClient;
     // validate input
     const { email, password } = req.body;
-    await authSchema.validateAsync(req.body);
+    // FIXME: not the best way to do this i'm sure, but i need this atm to verify
+    // which error is validation based
+    try {
+      await authSchema.validateAsync(req.body);
+    } catch (err) {
+      throw createError(403, "Invalid email or password");
+    }
 
     // authenticate user
     const user = await authenticateUser(email, password);
