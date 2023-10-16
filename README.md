@@ -47,6 +47,126 @@ A lot of my problems could probably have been avoided by asking for advice from 
 
 Yes, this project is seemingly a failure at the moment. However, I feel like the roughly two week development time was a great learning opportunity. Failure has helped me push my comfort zone, forced me to seek out new solutions, and given me insight into the problems that modern developers are currently working on. As a result, I ultimately consider this project to be a success.
 
+### Some notes from a better project
+
+After moving on from this project, I decided to look into more developed projects to see how they solved some of the issues I had. I found [this project](https://github.com/jigar-sable/instagram-mern/) which I really liked and used it to take some notes on what I could do better:
+
+#### Frontend
+
+- Uses redux
+
+  - uses 17 reducers for all kinds of website functionality
+  - saves the following state variables:
+    - user
+    - users
+    - post
+    - posts
+    - totalPosts
+    - newMessage
+    - message
+    - messages
+    - chat
+    - chats
+    - loading
+    - isAuthenticated
+    - isUpdated
+    - success
+    - error
+  - uses _thunk middleware_
+
+    - ['thunks' are a pattern of writing functions with logic inside that can interact with a Redux store's dispatch and getState methods.](https://redux.js.org/usage/writing-logic-thunks)
+    - thunks are a standard approach for writing async logic in Redux apps
+    - rather than taking in (state, action) args like a reducer, a thunk is passed the redux (dispatch, setState) methods.
+    - similar to how redux typically uses action creators to generate actions for dispatching, we normally use thunk action creators for generating thunk functions
+    - In a sense, a thunk is a loophole where you can write any code that needs to interact with the Redux store, ahead of time, without needing to know which Redux store will be used.
+    - Example:
+
+  ```javascript
+  // actions/todoAction.js
+  // fetchTodoById is the "thunk action creator"
+  export function fetchTodoById(todoId) {
+    // fetchTodoByIdThunk is the "thunk function"
+    return async function fetchTodoByIdThunk(dispatch, getState) {
+      const response = await client.get(`/fakeApi/todo/${todoId}`);
+      dispatch(todosLoaded(response.todos));
+    };
+  }
+
+  // components/TodoComponent.jsx
+  function TodoComponent({ todoId }) {
+    const dispatch = useDispatch();
+
+    const onFetchClicked = () => {
+      // Calls the thunk action creator, and passes the thunk function to dispatch
+      dispatch(fetchTodoById(todoId));
+    };
+  }
+  ```
+
+  - uses a file with constants for redux action types to eliminate risk of typing action type strings incorrectly.
+
+- Uses react router as well
+  - Deals with private routes, (those that need authentication), by wrapping the routes with `<PrivateRoute>` component.
+    - `<PrivateRoute>` is a component that accepts children components and redirects to login if
+      `(loading === false) && (isAuthenticated === false)`
+  - uses `useParams()` to get route params for use in components
+  - uses `useLocation()` on `<App />` to monitor route changes and always scroll to top left on route change. (implemented using `useEffect(func, [pathname])`)
+- Uses `<Suspense fallback={<SpinLoader />}></ Suspense>` to wrap routes and ensure that all page components have loaded before displaying them
+- Uses react's [lazy loading functionality](https://react.dev/reference/react/lazy) to defer loading of components until they are rendered for the first time. Ex:
+
+  ```javascript
+  const SignUp = lazy(() => import('./components/User/SignUp'));
+  const Login = lazy(() => import('./components/User/Login'));
+
+  function App() {
+     const returningUser = false;
+
+     return (
+        {returningUser ? <Login /> : <SignUp />}
+     );
+
+  }
+
+  // Login will not be imported until <Login />
+  // needs to be rendered for the first time.
+  ```
+
+- This project uses [react-helmet-async](https://www.npmjs.com/package/react-helmet-async).
+  - an async fork of react-helmet, a tool designed to help manage changes to the document head
+  - helps SEO rankings when combined with SSR
+  - just need to wrap app in `<Helmet Provider>` and place a `<Helmet>` with new metadata in each component we want to change the document head for
+- Make sure to use a cleanup function when using `useEffect()`
+- Uses react-toastify for nicer error messages
+- Uses tailwindCSS to eliminate the need for as many CSS files
+
+#### Backend
+
+- Express backend
+  - Global Middleware: JSON Parser, URLEncoded Parser, cookieParser(), errorHandler (custom)
+  - 4 main route trees: post, user, chat, message
+  - Auth:
+    - Implemented using JWT passed via cookie
+    - Protected routes are first based to `isAuthenticated` middleware that parses and validates JWT
+    - user is passed JWT as a cookie on register, login, reset password, or change password
+    - **I don't believe that this system is very secure, as:**
+      - **There is no way to invalidate tokens.**
+      - **On logout, the user is simply passed an expired token.**
+      - **This means that a bad actor could easily use the old token to access the account.**
+      - **Only safe-guard is sending the JWT as an httpOnly cookie, which merely prevents scripts from accessing the token on supported browsers.**
+- MongoDB database accessed using Mongoose
+- Uses [Socket.io](https://socket.io/) for low-latency chat server
+- Uses error middleware as well
+
+  - To prevent the need to explicitly check for any and all errors, all controllers are wrapped by passing them to the following function:
+
+  ```javascript
+  (errorFunction) => (req, res, next) => {
+    Promise.resolve(errorFunction(req, res, next)).catch(next);
+  };
+  ```
+
+  - Expected/defined errors are created and passed to next(), the wrapper function just catches all other errors. This prevents api calls from hanging on unexpected errors.
+
 ## Installation
 
 This repo contains both the frontend and backend code which can be run separate or together. Future plans include containerizing the entire project.
