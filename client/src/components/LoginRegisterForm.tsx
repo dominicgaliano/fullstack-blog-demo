@@ -1,6 +1,8 @@
 import './LoginForm.css';
 
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { loginUser, registerUser } from '../actions/authActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -8,11 +10,21 @@ import LoginInput from '../types/LoginInput';
 
 export default function LoginRegisterForm({ login }: { login: boolean }) {
   // redux utilities
-  const token = useAppSelector((state) => state.auth.token);
-  const errorMessage = useAppSelector((state) => state.auth.error);
+  const {
+    token,
+    isAuthenticated,
+    error: errorMessage,
+  } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {}, [navigate, dispatch]);
+  // react router utilities
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/feed');
+    }
+  }, [navigate, dispatch, isAuthenticated]);
 
   // react-hook-form setup
   const {
