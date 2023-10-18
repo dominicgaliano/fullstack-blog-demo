@@ -6,21 +6,23 @@ import FeedBody from '../components/FeedBody';
 import LogoutButton from '../components/LogoutButton';
 
 function Feed() {
-  const navigate = useNavigate();
-  const token = useAppSelector((state) => state.token.value);
+  // const navigate = useNavigate();
+  // const token = useAppSelector((state) => state.token.value);
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/');
-    }
-  }, [navigate, token]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate('/');
+  //   }
+  // }, [navigate, token]);
 
-  return (
-    <>
-      <FeedBody />
-      <LogoutButton />
-    </>
-  );
+  // return (
+  //   <>
+  //     <FeedBody />
+  //     <LogoutButton />
+  //   </>
+  // );
+
+  return <>Feed</>;
 }
 
 export default Feed;
