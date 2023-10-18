@@ -69,3 +69,20 @@ export const logoutUser = createAsyncThunk(
     }
   },
 );
+
+export const refreshToken = createAsyncThunk(
+  'auth/refreshToken',
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log('refresh');
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+
+      return rejectWithValue(error.message);
+    }
+  },
+);
