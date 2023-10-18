@@ -5,8 +5,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
+import { setupInterceptors } from './api/axios';
 import App from './App';
 import { store } from './app/store';
+
+setupInterceptors(store);
 
 ReactDOM.render(
   <React.StrictMode>

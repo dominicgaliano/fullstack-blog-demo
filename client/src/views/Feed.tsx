@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { axiosPrivate } from '../api/axios';
 import LogoutButton from '../components/LogoutButton';
 
@@ -13,9 +15,10 @@ function Feed() {
 
 export default Feed;
 
-const fetchPosts = () => {
-  axiosPrivate
-    .get('/posts')
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+const fetchPosts = async () => {
+  await axios.post('http://localhost:4001/api/token', {}, { withCredentials: true });
+  // axiosPrivate
+  //   .get('/posts')
+  //   .then((res) => console.log(res))
+  //   .catch((err) => console.log(err));
 };
