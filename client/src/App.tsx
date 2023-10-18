@@ -16,9 +16,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <PrivateRoute>
-          <Feed />
-        </PrivateRoute>
+        <Route path="/feed">
+          <PrivateRoute>
+            <Feed />
+          </PrivateRoute>
+        </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
