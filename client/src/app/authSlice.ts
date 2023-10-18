@@ -23,7 +23,8 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true; // registration successful
+        state.success = true;
+        state.token = action.payload.accessToken;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

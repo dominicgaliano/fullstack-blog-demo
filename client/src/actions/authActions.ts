@@ -14,7 +14,8 @@ export const loginUser = createAsyncThunk(
         },
       };
 
-      await axios.post(`${AUTH_URL}/login`, loginInput, config);
+      const { data } = await axios.post(`${AUTH_URL}/login`, loginInput, config);
+      return data;
     } catch (error: Error | any) {
       return rejectWithValue(error.message || null);
     }
