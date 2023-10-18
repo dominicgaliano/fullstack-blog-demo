@@ -1,7 +1,12 @@
-import axios from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { store } from '../app/store';
 import { API_URL, AUTH_URL } from '../config';
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  sent?: boolean;
+  // Add other custom properties or methods as needed
+}
 
 const authConfig = {
   baseURL: AUTH_URL,
@@ -21,25 +26,41 @@ export const axiosPrivateAuth = axios.create(authConfig);
 export const axiosPublic = axios.create(config);
 export const axiosPrivate = axios.create(config);
 
-// axiosPrivate.interceptors.request.use(
-//   async (config) => {
-//     const user = store?.getState()?.userData?.user;
+const privateRequestInterceptor = async (config: InternalAxiosRequestConfig) => {
+  // attaches token as bearer header
+  if (!config.headers['Authorization']) {
+    const token = store?.getState()?.auth.token;
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+};
 
-//     let currentDate = new Date();
-//     if (user?.accessToken) {
-//       const decodedToken: { exp: number } = jwt_decode(user?.accessToken);
-//       if (decodedToken.exp * 1000 < currentDate.getTime()) {
-//         await store.dispatch(refreshToken());
-//         if (config?.headers) {
-//           config.headers['authorization'] = `Bearer ${
-//             store?.getState()?.userData?.user?.accessToken
-//           }`;
-//         }
-//       }
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
+const privateResponseInterceptor = async (error: AxiosError) => {
+  // performs one retry if 403 returned
+  const prevRequest: CustomAxiosRequestConfig | undefined = error?.config;
+  if (prevRequest && error?.response?.status === 403 && !prevRequest?.sent) {
+    prevRequest.sent = true;
+
+    const newAccessToken = await refresh();
+    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+    return axiosPrivate(prevRequest);
+  }
+  return Promise.reject(error);
+};
+
+axiosPrivate.interceptors.request.use(privateRequestInterceptor, (error) => {
+  return Promise.reject(error);
+});
+axiosPrivateAuth.interceptors.request.use(privateRequestInterceptor, (error) => {
+  return Promise.reject(error);
+});
+
+axiosPrivate.interceptors.response.use(
+  (response) => response,
+  privateResponseInterceptor,
+);
+axiosPrivateAuth.interceptors.response.use(
+  (response) => response,
+  privateResponseInterceptor,
+);
