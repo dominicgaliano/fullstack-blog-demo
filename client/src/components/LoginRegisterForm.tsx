@@ -1,16 +1,15 @@
 import './LoginForm.css';
 
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { loginUser } from '../actions/authActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { clearToken, setToken } from '../app/tokenSlice';
 import LoginInput from '../types/LoginInput';
-import { loginUser, registerUser } from '../util/auth';
 
 export default function LoginRegisterForm({ login }: { login: boolean }) {
   // redux utilities
-  const token = useAppSelector((state) => state.token.value);
+  const token = useAppSelector((state) => state.auth.token);
+  const errorMessage = useAppSelector((state) => state.auth.error);
   const dispatch = useAppDispatch();
 
   // react-hook-form setup
@@ -20,26 +19,9 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
     formState: { errors },
   } = useForm<LoginInput>();
 
-  const onSubmit: SubmitHandler<LoginInput> = async (data) => {
-    setErrorMessage('');
-
-    const submitHandler = login ? loginUser : registerUser;
-    const res = await submitHandler(data);
-    if (res.token) {
-      console.log(res.token);
-
-      // store in redux
-      dispatch(setToken(res.token));
-    } else {
-      // ensure no tokens in redux
-      dispatch(clearToken());
-
-      setErrorMessage(res.errorMessage || 'An error occurred.');
-    }
+  const onSubmit: SubmitHandler<LoginInput> = async (loginInput) => {
+    dispatch(loginUser(loginInput));
   };
-
-  // local component state
-  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
