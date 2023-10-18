@@ -51,3 +51,20 @@ export const registerUser = createAsyncThunk(
     }
   },
 );
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log('logout, to be implemented');
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+
+      return rejectWithValue(error.message);
+    }
+  },
+);
