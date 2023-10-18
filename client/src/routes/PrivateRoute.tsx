@@ -1,15 +1,20 @@
 import { FC, ReactNode } from 'react';
 
+import { useAppSelector } from '../app/hooks';
+
 type PrivateRouteProps = {
   children?: ReactNode;
 };
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
-  // TODO: add auth verification based on redux state
+  const { loading, isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const allowEntry = false;
-
-  return allowEntry ? <>{children}</> : <p>page access restricted</p>;
+  return (
+    <>
+      {loading === false &&
+        (isAuthenticated ? <>{children}</> : <p>page access restricted</p>)}
+    </>
+  );
 };
 
 export default PrivateRoute;
