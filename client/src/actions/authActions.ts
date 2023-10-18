@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { axiosPublicAuth } from '../api/axios';
-import { RootState } from '../app/store';
 import LoginInput from '../types/LoginInput';
 
 export const loginUser = createAsyncThunk(
