@@ -2,6 +2,7 @@ import './App.css';
 
 import { Route, Routes } from 'react-router-dom';
 
+import PrivateRoute from './routes/PrivateRoute';
 import ErrorPage from './views/ErrorPage';
 import Feed from './views/Feed';
 import Home from './views/Home';
@@ -15,7 +16,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/feed" element={<Feed />} />
+        <PrivateRoute>
+          <Route path="/feed" element={<Feed />} />
+        </PrivateRoute>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
