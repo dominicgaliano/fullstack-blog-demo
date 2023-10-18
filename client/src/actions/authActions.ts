@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { axiosPublicAuth } from '../api/axios';
 import { AUTH_URL } from '../config';
 import LoginInput from '../types/LoginInput';
 
@@ -8,13 +9,7 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (loginInput: LoginInput, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const { data } = await axios.post(`${AUTH_URL}/login`, loginInput, config);
+      const { data } = await axiosPublicAuth.post('login', loginInput);
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present
@@ -32,13 +27,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (loginInput: LoginInput, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const { data } = await axios.post(`${AUTH_URL}/users`, loginInput, config);
+      const { data } = await axiosPublicAuth.post('users', loginInput);
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present
