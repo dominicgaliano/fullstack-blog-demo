@@ -12,6 +12,8 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
   const errorMessage = useAppSelector((state) => state.auth.error);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {}, [navigate, dispatch]);
+
   // react-hook-form setup
   const {
     register,

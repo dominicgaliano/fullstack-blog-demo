@@ -15,6 +15,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //TODO: simplify with matching utility
+    // https://redux-toolkit.js.org/api/matching-utilities
     builder
       // login user
       .addCase(loginUser.pending, (state) => {
