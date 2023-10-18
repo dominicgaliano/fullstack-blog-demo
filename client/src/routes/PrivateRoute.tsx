@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { useAppSelector } from '../app/hooks';
 
@@ -12,7 +13,7 @@ const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   return (
     <>
       {loading === false &&
-        (isAuthenticated ? <>{children}</> : <p>page access restricted</p>)}
+        (isAuthenticated ? <>{children}</> : <Navigate to="/login" />)}
     </>
   );
 };
