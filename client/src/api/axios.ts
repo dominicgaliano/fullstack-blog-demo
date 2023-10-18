@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
+import { refreshToken } from '../actions/authActions';
 import { store } from '../app/store';
 import { API_URL, AUTH_URL } from '../config';
 
@@ -38,12 +39,10 @@ const privateRequestInterceptor = async (config: InternalAxiosRequestConfig) => 
 const privateResponseInterceptor = async (error: AxiosError) => {
   // performs one retry if 403 returned
   const prevRequest: CustomAxiosRequestConfig | undefined = error?.config;
+  // only try again in first retry (ie, prevRequest.sent does not exist)
   if (prevRequest && error?.response?.status === 403 && !prevRequest?.sent) {
     prevRequest.sent = true;
-
-    const newAccessToken = await refresh();
-    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-
+    await store.dispatch(refreshToken());
     return axiosPrivate(prevRequest);
   }
   return Promise.reject(error);

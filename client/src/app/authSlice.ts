@@ -66,17 +66,11 @@ export const authSlice = createSlice({
         state.error = action.payload as string;
       })
       // refresh token
-      .addCase(refreshToken.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
       .addCase(refreshToken.fulfilled, (state, action) => {
-        state.loading = false;
         state.isAuthenticated = true;
         state.token = action.payload.accessToken;
       })
       .addCase(refreshToken.rejected, (state, action) => {
-        state.loading = false;
         state.isAuthenticated = false;
         state.token = null;
         state.error = action.payload as string;

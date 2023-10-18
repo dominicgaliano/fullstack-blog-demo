@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { axiosPublicAuth } from '../api/axios';
+import { RootState } from '../app/store';
 import LoginInput from '../types/LoginInput';
 
 export const loginUser = createAsyncThunk(
@@ -61,7 +62,8 @@ export const refreshToken = createAsyncThunk(
   'auth/refreshToken',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('refresh');
+      const { data } = await axiosPublicAuth.post('/refresh', { useCredentials: true });
+      return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {
