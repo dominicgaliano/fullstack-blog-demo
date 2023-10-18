@@ -27,3 +27,27 @@ export const loginUser = createAsyncThunk(
     }
   },
 );
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (loginInput: LoginInput, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(`${AUTH_URL}/users`, loginInput, config);
+      return data;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+
+      return rejectWithValue(error.message);
+    }
+  },
+);
