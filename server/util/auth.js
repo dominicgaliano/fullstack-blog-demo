@@ -18,7 +18,6 @@ function verifyToken(req, res, next) {
   if (!token) return res.sendStatus(401);
   (async () => {
     const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
-
     try {
       const { payload, protectedHeader } = await jose.jwtVerify(token, secret, {
         alg: "HS256",
@@ -83,7 +82,7 @@ async function signToken(user, tokenType) {
   );
   const alg = "HS256";
 
-  const expiresIn = tokenType === "access" ? "10m" : "10w";
+  const expiresIn = tokenType === "access" ? "5s" : "10w";
 
   try {
     return await new jose.SignJWT({ user_id: user._id })
