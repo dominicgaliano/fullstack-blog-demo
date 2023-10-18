@@ -17,7 +17,13 @@ export const loginUser = createAsyncThunk(
       const { data } = await axios.post(`${AUTH_URL}/login`, loginInput, config);
       return data;
     } catch (error: Error | any) {
-      return rejectWithValue(error.message || null);
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+
+      return rejectWithValue(error.message);
     }
   },
 );
