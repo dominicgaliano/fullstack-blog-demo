@@ -2,7 +2,7 @@ import './LoginForm.css';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { loginUser } from '../actions/authActions';
+import { loginUser, registerUser } from '../actions/authActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import LoginInput from '../types/LoginInput';
 
@@ -20,7 +20,7 @@ export default function LoginRegisterForm({ login }: { login: boolean }) {
   } = useForm<LoginInput>();
 
   const onSubmit: SubmitHandler<LoginInput> = async (loginInput) => {
-    dispatch(loginUser(loginInput));
+    dispatch(login ? loginUser(loginInput) : registerUser(loginInput));
   };
 
   return (
