@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <PrivateRoute>
-          <Route path="/feed" element={<Feed />} />
+          <Feed />
         </PrivateRoute>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
