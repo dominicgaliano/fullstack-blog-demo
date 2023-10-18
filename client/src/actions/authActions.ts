@@ -61,7 +61,7 @@ export const refreshToken = createAsyncThunk(
   'auth/refreshToken',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosPublicAuth.post('/refresh', { useCredentials: true });
+      const { data } = await axiosPublicAuth.post('/token', { useCredentials: true });
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present

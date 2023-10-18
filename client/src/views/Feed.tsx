@@ -1,33 +1,21 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { useAppSelector } from '../app/hooks';
-import FeedBody from '../components/FeedBody';
+import { axiosPrivate } from '../api/axios';
 import LogoutButton from '../components/LogoutButton';
 
 function Feed() {
-  // const navigate = useNavigate();
-  // const token = useAppSelector((state) => state.token.value);
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate('/');
-  //   }
-  // }, [navigate, token]);
-
-  // return (
-  //   <>
-  //     <FeedBody />
-  //     <LogoutButton />
-  //   </>
-  // );
-
   return (
     <>
       Feed
+      <button onClick={fetchPosts}>fetch posts (dev button)</button>
       <LogoutButton />
     </>
   );
 }
 
 export default Feed;
+
+const fetchPosts = () => {
+  axiosPrivate
+    .get('/posts')
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
