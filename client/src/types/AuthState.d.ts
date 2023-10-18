@@ -1,7 +1,7 @@
 interface AuthState {
   loading: boolean;
   token: string | null;
-  success: boolean;
+  isAuthenticated: boolean;
   error: string | null;
 }
 

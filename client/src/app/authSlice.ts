@@ -6,7 +6,7 @@ import AuthState from '../types/AuthState';
 const initialState: AuthState = {
   loading: false,
   token: null,
-  success: false,
+  isAuthenticated: false,
   error: null,
 };
 
@@ -25,7 +25,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
+        state.isAuthenticated = true;
         state.token = action.payload.accessToken;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -39,7 +39,7 @@ export const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
+        state.isAuthenticated = true;
         state.token = action.payload.accessToken;
       })
       .addCase(registerUser.rejected, (state, action) => {
