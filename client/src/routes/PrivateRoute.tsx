@@ -5,6 +5,8 @@ type PrivateRouteProps = {
 };
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
+  // TODO: add auth verification based on redux state
+
   const allowEntry = false;
 
   return allowEntry ? <>{children}</> : <p>page access restricted</p>;
