@@ -21,13 +21,13 @@ export const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, { payload }) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true; // registration successful
       })
-      .addCase(loginUser.rejected, (state, { payload }) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = payload;
+        state.error = action.payload as string;
       });
   },
 });
