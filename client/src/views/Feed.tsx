@@ -22,7 +22,12 @@ function Feed() {
   //   </>
   // );
 
-  return <>Feed</>;
+  return (
+    <>
+      Feed
+      <LogoutButton />
+    </>
+  );
 }
 
 export default Feed;

@@ -57,6 +57,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       console.log('logout, to be implemented');
+      // server side logout here
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {
