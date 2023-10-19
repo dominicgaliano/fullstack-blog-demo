@@ -1,13 +1,17 @@
+import './Login.css';
+
 import { Link } from 'react-router-dom';
 
 import LoginRegisterForm from '../components/LoginRegisterForm';
 
 function Login() {
   return (
-    <>
-      <LoginRegisterForm login={true} />
-      <Link to="/register">register</Link>
-    </>
+    <div className="form-container">
+      <div className="form-child">
+        <LoginRegisterForm login={true} />
+        <Link to="/register">register</Link>
+      </div>
+    </div>
   );
 }
 
