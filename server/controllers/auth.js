@@ -6,6 +6,14 @@ const createError = require("http-errors");
 const User = require("../models/user_model.js");
 const { authSchema } = require("../schemas/validation_schema");
 
+const cookieConfig = {
+  httpOnly: true,
+  // secure: true,
+  sameSite: "none",
+  domain: process.env.CLIENT_URL,
+  maxAge: 1000 * 60 * 60 * 24 * 7 * 10,
+};
+
 const createUserController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -59,11 +67,7 @@ const loginUserController = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
+      .cookie("refreshToken", refreshToken, cookieConfig)
       .json({ accessToken: accessToken });
   } catch (error) {
     next(error);
@@ -99,11 +103,7 @@ const refreshTokenController = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
+      .cookie("refreshToken", refreshToken, cookieConfig)
       .json({ accessToken: accessToken });
   } catch (error) {
     console.error("Error:", error);

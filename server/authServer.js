@@ -1,3 +1,4 @@
+require("dotenv").config();
 const errorHandler = require("./util/errorHandler");
 const express = require("express");
 const redisClient = require("./util/redis");
@@ -14,7 +15,13 @@ require("./db/initialize.js");
 redisClient.connect();
 
 // middleware
-app.use(cors({ credentials: true }));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieParser());
