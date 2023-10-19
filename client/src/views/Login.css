@@ -7,4 +7,9 @@
     justify-content: center;
 }
 
-.form-child {}
+.form-items {
+    padding: 10rem;
+    border-radius: 2rem;
+    background-color: slategray;
+    border-color: darkslategrey;
+}

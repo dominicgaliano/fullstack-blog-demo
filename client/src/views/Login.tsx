@@ -7,7 +7,7 @@ import LoginRegisterForm from '../components/LoginRegisterForm';
 function Login() {
   return (
     <div className="form-container">
-      <div className="form-child">
+      <div className="form-items">
         <LoginRegisterForm login={true} />
         <Link to="/register">register</Link>
       </div>
