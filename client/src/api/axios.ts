@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { refreshToken } from '../actions/authActions';
+import { AppStore } from '../app/store';
 import { API_URL, AUTH_URL } from '../config';
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -28,7 +29,7 @@ export const axiosRefreshToken = axios.create(authConfig);
 export const axiosPublic = axios.create(config);
 export const axiosPrivate = axios.create(config);
 
-export function setupInterceptors(store) {
+export function setupInterceptors(store: AppStore) {
   const privateRequestInterceptor = async (config: InternalAxiosRequestConfig) => {
     // attaches token as bearer header
     if (!config.headers['Authorization']) {
