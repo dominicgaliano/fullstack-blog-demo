@@ -44,7 +44,13 @@ export function setupInterceptors(store) {
     // only try again in first retry (ie, prevRequest.sent does not exist)
     if (prevRequest && error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
+
+      // refresh token
       await store.dispatch(refreshToken());
+
+      // add new token to retry
+      const token = store?.getState()?.auth.token;
+      prevRequest.headers['Authorization'] = `Bearer ${token}`;
       return axiosPrivate(prevRequest);
     }
     return Promise.reject(error);

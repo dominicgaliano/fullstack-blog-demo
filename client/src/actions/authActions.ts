@@ -62,6 +62,7 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosRefreshToken.get('/token');
+      console.log(data);
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present
