@@ -19,6 +19,13 @@ export default function PostView() {
     dispatch(getPost(id || ''));
   }, []);
 
+  useEffect(() => {
+    if (!post) {
+      // redirect to feed
+      console.log('to be implemented');
+    }
+  }, [post]);
+
   return (
     <>
       {loading ? (

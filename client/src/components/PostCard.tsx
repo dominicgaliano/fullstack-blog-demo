@@ -1,10 +1,14 @@
 import './PostCard.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import { deletePost } from '../actions/postActions';
+import { useAppDispatch } from '../app/hooks';
 import Post from '../types/Post.d';
 
 export default function PostCard({ post }: { post: Post }) {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="post-card">
       {/* FIXME: included for dev only */}
@@ -18,6 +22,15 @@ export default function PostCard({ post }: { post: Post }) {
         By: {post.author.email} at {post.timestamp}
       </p>
       <p>Likes: {post.likes}</p>
+      <button
+        onClick={() => {
+          if (window.confirm('Are you sure to delete this post?')) {
+            dispatch(deletePost(post._id));
+          }
+        }}
+      >
+        DELETE
+      </button>
     </div>
   );
 }
