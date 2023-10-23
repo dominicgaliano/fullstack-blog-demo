@@ -16,7 +16,7 @@ interface Post {
   content: string;
   timestamp: Date;
   likes: number;
-  comments: [Comment];
+  comments: Comment[];
 }
 
 export default Post;
