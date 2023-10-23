@@ -18,3 +18,20 @@ export const getPosts = createAsyncThunk(
     }
   },
 );
+
+export const getPost = createAsyncThunk(
+  'post/getPost',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate(`/posts/${id}`);
+      return data;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);

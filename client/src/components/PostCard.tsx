@@ -1,5 +1,7 @@
 import './PostCard.css';
 
+import { Link } from 'react-router-dom';
+
 import Post from '../types/Post.d';
 
 export default function PostCard({ post }: { post: Post }) {
@@ -7,7 +9,9 @@ export default function PostCard({ post }: { post: Post }) {
     <div className="post-card">
       {/* FIXME: included for dev only */}
       <small>
-        <i>{post._id}</i>
+        <i>
+          <Link to={`/feed/${post._id}`}>{post._id}</Link>
+        </i>
       </small>
       <p>{post.content}</p>
       <p>

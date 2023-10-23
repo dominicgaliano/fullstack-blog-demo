@@ -7,6 +7,7 @@ import ErrorPage from './views/ErrorPage';
 import Feed from './views/Feed';
 import Home from './views/Home';
 import Login from './views/Login';
+import PostView from './views/PostView';
 import Register from './views/Register';
 
 function App() {
@@ -21,6 +22,14 @@ function App() {
           element={
             <PrivateRoute>
               <Feed />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/feed/:id"
+          element={
+            <PrivateRoute>
+              <PostView />
             </PrivateRoute>
           }
         />
