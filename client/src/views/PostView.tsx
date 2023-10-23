@@ -8,32 +8,25 @@ import PostCard from '../components/PostCard';
 export default function PostView() {
   // extract post id from route
   const { id } = useParams();
-  console.log(id);
 
   // redux utilities
   const { post, loading, error } = useAppSelector((state) => state.post);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('run with', id);
     dispatch(getPost(id || ''));
   }, []);
-
-  useEffect(() => {
-    if (!post) {
-      // redirect to feed
-      console.log('to be implemented');
-    }
-  }, [post]);
 
   return (
     <>
       {loading ? (
         <span>LOADING...</span>
-      ) : error ? (
-        <p>error</p>
       ) : (
-        post && <PostCard post={post} />
+        <div>
+          <ul>{post && <PostCard post={post} />}</ul>
+          {/* TODO: DEV HELP, REMOVE LATER */}
+          <p>Error Message: {error || ''}</p>
+        </div>
       )}
     </>
   );
