@@ -1,8 +1,8 @@
 const cookieConfig = {
-  domain: process.env.CLIENT_URL,
+  domain: process.env.CLIENT_DOMAIN,
   httpOnly: true,
   maxAge: 1000 * 60 * 60 * 24 * 7 * 10, // 10 weeks
-  sameSite: "none",
+  sameSite: "Strict",
   secure: true,
 };
 
