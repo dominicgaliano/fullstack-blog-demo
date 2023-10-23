@@ -67,6 +67,10 @@ export const authSlice = createSlice({
         state.error = action.payload as string;
       })
       // refresh token
+      .addCase(refreshToken.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.token = action.payload.accessToken;
@@ -77,6 +81,10 @@ export const authSlice = createSlice({
         state.error = action.payload as string;
       })
       // load user
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(loadUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
