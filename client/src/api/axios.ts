@@ -13,6 +13,7 @@ const authConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 };
 const config = {
   baseURL: API_URL,
@@ -23,7 +24,7 @@ const config = {
 
 export const axiosPublicAuth = axios.create(authConfig);
 export const axiosPrivateAuth = axios.create(authConfig);
-export const axiosRefreshToken = axios.create({ ...authConfig, withCredentials: true });
+export const axiosRefreshToken = axios.create(authConfig);
 export const axiosPublic = axios.create(config);
 export const axiosPrivate = axios.create(config);
 
