@@ -64,7 +64,24 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosRefreshToken.get('/token');
-      console.log(data);
+      return data;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const loadUser = createAsyncThunk(
+  'auth/loadUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosRefreshToken.get('/token');
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present

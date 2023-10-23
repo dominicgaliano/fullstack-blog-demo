@@ -1,7 +1,10 @@
 import './App.css';
 
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { loadUser } from './actions/authActions';
+import { useAppDispatch } from './app/hooks';
 import PrivateRoute from './routes/PrivateRoute';
 import CreatePostView from './views/CreatePostView';
 import ErrorPage from './views/ErrorPage';
@@ -12,6 +15,12 @@ import PostView from './views/PostView';
 import Register from './views/Register';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>
