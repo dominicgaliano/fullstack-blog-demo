@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { axiosPublicAuth, axiosRefreshToken } from '../api/axios';
+import { axiosPrivateAuth, axiosPublicAuth, axiosRefreshToken } from '../api/axios';
 import LoginInput from '../types/LoginInput';
 
 export const loginUser = createAsyncThunk(
@@ -43,8 +43,10 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('logout, to be implemented');
-      // server side logout here
+      // use auth private to call post /logout
+      await axiosPrivateAuth.post('logout');
+
+      return;
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {
