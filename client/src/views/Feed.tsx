@@ -16,7 +16,7 @@ function Feed() {
 export default Feed;
 
 const fetchPosts = async () => {
-  await axios.post('http://localhost:4001/api/token', {}, { withCredentials: true });
+  await axios.get('http://localhost:4001/api/token', {}, { withCredentials: true });
   // axiosPrivate
   //   .get('/posts')
   //   .then((res) => console.log(res))
