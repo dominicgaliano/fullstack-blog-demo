@@ -6,7 +6,10 @@ const cookieConfig = {
   secure: true,
 };
 
-const corsConfig = {};
+const corsConfig = {
+  origin: process.env.CLIENT_URL,
+  optionsSuccessStatus: 200,
+};
 
 const authCorsConfig = {
   origin: process.env.CLIENT_URL,
