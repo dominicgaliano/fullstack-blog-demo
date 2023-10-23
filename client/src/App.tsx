@@ -1,19 +1,19 @@
 import './App.css';
 
-import { Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { loadUser } from './actions/authActions';
 import { useAppDispatch } from './app/hooks';
 import SpinLoader from './components/SpinLoader';
 import PrivateRoute from './routes/PrivateRoute';
-import CreatePostView from './views/CreatePostView';
-import ErrorPage from './views/ErrorPage';
-import Feed from './views/Feed';
-import Home from './views/Home';
-import Login from './views/Login';
-import PostView from './views/PostView';
-import Register from './views/Register';
+const CreatePostView = lazy(() => import('./views/CreatePostView'));
+const ErrorPage = lazy(() => import('./views/ErrorPage'));
+const Feed = lazy(() => import('./views/Feed'));
+const Home = lazy(() => import('./views/Home'));
+const Login = lazy(() => import('./views/Login'));
+const PostView = lazy(() => import('./views/PostView'));
+const Register = lazy(() => import('./views/Register'));
 
 function App() {
   const dispatch = useAppDispatch();
