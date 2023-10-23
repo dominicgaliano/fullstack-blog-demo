@@ -113,6 +113,11 @@ Backend
 - [ ] Convert to TS for better dev process
 - [ ] (Maybe) Server Side Rendering
 
+### Issues
+
+- Currently, cannot access individual posts after deleting a post on feed
+- Deleting an individual post does not properly redirect to feed
+
 Other
 
 - [ ] Containerization
