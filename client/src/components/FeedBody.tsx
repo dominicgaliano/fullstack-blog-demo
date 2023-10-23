@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { getPosts } from '../actions/postActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Post from '../types/Post';
+import PostCard from './PostCard';
 
 export default function FeedBody() {
   // redux utilities
@@ -20,8 +21,7 @@ export default function FeedBody() {
       ) : (
         <div>
           <ul>
-            {posts &&
-              posts.map((post: Post) => <li key={post._id}>{JSON.stringify(post)}</li>)}
+            {posts && posts.map((post: Post) => <PostCard post={post} key={post._id} />)}
           </ul>
           {/* TODO: DEV HELP, REMOVE LATER */}
           <p>Error Message: {error || ''}</p>
