@@ -1,36 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { useAppSelector } from '../app/hooks';
+import { getPosts } from '../actions/postActions';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Post from '../types/Post';
-import { getPosts } from '../util/posts';
 
 export default function FeedBody() {
-  const token = useAppSelector((state) => state.token.value);
-
-  const [posts, setPosts] = useState<[Post]>();
-
-  const fetchData = async () => {
-    try {
-      // get the data from the api
-      const data = await getPosts(token);
-
-      // set state with the result
-      setPosts(data);
-    } catch (error) {
-      return error;
-    }
-  };
+  // redux utilities
+  const { posts, loading, error } = useAppSelector((state) => state.post);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchData().catch((error) => console.log(error));
+    dispatch(getPosts());
   }, []);
 
   return (
     <>
-      <ul>
-        {posts && posts.map((post) => <li key={post._id}>{JSON.stringify(post)}</li>)}
-      </ul>
-      <button onClick={fetchData}>manual refresh</button>
+      {loading ? (
+        <span>LOADING...</span>
+      ) : (
+        <div>
+          <ul>
+            {posts &&
+              posts.map((post: Post) => <li key={post._id}>{JSON.stringify(post)}</li>)}
+          </ul>
+          {/* TODO: DEV HELP, REMOVE LATER */}
+          <p>Error Message: {error || ''}</p>
+        </div>
+      )}
     </>
   );
 }
