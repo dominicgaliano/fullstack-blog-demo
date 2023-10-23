@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { axiosPrivate, axiosPublic } from '../api/axios';
+import { axiosPrivate } from '../api/axios';
 
 export const getPosts = createAsyncThunk(
   'post/getPosts',
