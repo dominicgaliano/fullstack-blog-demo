@@ -5,14 +5,7 @@ const bcrypt = require("bcrypt");
 const createError = require("http-errors");
 const User = require("../models/user_model.js");
 const { authSchema } = require("../schemas/validation_schema");
-
-const cookieConfig = {
-  domain: process.env.CLIENT_URL,
-  httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24 * 7 * 10, // 10 weeks
-  sameSite: "none",
-  secure: true,
-};
+const { cookieConfig } = require("../config");
 
 const createUserController = async (req, res, next) => {
   try {
