@@ -3,6 +3,7 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 
 import PrivateRoute from './routes/PrivateRoute';
+import CreatePostView from './views/CreatePostView';
 import ErrorPage from './views/ErrorPage';
 import Feed from './views/Feed';
 import Home from './views/Home';
@@ -30,6 +31,14 @@ function App() {
           element={
             <PrivateRoute>
               <PostView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/feed/new"
+          element={
+            <PrivateRoute>
+              <CreatePostView />
             </PrivateRoute>
           }
         />
