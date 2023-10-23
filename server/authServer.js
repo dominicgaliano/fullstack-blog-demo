@@ -3,7 +3,6 @@ const errorHandler = require("./util/errorHandler");
 const express = require("express");
 const redisClient = require("./util/redis");
 const morgan = require("morgan");
-const corsMiddleware = require("./util/corsMiddleware");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { authCorsConfig } = require("./config");
