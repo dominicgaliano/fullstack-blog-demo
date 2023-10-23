@@ -10,7 +10,7 @@ import {
 import AuthState from '../types/AuthState';
 
 const initialState: AuthState = {
-  loading: false,
+  loading: true,
   token: null,
   isAuthenticated: false,
   error: null,
