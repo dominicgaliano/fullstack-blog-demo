@@ -5,6 +5,7 @@ interface PostState {
   posts: Post[];
   error: string | null;
   post: Post | null;
+  postCreated: boolean;
 }
 
 export default PostState;

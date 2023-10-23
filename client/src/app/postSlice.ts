@@ -8,6 +8,7 @@ const initialState: PostState = {
   posts: [],
   error: null,
   post: null,
+  postCreated: false,
 };
 
 export const postSlice = createSlice({
@@ -49,15 +50,18 @@ export const postSlice = createSlice({
       .addCase(createPost.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.postCreated = false;
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.loading = false;
         state.post = action.payload;
+        state.postCreated = true;
       })
       .addCase(createPost.rejected, (state, action) => {
         console.log(action);
         state.loading = false;
         state.error = action.payload as string;
+        state.postCreated = false;
       });
   },
 });
