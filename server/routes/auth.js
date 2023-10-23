@@ -15,6 +15,6 @@ router.post("/login", loginUserController);
 
 router.post("/logout", verifyToken, logoutUserController);
 
-router.post("/token", verifyRefreshToken, refreshTokenController);
+router.get("/token", verifyRefreshToken, refreshTokenController);
 
 module.exports = router;
