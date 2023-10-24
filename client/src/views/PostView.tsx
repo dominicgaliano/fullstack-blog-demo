@@ -15,7 +15,7 @@ export default function PostView() {
 
   useEffect(() => {
     dispatch(getPost(id || ''));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -52,7 +52,7 @@ export const postSlice = createSlice({
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.loading = false;
-        state.post = action.payload;
+        // state.post = action.payload;
       })
       .addCase(createPost.rejected, (state, action) => {
         state.loading = false;
@@ -65,9 +65,8 @@ export const postSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         state.loading = false;
-        state.post = [];
-        const index = state.posts.findIndex((post) => post._id === action.payload);
-        state.posts = [...state.posts.slice(0, index), ...state.posts.slice(index + 1)];
+        state.post = null;
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
       })
       .addCase(deletePost.rejected, (state, action) => {
         state.loading = false;
