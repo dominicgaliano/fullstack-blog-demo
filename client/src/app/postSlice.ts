@@ -88,8 +88,11 @@ export const postSlice = createSlice({
         state.loading = false;
         const newPost = action.payload as Post;
         const index = state.posts.findIndex((post) => post._id === newPost._id);
-        console.log(newPost, index, state.posts);
         state.posts[index] = newPost;
+        // this might be a bad practice
+        if (state.post._id === newPost._id) {
+          state.post = newPost;
+        }
       })
       .addCase(updatePost.rejected, (state, action) => {
         state.loading = false;
