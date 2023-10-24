@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { getPosts } from '../actions/postActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
+import loadingGif from '../assets/loadingGif.gif';
 import Post from '../types/Post';
 import PostCard from './PostCard';
 
@@ -17,12 +18,13 @@ export default function FeedBody() {
   return (
     <>
       {loading ? (
-        <span>LOADING...</span>
+        <img src={loadingGif} alt="loading gif"></img>
       ) : (
         <div>
           <ul>
             {posts && posts.map((post: Post) => <PostCard post={post} key={post._id} />)}
           </ul>
+          {/* <img src={loadingGif} alt="loading gif" /> */}
           {/* TODO: DEV HELP, REMOVE LATER */}
           <p>Error Message: {error || ''}</p>
         </div>
