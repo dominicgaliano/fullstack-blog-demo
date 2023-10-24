@@ -8,6 +8,8 @@ import Post from '../types/Post.d';
 
 export default function PostCard({ post }: { post: Post }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className="post-card">
@@ -25,7 +27,11 @@ export default function PostCard({ post }: { post: Post }) {
       <button
         onClick={() => {
           if (window.confirm('Are you sure to delete this post?')) {
-            dispatch(deletePost(post._id));
+            dispatch(deletePost(post._id)).then(() => {
+              // navigate to feed if on individual post
+              console.log(location.pathname);
+              if (location.pathname !== '/feed/') navigate('../feed');
+            });
           }
         }}
       >
