@@ -7,6 +7,7 @@ import {
   getPosts,
   updatePost,
 } from '../actions/postActions';
+import Post from '../types/Post';
 import PostState from '../types/PostState';
 
 const initialState: PostState = {
@@ -85,7 +86,10 @@ export const postSlice = createSlice({
       })
       .addCase(updatePost.fulfilled, (state, action) => {
         state.loading = false;
-        // state.posts = state.posts.filter((post) => post._id !== action.payload);
+        const newPost = action.payload as Post;
+        const index = state.posts.findIndex((post) => post._id === newPost._id);
+        console.log(newPost, index, state.posts);
+        state.posts[index] = newPost;
       })
       .addCase(updatePost.rejected, (state, action) => {
         state.loading = false;

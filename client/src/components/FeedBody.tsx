@@ -13,7 +13,7 @@ export default function FeedBody() {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
