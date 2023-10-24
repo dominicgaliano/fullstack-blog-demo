@@ -6,7 +6,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
 import Post from '../types/Post.d';
-import { set } from 'react-hook-form';
 
 export default function PostCard({ post }: { post: Post }) {
   const dispatch = useAppDispatch();
