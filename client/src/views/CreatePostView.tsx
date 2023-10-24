@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { createPost } from '../actions/postActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
+import SpinLoader from '../components/SpinLoader';
 import Post from '../types/Post';
 
 type Inputs = {
@@ -32,12 +33,18 @@ export default function CreatePostView() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <textarea {...register('content', { required: true })} />
-      {errors.content && <li>This field is required</li>}
-      <input type="submit" />
-      {loading && <p>LOADING...</p>}
-      {error || <p>{error}</p>}
-    </form>
+    <>
+      {loading ? (
+        <SpinLoader />
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <textarea {...register('content', { required: true })} />
+          {errors.content && <li>This field is required</li>}
+          <input type="submit" value="Create Post" />
+          {loading && <p>LOADING...</p>}
+          {error || <p>{error}</p>}
+        </form>
+      )}
+    </>
   );
 }
