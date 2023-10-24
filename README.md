@@ -167,6 +167,8 @@ After moving on from this project, I decided to look into more developed project
 
   - Expected/defined errors are created and passed to next(), the wrapper function just catches all other errors. This prevents api calls from hanging on unexpected errors.
 
+Currently stuck on how to implement client side refresh token behavior.
+
 ## Installation
 
 This repo contains both the frontend and backend code which can be run separate or together. Future plans include containerizing the entire project.
@@ -264,6 +266,11 @@ Backend
 - [ ] Full coverage of http-error package
 - [ ] Convert to TS for better dev process
 - [ ] (Maybe) Server Side Rendering
+
+### Issues
+
+- Currently, cannot access individual posts after deleting a post on feed
+- Deleting an individual post does not properly redirect to feed
 
 Other
 

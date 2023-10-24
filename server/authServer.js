@@ -1,7 +1,11 @@
+require("dotenv").config();
 const errorHandler = require("./util/errorHandler");
 const express = require("express");
 const redisClient = require("./util/redis");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const { authCorsConfig } = require("./config");
 
 const app = express();
 const PORT = process.env.AUTH_PORT || 4001;
@@ -11,8 +15,10 @@ require("./db/initialize.js");
 redisClient.connect();
 
 // middleware
+app.use(cors(authCorsConfig));
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(cookieParser());
 app.use((req, res, next) => {
   req.redisClient = redisClient;
   next();

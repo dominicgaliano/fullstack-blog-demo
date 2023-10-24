@@ -5,13 +5,20 @@ const bcrypt = require("bcrypt");
 const createError = require("http-errors");
 const User = require("../models/user_model.js");
 const { authSchema } = require("../schemas/validation_schema");
+const { cookieConfig } = require("../config");
 
 const createUserController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     // validate input
-    await authSchema.validateAsync(req.body);
+    // FIXME: not the best way to do this i'm sure, but i need this atm to verify
+    // which error is validation based
+    try {
+      await authSchema.validateAsync(req.body);
+    } catch (err) {
+      throw createError(400, "Invalid email or password");
+    }
 
     // verify email not already used
     const doesExist = await User.findOne({ email: email });
@@ -19,7 +26,8 @@ const createUserController = async (req, res, next) => {
 
     // register user
     const savedUser = await createUser(email, await bcrypt.hash(password, 10));
-    res.status(201).send(savedUser);
+    // res.status(201).send(savedUser);
+    next();
   } catch (error) {
     next(error);
   }
@@ -30,7 +38,13 @@ const loginUserController = async (req, res, next) => {
     const redisClient = req.redisClient;
     // validate input
     const { email, password } = req.body;
-    await authSchema.validateAsync(req.body);
+    // FIXME: not the best way to do this i'm sure, but i need this atm to verify
+    // which error is validation based
+    try {
+      await authSchema.validateAsync(req.body);
+    } catch (err) {
+      throw createError(400, "Invalid email or password");
+    }
 
     // authenticate user
     const user = await authenticateUser(email, password);
@@ -46,7 +60,8 @@ const loginUserController = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ accessToken: accessToken, refreshToken: refreshToken });
+      .cookie("refreshToken", refreshToken, cookieConfig)
+      .json({ accessToken: accessToken });
   } catch (error) {
     next(error);
   }
@@ -81,7 +96,8 @@ const refreshTokenController = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ accessToken: accessToken, refreshToken: refreshToken });
+      .cookie("refreshToken", refreshToken, cookieConfig)
+      .json({ accessToken: accessToken });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({

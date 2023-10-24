@@ -9,12 +9,12 @@ const { verifyRefreshToken, verifyToken } = require("../util/auth");
 const express = require("express");
 const router = express.Router();
 
-router.post("/users", createUserController);
+router.post("/users", [createUserController, loginUserController]);
 
 router.post("/login", loginUserController);
 
 router.post("/logout", verifyToken, logoutUserController);
 
-router.post("/token", verifyRefreshToken, refreshTokenController);
+router.get("/token", verifyRefreshToken, refreshTokenController);
 
 module.exports = router;
