@@ -75,7 +75,6 @@ export const updatePost = createAsyncThunk(
   async ({ id, newContent }: { id: string; newContent: string }, { rejectWithValue }) => {
     try {
       const { data } = await axiosPrivate.put(`/posts/${id}`, { content: newContent });
-      console.log(data);
       return data;
     } catch (error: Error | any) {
       // return custom error message from backend if present

@@ -37,7 +37,7 @@ export default function PostCard({ post }: { post: Post }) {
           <button
             onClick={() => {
               const postChanges = { id: post._id, newContent: newContent };
-              updatePost(postChanges);
+              dispatch(updatePost(postChanges));
               setIsEditing(false);
             }}
           >
