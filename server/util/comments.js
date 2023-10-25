@@ -43,11 +43,21 @@ const createComment = async (user, post_id, commentBody) => {
       text: commentBody,
     };
     // throw createError(501, "not implemented");
-    const res = await Post.updateOne(
+    // const res = await Post.updateOne(
+    //   { _id: post_id },
+    //   { $push: { comments: newComment } }
+    // );
+    const updatedPost = await Post.findOneAndUpdate(
       { _id: post_id },
-      { $push: { comments: newComment } }
+      { $push: { comments: newComment } },
+      { new: true, returnOriginal: false }
     );
-    return res.modifiedCount;
+
+    if (updatedPost) {
+      const newlyPushedComment =
+        updatedPost.comments[updatedPost.comments.length - 1];
+      return newlyPushedComment;
+    }
   } catch (err) {
     throw createError(500);
   }
