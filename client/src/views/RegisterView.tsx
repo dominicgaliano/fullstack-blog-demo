@@ -1,18 +1,18 @@
-import './Login.css';
+import './LoginView.css';
 
 import { Link } from 'react-router-dom';
 
 import LoginRegisterForm from '../components/LoginRegisterForm';
 
-function Login() {
+const RegisterView = () => {
   return (
     <div className="form-container">
       <div className="form-items">
-        <LoginRegisterForm login={true} />
-        <Link to="/register">register</Link>
+        <LoginRegisterForm login={false} />
+        <Link to="/login">login</Link>
       </div>
     </div>
   );
-}
+};
 
-export default Login;
+export default RegisterView;

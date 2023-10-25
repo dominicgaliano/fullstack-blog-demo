@@ -8,11 +8,11 @@ import { useAppDispatch } from './app/hooks';
 import SpinLoader from './components/SpinLoader';
 import PrivateRoute from './routes/PrivateRoute';
 const CreatePostView = lazy(() => import('./views/CreatePostView'));
-const ErrorPage = lazy(() => import('./views/ErrorPage'));
-const Feed = lazy(() => import('./views/Feed'));
-const Home = lazy(() => import('./views/Home'));
-const Login = lazy(() => import('./views/Login'));
-const Register = lazy(() => import('./views/Register'));
+const ErrorPageView = lazy(() => import('./views/ErrorPageView'));
+const FeedView = lazy(() => import('./views/FeedView'));
+const HomeView = lazy(() => import('./views/HomeView'));
+const LoginView = lazy(() => import('./views/LoginView'));
+const RegisterView = lazy(() => import('./views/RegisterView'));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,14 +25,14 @@ function App() {
     <>
       <Suspense fallback={<SpinLoader />}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<HomeView />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView />} />
           <Route
             path="/feed"
             element={
               <PrivateRoute>
-                <Feed />
+                <FeedView />
               </PrivateRoute>
             }
           />
@@ -44,7 +44,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPageView />} />
         </Routes>
       </Suspense>
     </>
