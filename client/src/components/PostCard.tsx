@@ -101,7 +101,10 @@ export default function PostCard({ post }: { post: Post }) {
               ))}
           </ul>
           {isCreatingComment && (
-            <CreateCommentForm handleClose={() => setIsCreatingComment(false)} />
+            <CreateCommentForm
+              postId={post._id}
+              handleClose={() => setIsCreatingComment(false)}
+            />
           )}
           <button onClick={() => setIsCreatingComment(!isCreatingComment)}>
             {isCreatingComment ? 'cancel' : 'create comment'}

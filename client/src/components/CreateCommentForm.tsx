@@ -7,7 +7,13 @@ type Inputs = {
   content: string;
 };
 
-export default function CreateCommentForm({ handleClose }: { handleClose: () => void }) {
+export default function CreateCommentForm({
+  postId,
+  handleClose,
+}: {
+  postId: string;
+  handleClose: () => void;
+}) {
   const dispatch = useAppDispatch();
 
   // react-hook-form setup
@@ -18,9 +24,9 @@ export default function CreateCommentForm({ handleClose }: { handleClose: () => 
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // dispatch(createComment(data.content)).then(handleClose);
-    console.log(data);
-    handleClose();
+    dispatch(createComment({ postId: postId, newContent: data.content })).then(
+      handleClose,
+    );
   };
 
   return (
