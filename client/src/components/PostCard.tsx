@@ -2,7 +2,7 @@ import './PostCard.css';
 
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
@@ -38,12 +38,6 @@ export default function PostCard({ post }: { post: Post }) {
 
   return (
     <div className="post-card">
-      {/* FIXME: included for dev only */}
-      <small>
-        <i>
-          <Link to={`/feed/${post._id}`}>{post._id}</Link>
-        </i>
-      </small>
       {isEditing ? (
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,11 +76,7 @@ export default function PostCard({ post }: { post: Post }) {
           <button
             onClick={() => {
               if (window.confirm('Are you sure to delete this post?')) {
-                dispatch(deletePost(post._id)).then(() => {
-                  // navigate to feed if on individual post
-                  console.log(location.pathname);
-                  if (location.pathname !== '/feed/') navigate('../feed');
-                });
+                dispatch(deletePost(post._id));
               }
             }}
           >
