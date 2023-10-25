@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 
 const express = require("express");
 const morgan = require("morgan");
@@ -18,13 +19,15 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cors(corsConfig));
 
-// serve static files in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../client/dist"));
-}
-
 // routes
 app.use("/api/posts", verifyToken, require("./routes/posts"));
+
+// static files, required to ensure that react-router works
+if (process.env.NODE_ENV === "production") {
+  const publicPath = path.join(__dirname, "../client/dist");
+  app.use(express.static(publicPath));
+  app.use("*", express.static(publicPath));
+}
 
 // error handler
 app.use(errorHandler);
