@@ -44,7 +44,6 @@ async function verifyRefreshToken(req, res, next) {
 
   // validate req body
   const refreshToken = req.cookies["refreshToken"];
-  console.log(refreshToken);
   if (!refreshToken) return res.sendStatus(400);
 
   // verify token

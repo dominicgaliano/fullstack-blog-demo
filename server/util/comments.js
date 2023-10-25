@@ -9,7 +9,6 @@ const getComments = async (post_id) => {
     }
     return post;
   } catch (error) {
-    console.log(error);
     throw createError(500);
   }
 };
