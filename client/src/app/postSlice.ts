@@ -109,7 +109,15 @@ export const postSlice = createSlice({
       })
       .addCase(createComment.fulfilled, (state, action) => {
         state.loading = false;
-        // FIXME: need to modify backend to return comment so that we can update state
+        const { newComment, postId } = action.payload as {
+          newComment: CommentType;
+          postId: string;
+        };
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        state.posts[postIndex].comments = [
+          ...state.posts[postIndex].comments,
+          newComment,
+        ];
       })
       .addCase(createComment.rejected, (state, action) => {
         state.loading = false;

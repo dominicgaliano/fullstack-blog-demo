@@ -97,11 +97,11 @@ export const createComment = createAsyncThunk(
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      // would be very useful if api gave comment id back but it does not
       const { data } = await axiosPrivate.post(`/posts/${postId}/comments`, {
         commentBody: newContent,
       });
-      return fulfillWithValue(data);
+      const res = { postId: postId, newComment: data };
+      return fulfillWithValue(res);
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {
