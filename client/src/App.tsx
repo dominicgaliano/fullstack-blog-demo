@@ -38,14 +38,6 @@ function App() {
             }
           />
           <Route
-            path="/feed/:id"
-            element={
-              <PrivateRoute>
-                <PostView />
-              </PrivateRoute>
-            }
-          />
-          <Route
             path="/feed/new"
             element={
               <PrivateRoute>
