@@ -1,11 +1,4 @@
-interface Comment {
-  _id: string;
-  author: {
-    user_id: string;
-    email: string;
-  };
-  text: string;
-}
+import Comment from './Comment';
 
 interface Post {
   _id: string;
