@@ -1,12 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  createComment,
   createPost,
+  deleteComment,
   deletePost,
   getPost,
   getPosts,
+  updateComment,
   updatePost,
 } from '../actions/postActions';
+import CommentType from '../types/CommentType';
 import Post from '../types/Post';
 import PostState from '../types/PostState';
 
@@ -95,6 +99,66 @@ export const postSlice = createSlice({
         }
       })
       .addCase(updatePost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // create comment
+      .addCase(createComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        state.loading = false;
+        const { newComment, postId } = action.payload as {
+          newComment: CommentType;
+          postId: string;
+        };
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        state.posts[postIndex].comments = [
+          ...state.posts[postIndex].comments,
+          newComment,
+        ];
+      })
+      .addCase(createComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // update comment
+      .addCase(updateComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.loading = false;
+        const { newComment, postId } = action.payload as {
+          newComment: CommentType;
+          postId: string;
+        };
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        const postToEdit = state.posts[postIndex] as Post;
+        const commentIndex = postToEdit.comments.findIndex(
+          (comment) => comment._id === newComment._id,
+        );
+        state.posts[postIndex].comments[commentIndex] = newComment;
+      })
+      .addCase(updateComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // delete comment
+      .addCase(deleteComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.loading = false;
+        const { postId, commentId } = action.payload;
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        state.posts[postIndex].comments = state.posts[postIndex].comments.filter(
+          (comment: CommentType) => comment._id !== commentId,
+        );
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

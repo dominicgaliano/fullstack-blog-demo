@@ -6,7 +6,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
+import CommentType from '../types/CommentType';
 import Post from '../types/Post.d';
+import CommentCard from './CommentCard';
+import CreateCommentForm from './CreateCommentForm';
 
 type Input = {
   content: string;
@@ -31,6 +34,7 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isCreatingComment, setIsCreatingComment] = useState<boolean>(false);
 
   return (
     <div className="post-card">
@@ -87,6 +91,23 @@ export default function PostCard({ post }: { post: Post }) {
             }}
           >
             DELETE
+          </button>
+          <hr />
+          <span>Comments:</span>
+          <ul>
+            {post.comments &&
+              post.comments.map((comment: CommentType) => (
+                <CommentCard key={comment._id} postId={post._id} comment={comment} />
+              ))}
+          </ul>
+          {isCreatingComment && (
+            <CreateCommentForm
+              postId={post._id}
+              handleClose={() => setIsCreatingComment(false)}
+            />
+          )}
+          <button onClick={() => setIsCreatingComment(!isCreatingComment)}>
+            {isCreatingComment ? 'cancel' : 'create comment'}
           </button>
         </>
       )}

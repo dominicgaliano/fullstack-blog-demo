@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { getPost } from '../actions/postActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import PostCard from '../components/PostCard';
+import PostCard from '../components/PostCard.1';
 
 export default function PostView() {
   // extract post id from route

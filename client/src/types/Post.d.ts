@@ -1,11 +1,4 @@
-interface Comment {
-  _id: string;
-  author: {
-    user_id: string;
-    email: string;
-  };
-  text: string;
-}
+import CommentType from './CommentType';
 
 interface Post {
   _id: string;
@@ -16,7 +9,7 @@ interface Post {
   content: string;
   timestamp: Date;
   likes: number;
-  comments: Comment[];
+  comments: CommentType[];
 }
 
 export default Post;

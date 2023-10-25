@@ -38,6 +38,10 @@ Yes, this project is seemingly a failure at the moment. However, I feel like the
 
 After moving on from this project, I decided to look into more developed projects to see how they solved some of the issues I had. I found [this project](https://github.com/jigar-sable/instagram-mern/) which I really liked and used it to take some notes on what I could do better:
 
+### Return newly created object on POST request
+
+I did not do this because of convenience sake and it ended up making frontend development much harder.
+
 #### Frontend
 
 - Uses redux

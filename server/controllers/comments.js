@@ -56,12 +56,12 @@ const createCommentController = async (req, res, next) => {
     }
 
     // create comment
-    const modifiedCount = await createComment(user, post_id, commentBody);
-    if (!modifiedCount) {
+    const newComment = await createComment(user, post_id, commentBody);
+    if (!newComment) {
       throw createError(404);
     }
 
-    res.sendStatus(201);
+    res.status(201).json(newComment);
   } catch (err) {
     next(err);
   }
