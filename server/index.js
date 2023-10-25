@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // routes
-app.use("/posts", verifyToken, require("./routes/posts"));
+app.use("/api/posts", verifyToken, require("./routes/posts"));
 
 // error handler
 app.use(errorHandler);
