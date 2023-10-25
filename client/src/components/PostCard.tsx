@@ -17,8 +17,6 @@ type Input = {
 
 export default function PostCard({ post }: { post: Post }) {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   // form utilities
   const {
