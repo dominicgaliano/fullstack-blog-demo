@@ -69,3 +69,23 @@ export const deletePost = createAsyncThunk(
     }
   },
 );
+
+export const updatePost = createAsyncThunk(
+  'post/updatePost',
+  async (
+    { id, newContent }: { id: string; newContent: string },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
+    try {
+      const { data } = await axiosPrivate.put(`/posts/${id}`, { content: newContent });
+      return fulfillWithValue(data);
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);
