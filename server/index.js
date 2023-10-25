@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const morgan = require("morgan");
 const errorHandler = require("./util/errorHandler");
@@ -15,6 +17,11 @@ require("./db/initialize");
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cors(corsConfig));
+
+// serve static files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../client/dist"));
+}
 
 // routes
 app.use("/posts", verifyToken, require("./routes/posts"));
