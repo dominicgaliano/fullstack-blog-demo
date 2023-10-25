@@ -8,7 +8,7 @@ const cors = require("cors");
 const { corsConfig } = require("./config");
 
 const app = express();
-const port = 3001;
+const port = process.env.SERVER_PORT || 3001;
 
 // initialize database
 require("./db/initialize");
