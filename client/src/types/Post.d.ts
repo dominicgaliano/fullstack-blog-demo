@@ -1,4 +1,4 @@
-import Comment from './Comment';
+import Comment from './Comment.d';
 
 interface Post {
   _id: string;

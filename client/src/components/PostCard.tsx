@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
 import Post from '../types/Post.d';
+import Comment from '../types/Comment.d';
 
 type Input = {
   content: string;
@@ -88,6 +89,16 @@ export default function PostCard({ post }: { post: Post }) {
           >
             DELETE
           </button>
+          <hr />
+          <span>Comments:</span>
+          <ul>
+            {post.comments &&
+              post.comments.map((comment: Comment) => (
+                <li key={comment._id}>
+                  {comment._id}: {comment.text}
+                </li>
+              ))}
+          </ul>
         </>
       )}
     </div>
