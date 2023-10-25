@@ -92,9 +92,15 @@ export const updatePost = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
   'post/createComment',
-  async (_, { rejectWithValue }) => {
+  async (
+    { postId, newContent }: { postId: string; newContent: string },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
-      return;
+      const { data } = await axiosPrivate.post(`/posts/${postId}/comments`, {
+        commentBody: newContent,
+      });
+      return fulfillWithValue(data);
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {
