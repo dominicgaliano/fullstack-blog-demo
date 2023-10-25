@@ -2,6 +2,11 @@ require("dotenv").config();
 const jose = require("jose");
 const bcrypt = require("bcrypt");
 const User = require("../models/user_model");
+const {
+  accessTokenConfig,
+  ACCESS_TOKEN_EXPIRATION_TIME,
+  REFRESH_TOKEN_EXPIRATION_TIME,
+} = require("../config");
 
 async function authenticateUser(email, password) {
   const user = await User.findOne({ email: email });
@@ -19,12 +24,11 @@ function verifyToken(req, res, next) {
   (async () => {
     const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
     try {
-      const { payload, protectedHeader } = await jose.jwtVerify(token, secret, {
-        alg: "HS256",
-        issuer: "urn:example:issuer",
-        audience: "urn:example:audience",
-        requiredClaims: ["user_id"],
-      });
+      const { payload, protectedHeader } = await jose.jwtVerify(
+        token,
+        secret,
+        accessTokenConfig
+      );
       console.log("Server authenticated user:", payload.user_id);
       req.user_id = payload.user_id;
       next();
@@ -52,12 +56,7 @@ async function verifyRefreshToken(req, res, next) {
       const { payload, protectedHeader } = await jose.jwtVerify(
         refreshToken,
         secret,
-        {
-          alg: "HS256",
-          issuer: "urn:example:issuer",
-          audience: "urn:example:audience",
-          requiredClaims: ["user_id"],
-        }
+        accessTokenConfig
       );
 
       // verify token is whitelisted
@@ -80,16 +79,19 @@ async function signToken(user, tokenType) {
       ? process.env.ACCESS_TOKEN_SECRET
       : process.env.REFRESH_TOKEN_SECRET
   );
-  const alg = "HS256";
+  const alg = accessTokenConfig.alg;
 
-  const expiresIn = tokenType === "access" ? "5s" : "10w";
+  const expiresIn =
+    tokenType === "access"
+      ? ACCESS_TOKEN_EXPIRATION_TIME
+      : REFRESH_TOKEN_EXPIRATION_TIME;
 
   try {
     return await new jose.SignJWT({ user_id: user._id })
       .setProtectedHeader({ alg })
       .setIssuedAt()
-      .setAudience("urn:example:audience")
-      .setIssuer("urn:example:issuer")
+      .setAudience(accessTokenConfig.audience)
+      .setIssuer(accessTokenConfig.issuer)
       .setExpirationTime(expiresIn)
       .sign(secret);
   } catch (error) {
