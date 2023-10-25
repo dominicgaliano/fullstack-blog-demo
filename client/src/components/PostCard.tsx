@@ -1,19 +1,36 @@
 import './PostCard.css';
 
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
 import Post from '../types/Post.d';
 
+type Input = {
+  content: string;
+};
+
 export default function PostCard({ post }: { post: Post }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  // form utilities
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Input>({ defaultValues: { content: post.content } });
+
+  const onSubmit: SubmitHandler<Input> = (data) => {
+    const postChanges = { id: post._id, newContent: data.content };
+    dispatch(updatePost(postChanges));
+    setIsEditing(false);
+  };
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [newContent, setNewContent] = useState<string>('');
 
   return (
     <div className="post-card">
@@ -25,24 +42,15 @@ export default function PostCard({ post }: { post: Post }) {
       </small>
       {isEditing ? (
         <>
-          <form>
-            <label>
-              <input
-                type="text"
-                value={newContent}
-                onChange={(e) => setNewContent(e.target.value)}
-              />
-            </label>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="content">Update Post:</label>
+            <textarea
+              {...register('content', { required: true })}
+              placeholder="Post Content"
+            />
+            {errors.content && <li>This field is required</li>}
+            <input type="submit" value="Save Changes" />
           </form>
-          <button
-            onClick={() => {
-              const postChanges = { id: post._id, newContent: newContent };
-              dispatch(updatePost(postChanges));
-              setIsEditing(false);
-            }}
-          >
-            save
-          </button>
           <button
             onClick={() => {
               setIsEditing(false);
@@ -62,7 +70,6 @@ export default function PostCard({ post }: { post: Post }) {
         <>
           <button
             onClick={() => {
-              setNewContent(post.content);
               setIsEditing(true);
             }}
           >
