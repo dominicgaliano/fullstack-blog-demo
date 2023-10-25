@@ -10,9 +10,9 @@ import {
   updateComment,
   updatePost,
 } from '../actions/postActions';
+import CommentType from '../types/CommentType';
 import Post from '../types/Post';
 import PostState from '../types/PostState';
-import CommentType from '../types/CommentType';
 
 const initialState: PostState = {
   loading: false,

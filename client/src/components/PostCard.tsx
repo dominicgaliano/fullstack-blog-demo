@@ -97,7 +97,7 @@ export default function PostCard({ post }: { post: Post }) {
           <ul>
             {post.comments &&
               post.comments.map((comment: CommentType) => (
-                <CommentCard key={comment._id} comment={comment} />
+                <CommentCard key={comment._id} postId={post._id} comment={comment} />
               ))}
           </ul>
           {isCreatingComment && (
