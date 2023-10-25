@@ -10,9 +10,11 @@ cd ../server
 npm install
 ```
 
-2. modify client/config.ts
+2. create .env in client directory with the following information:
 
-- sets URL of auth server and main server
+```
+VITE_ENV="production"
+```
 
 3. build client
 
