@@ -1,4 +1,4 @@
-interface Comment {
+interface CommentType {
   _id: string;
   author: {
     user_id: string;
@@ -7,4 +7,4 @@ interface Comment {
   text: string;
 }
 
-export default Comment;
+export default CommentType;

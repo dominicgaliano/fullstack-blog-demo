@@ -6,8 +6,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { deletePost, updatePost } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
-import Comment from '../types/Comment.d';
+import CommentType from '../types/CommentType';
 import Post from '../types/Post.d';
+import CommentCard from './CommentCard';
 
 type Input = {
   content: string;
@@ -93,10 +94,8 @@ export default function PostCard({ post }: { post: Post }) {
           <span>Comments:</span>
           <ul>
             {post.comments &&
-              post.comments.map((comment: Comment) => (
-                <li key={comment._id}>
-                  {comment.author.email}: {comment.text}
-                </li>
+              post.comments.map((comment: CommentType) => (
+                <CommentCard key={comment._id} comment={comment} />
               ))}
           </ul>
         </>

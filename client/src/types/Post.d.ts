@@ -1,4 +1,4 @@
-import Comment from './Comment.d';
+import CommentType from './CommentType';
 
 interface Post {
   _id: string;
@@ -9,7 +9,7 @@ interface Post {
   content: string;
   timestamp: Date;
   likes: number;
-  comments: Comment[];
+  comments: CommentType[];
 }
 
 export default Post;
