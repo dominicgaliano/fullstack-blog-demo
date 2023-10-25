@@ -26,8 +26,8 @@ export default function PostCard({ post }: { post: Post }) {
 
   const onSubmit: SubmitHandler<Input> = (data) => {
     const postChanges = { id: post._id, newContent: data.content };
-    dispatch(updatePost(postChanges));
     setIsEditing(false);
+    dispatch(updatePost(postChanges));
   };
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
