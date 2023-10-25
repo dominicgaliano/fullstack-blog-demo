@@ -88,6 +88,7 @@ Frontend
 - [x] Login and registration
 - [x] Feed view with all posts
 - [x] CRUD for posts
+- [x] CRUD for comments
 
 Backend
 
@@ -109,7 +110,6 @@ Database
 
 Frontend
 
-- [ ] CRUD for comments
 - [ ] Frontend Styling
 - [ ] Frontend refactoring
 
