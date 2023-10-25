@@ -12,7 +12,6 @@ const ErrorPage = lazy(() => import('./views/ErrorPage'));
 const Feed = lazy(() => import('./views/Feed'));
 const Home = lazy(() => import('./views/Home'));
 const Login = lazy(() => import('./views/Login'));
-const PostView = lazy(() => import('./views/PostView'));
 const Register = lazy(() => import('./views/Register'));
 
 function App() {
