@@ -142,9 +142,13 @@ export const updateComment = createAsyncThunk(
 
 export const deleteComment = createAsyncThunk(
   'post/deleteComment',
-  async (_, { rejectWithValue }) => {
+  async (
+    { postId, commentId }: { postId: string; commentId: string },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
-      return;
+      await axiosPrivate.delete(`posts/${postId}/comments/${commentId}`);
+      return fulfillWithValue({ postId: postId, commentId: commentId });
     } catch (error: Error | any) {
       // return custom error message from backend if present
       if (error.response && error.response.data.error.message) {

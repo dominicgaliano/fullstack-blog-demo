@@ -144,6 +144,11 @@ export const postSlice = createSlice({
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
         state.loading = false;
+        const { postId, commentId } = action.payload;
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        state.posts[postIndex].comments = state.posts[postIndex].comments.filter(
+          (comment: CommentType) => comment._id !== commentId,
+        );
       })
       .addCase(deleteComment.rejected, (state, action) => {
         state.loading = false;
