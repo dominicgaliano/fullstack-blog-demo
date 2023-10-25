@@ -6,6 +6,16 @@ const cookieConfig = {
   secure: true,
 };
 
+const accessTokenConfig = {
+  alg: "HS256",
+  issuer: "urn:example:issuer",
+  audience: "urn:example:audience",
+  requiredClaims: ["user_id"],
+};
+
+const ACCESS_TOKEN_EXPIRATION_TIME = "10w";
+const REFRESH_TOKEN_EXPIRATION_TIME = "10m";
+
 const corsConfig = {
   origin: process.env.CLIENT_URL,
   optionsSuccessStatus: 200,
@@ -17,4 +27,11 @@ const authCorsConfig = {
   credentials: true,
 };
 
-module.exports = { cookieConfig, corsConfig, authCorsConfig };
+module.exports = {
+  cookieConfig,
+  corsConfig,
+  authCorsConfig,
+  accessTokenConfig,
+  ACCESS_TOKEN_EXPIRATION_TIME,
+  REFRESH_TOKEN_EXPIRATION_TIME,
+};
