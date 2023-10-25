@@ -2,7 +2,7 @@ import CreatePostButton from '../components/CreatePostButton';
 import FeedBody from '../components/FeedBody';
 import LogoutButton from '../components/LogoutButton';
 
-function Feed() {
+function FeedView() {
   return (
     <>
       Feed
@@ -13,4 +13,4 @@ function Feed() {
   );
 }
 
-export default Feed;
+export default FeedView;
