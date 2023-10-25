@@ -90,7 +90,7 @@ export const postSlice = createSlice({
         const index = state.posts.findIndex((post) => post._id === newPost._id);
         state.posts[index] = newPost;
         // this might be a bad practice
-        if (state.post._id === newPost._id) {
+        if (state.post && state.post?._id === newPost._id) {
           state.post = newPost;
         }
       })
