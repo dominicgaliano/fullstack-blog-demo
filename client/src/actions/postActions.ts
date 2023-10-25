@@ -89,3 +89,51 @@ export const updatePost = createAsyncThunk(
     }
   },
 );
+
+export const createComment = createAsyncThunk(
+  'post/createComment',
+  async (_, { rejectWithValue }) => {
+    try {
+      return;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const updateComment = createAsyncThunk(
+  'post/updateComment',
+  async (_, { rejectWithValue }) => {
+    try {
+      return;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const deleteComment = createAsyncThunk(
+  'post/deleteComment',
+  async (_, { rejectWithValue }) => {
+    try {
+      return;
+    } catch (error: Error | any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.error.message) {
+        // wow, this is a handful of a variable name
+        return rejectWithValue(error.response.data.error.message);
+      }
+      return rejectWithValue(error.message);
+    }
+  },
+);

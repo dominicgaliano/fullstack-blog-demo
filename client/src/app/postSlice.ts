@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  createComment,
   createPost,
+  deleteComment,
   deletePost,
   getPost,
   getPosts,
+  updateComment,
   updatePost,
 } from '../actions/postActions';
 import Post from '../types/Post';
@@ -95,6 +98,42 @@ export const postSlice = createSlice({
         }
       })
       .addCase(updatePost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // create comment
+      .addCase(createComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(createComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // update comment
+      .addCase(updateComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // delete comment
+      .addCase(deleteComment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
