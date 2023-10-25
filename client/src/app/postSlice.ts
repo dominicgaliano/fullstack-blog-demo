@@ -108,6 +108,7 @@ export const postSlice = createSlice({
       })
       .addCase(createComment.fulfilled, (state, action) => {
         state.loading = false;
+        // FIXME: need to modify backend to return comment so that we can update state
       })
       .addCase(createComment.rejected, (state, action) => {
         state.loading = false;
