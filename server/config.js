@@ -25,9 +25,10 @@ const corsConfig = {
 };
 
 const authCorsConfig = {
-  origin: process.env.NODE_ENV === "production"
-  ? `http://${process.env.DOMAIN}:${process.env.SERVER_PORT}`
-  : process.env.CLIENT_URL,,
+  origin:
+    process.env.NODE_ENV === "production"
+      ? `http://${process.env.DOMAIN}:${process.env.SERVER_PORT}`
+      : process.env.CLIENT_URL,
   optionsSuccessStatus: 200,
   credentials: true,
 };

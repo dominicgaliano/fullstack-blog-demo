@@ -39,8 +39,6 @@
 10. create .env file in server directory with the following information
 
     ```
-    CLIENT_URL=
-    CLIENT_DOMAIN=
     SERVER_PORT=
     AUTH_PORT=
     ACCESS_TOKEN_SECRET=
