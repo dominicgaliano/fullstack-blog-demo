@@ -12,6 +12,7 @@ import {
 } from '../actions/postActions';
 import Post from '../types/Post';
 import PostState from '../types/PostState';
+import CommentType from '../types/CommentType';
 
 const initialState: PostState = {
   loading: false,
@@ -121,6 +122,16 @@ export const postSlice = createSlice({
       })
       .addCase(updateComment.fulfilled, (state, action) => {
         state.loading = false;
+        const { newComment, postId } = action.payload as {
+          newComment: CommentType;
+          postId: string;
+        };
+        const postIndex = state.posts.findIndex((post) => post._id === postId);
+        const postToEdit = state.posts[postIndex] as Post;
+        const commentIndex = postToEdit.comments.findIndex(
+          (comment) => comment._id === newComment._id,
+        );
+        state.posts[postIndex].comments[commentIndex] = newComment;
       })
       .addCase(updateComment.rejected, (state, action) => {
         state.loading = false;
