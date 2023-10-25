@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { updateComment } from '../actions/postActions';
+import { deleteComment, updateComment } from '../actions/postActions';
 import { useAppDispatch } from '../app/hooks';
 import CommentType from '../types/CommentType';
 
@@ -55,7 +55,13 @@ export default function CommentCard({
       <button onClick={() => setIsEditing(!isEditing)}>
         {isEditing ? 'cancel' : 'edit'}
       </button>
-      <button>DELETE</button>
+      <button
+        onClick={() =>
+          dispatch(deleteComment({ postId: postId, commentId: comment._id }))
+        }
+      >
+        DELETE
+      </button>
     </div>
   );
 }
