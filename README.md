@@ -26,7 +26,7 @@ To run this project locally, follow the following commands (npm required):
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/dominicgaliano/jwt-demo.git
+   git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
    cd {repo-name}/
    ```
 
@@ -84,7 +84,10 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 
 Frontend
 
-- [x] Placeholder frontend
+- [x] Draft proof frontend of concept
+- [x] Login and registration
+- [x] Feed view with all posts
+- [x] CRUD for posts
 
 Backend
 
@@ -106,8 +109,9 @@ Database
 
 Frontend
 
-- [ ] Draft proof frontend of concept
-- [ ] Create frontend (more details soon)
+- [ ] CRUD for comments
+- [ ] Frontend Styling
+- [ ] Frontend refactoring
 
 Backend
 
@@ -115,17 +119,14 @@ Backend
 - [ ] Convert to TS for better dev process
 - [ ] (Maybe) Server Side Rendering
 
-### Issues
-
-- Currently, cannot access individual posts after deleting a post on feed
-- Deleting an individual post does not properly redirect to feed
-
 Other
 
 - [ ] Containerization
 - [ ] Deploy App
 
-See the [open issues](https://github.com/dominicgaliano/jwt-demo/issues) for a full list of proposed features (and known issues).
+### Issues
+
+See the [open issues](https://github.com/dominicgaliano/fullstack-blog-demo/issues) for a full list of proposed features (and known issues).
 
 ## How to Contribute
 
@@ -138,20 +139,20 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-[contributors-shield]: https://img.shields.io/github/contributors/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[contributors-url]: https://github.com/dominicgaliano/jwt-demo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[forks-url]: https://github.com/dominicgaliano/jwt-demo/network/members
-[stars-shield]: https://img.shields.io/github/stars/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[stars-url]: https://github.com/dominicgaliano/jwt-demo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[issues-url]: https://github.com/dominicgaliano/jwt-demo/issues
-[license-shield]: https://img.shields.io/github/license/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[license-url]: https://github.com/dominicgaliano/jwt-demo/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[contributors-url]: https://github.com/dominicgaliano/fullstack-blog-demo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[forks-url]: https://github.com/dominicgaliano/fullstack-blog-demo/network/members
+[stars-shield]: https://img.shields.io/github/stars/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[stars-url]: https://github.com/dominicgaliano/fullstack-blog-demo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[issues-url]: https://github.com/dominicgaliano/fullstack-blog-demo/issues
+[license-shield]: https://img.shields.io/github/license/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[license-url]: https://github.com/dominicgaliano/fullstack-blog-demo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/dominic-galiano
-[tech-shield]: https://img.shields.io/github/languages/top/dominicgaliano/jwt-demo.svg?style=for-the-badge
-[github-status-shield]: https://img.shields.io/github/actions/workflow/status/dominicgaliano/jwt-demo/main.yml.svg?style=for-the-badge
+[tech-shield]: https://img.shields.io/github/languages/top/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
+[github-status-shield]: https://img.shields.io/github/actions/workflow/status/dominicgaliano/fullstack-blog-demo/main.yml.svg?style=for-the-badge
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Typescript.js]: https://shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=61DAFB
