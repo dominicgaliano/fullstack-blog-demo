@@ -53,3 +53,7 @@
 12. Install and setup nginx reverse proxy to forward HTTP requests to a required port on EC2 instance
 
 13. Run servers and redis-server
+
+_TODO NEXT:_
+
+- probably should just go ahead and get the repo in an EC2 instance to see what goes wrong and what needs to be added to this list
