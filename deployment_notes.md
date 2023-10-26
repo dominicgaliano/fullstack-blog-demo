@@ -53,10 +53,10 @@ sudo git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
    npm install
    ```
 
-8. create .env in client directory with the following information:
+8. create .env.production in client directory with the following information:
 
    ```
-   VITE_ENV="production"
+   SERVER_ADDRESS=
    ```
 
 9. build client
