@@ -56,7 +56,8 @@ sudo git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
 8. create .env.production in client directory with the following information:
 
    ```
-   SERVER_ADDRESS=
+   VITE_SERVER_ADDRESS=
+   VITE_AUTH_ADDRESS=
    ```
 
 9. build client
