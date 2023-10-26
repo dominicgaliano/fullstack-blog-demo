@@ -27,11 +27,11 @@ nvm install v18.18.2
 
 5. Install redis server
 
-ok this did not work, will need to troubleshoot later
-
 ```bash
-sudo apt update
-sudo apt install redis-server -y
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install redis-server -y
+sudo systemctl enable redis-server.service && sudo systemctl start redis-server.service
+
 # update config file to allow redis to be managed as a service by systemd (more info here: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-22-04)
 sudo vim /etc/redis/redis.conf
 ```
@@ -70,6 +70,7 @@ sudo git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
 10. create .env file in server directory with the following information
 
     ```
+    DOMAIN={your ec2 instance ipv4 address}
     SERVER_PORT=
     AUTH_PORT=
     ACCESS_TOKEN_SECRET=
