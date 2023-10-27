@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const cookieConfig = {
   domain: process.env.CLIENT_DOMAIN,
   httpOnly: true,
