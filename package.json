@@ -6,15 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npm --prefix server run start",
-    "serverAuth": "npm --prefix server run startAuth",
-    "client": "npm --prefix client run dev",
-    "dev": "concurrently \"npm run serverAuth\" \"npm run server\" \"npm run client\"",
-    "devServer": "concurrently \"npm run serverAuth\" \"npm run server\""
+    "auth": "npm --prefix auth run start",
+    "devServer": "npm --prefix server run dev",
+    "devAuth": "npm --prefix auth run dev",
+    "devClient": "npm --prefix client run dev",
+    "dev": "concurrently \"npm run devAuth\" \"npm run devServer\" \"npm run devClient\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
   }
 }
