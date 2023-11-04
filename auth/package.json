@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node authServer",
-    "dev": "nodemon authServer"
+    "start": "NODE_ENV=production node authServer",
+    "dev": "NODE_ENV=development nodemon authServer"
   },
   "keywords": [],
   "author": "",
