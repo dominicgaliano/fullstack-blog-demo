@@ -24,7 +24,7 @@ app.use("/api/posts", verifyToken, require("./routes/posts"));
 
 // static files, required to ensure that react-router works
 if (process.env.NODE_ENV === "production") {
-  const publicPath = path.join(__dirname, "../client/dist");
+  const publicPath = path.join(__dirname, "/public");
   app.use(express.static(publicPath));
   app.use("*", express.static(publicPath));
 }
