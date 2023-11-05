@@ -18,27 +18,8 @@ const accessTokenConfig = {
 const ACCESS_TOKEN_EXPIRATION_TIME = "10w";
 const REFRESH_TOKEN_EXPIRATION_TIME = "10m";
 
-const corsConfig = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? `http://${process.env.DOMAIN}:${process.env.SERVER_PORT}`
-      : process.env.CLIENT_URL,
-  optionsSuccessStatus: 200,
-};
-
-const authCorsConfig = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? `http://${process.env.DOMAIN}:${process.env.SERVER_PORT}`
-      : process.env.CLIENT_URL,
-  optionsSuccessStatus: 200,
-  credentials: true,
-};
-
 module.exports = {
   cookieConfig,
-  corsConfig,
-  authCorsConfig,
   accessTokenConfig,
   ACCESS_TOKEN_EXPIRATION_TIME,
   REFRESH_TOKEN_EXPIRATION_TIME,
