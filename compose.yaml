@@ -28,19 +28,6 @@ services:
       DEBUG: nodejs-docker-express:*
     depends_on:
       - redis
-  # client:
-  #   image: node:lts
-  #   restart: on-failure
-  #   container_name: client_container
-  #   working_dir: /client
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./client:/client
-  #     - type: bind
-  #       source: ./server
-  #       target: /server
-  #   command: npm run dev
   redis:
     image: redis:7.2-alpine
     ports:

@@ -2,7 +2,6 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { refreshToken } from '../actions/authActions';
 import { AppStore } from '../app/store';
-import { API_URL, AUTH_URL } from '../config';
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   sent?: boolean;
@@ -10,14 +9,14 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 const authConfig = {
-  baseURL: AUTH_URL,
+  baseURL: 'http://nginx',
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 };
 const config = {
-  baseURL: API_URL,
+  baseURL: 'http://nginx',
   headers: {
     'Content-Type': 'application/json',
   },
