@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use("/api/", require("./routes/auth"));
+app.use("/", require("./routes/auth"));
 
 app.get("*", (req, res) => {
   res.sendStatus(404);

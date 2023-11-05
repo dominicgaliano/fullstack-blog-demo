@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 // routes
-app.use("/api/posts", verifyToken, require("./routes/posts"));
+app.use("/posts", verifyToken, require("./routes/posts"));
 
 // static files, required to ensure that react-router works
 if (process.env.NODE_ENV === "production") {
