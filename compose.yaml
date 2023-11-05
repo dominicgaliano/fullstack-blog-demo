@@ -13,19 +13,21 @@ services:
       - "3001:3001"
     environment:
       DEBUG: nodejs-docker-express:*
-  # auth:
-  #   image: node:lts 
-  #   restart: on-failure
-  #   container_name: auth_container
-  #   working_dir: /auth
-  #   ports:
-  #     - "4001:4001"
-  #   volumes:
-  #     - ./auth:/auth
-  #     - type: bind
-  #       source: ./auth
-  #       target: /auth
-  #   command: npm run dev
+  auth:
+    build:
+      context: ./auth
+      target: dev
+    volumes:
+      - ./auth:/auth
+      - /auth/node_modules
+    command:
+      npm run dev
+    ports:
+      - "4001:4001"
+    environment:
+      DEBUG: nodejs-docker-express:*
+    depends_on:
+      - redis
   # client:
   #   image: node:lts
   #   restart: on-failure
@@ -49,3 +51,4 @@ services:
       - "80:80"
     depends_on:
       - server
+      - auth
