@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./server
+      target: dev
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    command:
+      npm run dev
+    ports:
+      - "3001:3001"
+    environment:
+      DEBUG: nodejs-docker-express:*
+  # auth:
+  #   image: node:lts 
+  #   restart: on-failure
+  #   container_name: auth_container
+  #   working_dir: /auth
+  #   ports:
+  #     - "4001:4001"
+  #   volumes:
+  #     - ./auth:/auth
+  #     - type: bind
+  #       source: ./auth
+  #       target: /auth
+  #   command: npm run dev
+  # client:
+  #   image: node:lts
+  #   restart: on-failure
+  #   container_name: client_container
+  #   working_dir: /client
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./client:/client
+  #     - type: bind
+  #       source: ./server
+  #       target: /server
+  #   command: npm run dev
+  redis:
+    image: redis:7.2-alpine
+    ports:
+      - "6379:6379"
+    # nginx:
+    #   ports: "3000:80"
+    #   depends_on:
+    #     - server
+    #     - auth
+    #     - client
