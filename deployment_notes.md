@@ -1,5 +1,15 @@
 # Steps to (manually) deploy remotely
 
+## Docker Based Deploy
+
+To run this project in production, you must:
+
+1. build the frontend and place it in the /server/public directory
+2. Switch all targets in compose.yaml from `dev` to `production
+3. build and deploy using `docker compose up --build -d`
+
+## (Deprecated) Manual Deploy
+
 1. Spin up EC2 instance
 
 - I went with Ubuntu, 22.04 LTS as the AMI and t2.micro as the instance type
@@ -87,6 +97,3 @@ sudo git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
 
 13. Run servers and redis-server
 
-_TODO NEXT:_
-
-- probably should just go ahead and get the repo in an EC2 instance to see what goes wrong and what needs to be added to this list
