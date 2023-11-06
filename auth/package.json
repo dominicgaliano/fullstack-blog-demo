@@ -1,12 +1,12 @@
 {
-  "name": "server",
+  "name": "auth",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production node index",
-    "dev": "NODE_ENV=development nodemon index"
+    "start": "NODE_ENV=production node authServer",
+    "dev": "NODE_ENV=development nodemon authServer"
   },
   "keywords": [],
   "author": "",

@@ -2,22 +2,23 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { refreshToken } from '../actions/authActions';
 import { AppStore } from '../app/store';
-import { API_URL, AUTH_URL } from '../config';
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   sent?: boolean;
   // Add other custom properties or methods as needed
 }
 
+const baseURL = import.meta.env.PROD ? import.meta.env.BASE_URL : 'http://localhost/';
+
 const authConfig = {
-  baseURL: AUTH_URL,
+  baseURL: baseURL + 'auth/',
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 };
 const config = {
-  baseURL: API_URL,
+  baseURL: baseURL + 'api/',
   headers: {
     'Content-Type': 'application/json',
   },

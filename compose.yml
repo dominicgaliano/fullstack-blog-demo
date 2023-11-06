@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: ./server
+      target: dev
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    ports:
+      - "3001:3001"
+    environment:
+      - CLIENT_DOMAIN="localhost"
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+  auth:
+    build:
+      context: ./auth
+      target: dev
+    volumes:
+      - ./auth:/auth
+      - /auth/node_modules
+    ports:
+      - "4001:4001"
+    environment:
+      - CLIENT_DOMAIN="localhost"
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      - redis
+  redis:
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel verbose
+    volumes:
+      - cache:/data
+  nginx:
+    build: 
+      context: ./nginx
+      target: dev
+    ports: 
+      - "80:80"
+    depends_on:
+      - server
+      - auth
+volumes:
+  cache:
+    driver: local

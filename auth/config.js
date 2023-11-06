@@ -15,8 +15,8 @@ const accessTokenConfig = {
   requiredClaims: ["user_id"],
 };
 
-const ACCESS_TOKEN_EXPIRATION_TIME = "10w";
-const REFRESH_TOKEN_EXPIRATION_TIME = "10m";
+const ACCESS_TOKEN_EXPIRATION_TIME = "10m";
+const REFRESH_TOKEN_EXPIRATION_TIME = "10w";
 
 module.exports = {
   cookieConfig,

@@ -47,6 +47,24 @@ To run this project locally, follow the following commands (npm required):
    npm run dev
    ```
 
+### Docker Instructions
+
+- For local development:
+
+```bash
+# build
+docker-compose build
+
+# start
+docker-compose up -d
+
+# run local client
+npm run devClient
+
+# stop
+docker-compose down -v
+```
+
 ## Credits
 
 Frameworks and Packages:
