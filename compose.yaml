@@ -26,8 +26,12 @@ services:
       - redis
   redis:
     image: redis:7.2-alpine
+    restart: always
     ports:
       - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
   nginx:
     build: 
       context: ./nginx
@@ -37,3 +41,6 @@ services:
     depends_on:
       - server
       - auth
+volumes:
+  cache:
+    driver: local
