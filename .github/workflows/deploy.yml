@@ -2,33 +2,24 @@ name: Build and Deploy
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
 
 jobs:
   deploy:
-    # name: Push to EC2 instance
-    # runs-on: ubuntu-latest
-    # environment:
-    #   name: deploy
+    runs-on: ubuntu-latest
 
-    # steps:
-    #   - name: Checkout the code
-    #     uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    #   - uses: webfactory/ssh-agent@v0.8.0 
-    #     with:
-    #       ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-       
-    #   - name: Deploy to EC2
-    #     run: |
-    #       rsync -avz --exclude "configuration" -e "ssh -o StrictHostKeyChecking=no" -p ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/ec2practice
+      - name: Install node
 
-    #   - name: Restart express server
-    #     uses: appleboy/ssh-action@master
-    #     with:
-    #       host: ${{ secrets.EC2_HOST }}
-    #       username: ${{ secrets.EC2_USERNAME }}
-    #       key: ${{ secrets.EC2_SSH_KEY }}
-    #       script: sudo systemctl restart ec2practice 
+      - name: Build frontend
+
+      - name: Set up SSH Key
+
+      - name: SSH into EC2
+
+      - name: Install Docker
+
+      - name: Run Docker Compose Script
+
