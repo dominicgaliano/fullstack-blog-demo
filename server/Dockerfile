@@ -7,9 +7,9 @@ EXPOSE 3001
 FROM base as production
 RUN npm ci
 COPY . /
-CMD ["npm run start"]
+CMD ["npm", "start"]
 
 FROM base as dev
 RUN npm install
 COPY . /
-CMD ["npm run dev"]
+CMD ["npm", "run", "dev"]

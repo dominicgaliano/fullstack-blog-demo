@@ -8,15 +8,17 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   // Add other custom properties or methods as needed
 }
 
+const baseURL = import.meta.env.PROD ? import.meta.env.BASE_URL : 'http://localhost/';
+
 const authConfig = {
-  baseURL: 'http://nginx',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 };
 const config = {
-  baseURL: 'http://nginx',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
