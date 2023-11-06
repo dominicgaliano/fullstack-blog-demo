@@ -29,7 +29,9 @@ services:
     ports:
       - "6379:6379"
   nginx:
-    build: ./nginx
+    build: 
+      context: ./nginx
+      target: dev
     ports: 
       - "80:80"
     depends_on:
