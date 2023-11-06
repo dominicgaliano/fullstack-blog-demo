@@ -9,13 +9,9 @@
     "auth": "npm --prefix auth run start",
     "devServer": "npm --prefix server run dev",
     "devAuth": "npm --prefix auth run dev",
-    "devClient": "npm --prefix client run dev",
-    "dev": "concurrently \"npm run devAuth\" \"npm run devServer\" \"npm run devClient\""
+    "devClient": "npm --prefix client run dev"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.2.1"
-  }
+  "license": "ISC"
 }
