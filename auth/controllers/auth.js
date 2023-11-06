@@ -57,7 +57,7 @@ const loginUserController = async (req, res, next) => {
 
     // add refresh token to cache
     await redisClient.set(user.id.toString(), refreshToken);
-
+    
     res
       .status(200)
       .cookie("refreshToken", refreshToken, cookieConfig)
