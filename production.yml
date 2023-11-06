@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  server:
+    build:
+      target: production
+    environment:
+      - CLIENT_DOMAIN=${DOMAIN}
+  auth:
+    build:
+      target: production
+    environment:
+      - CLIENT_DOMAIN=${DOMAIN}
+  auth:
+  nginx:
+    build: 
+      target: production

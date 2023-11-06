@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build:client": "npm --prefix client run build",
     "server": "npm --prefix server run start",
     "auth": "npm --prefix auth run start",
     "devServer": "npm --prefix server run dev",

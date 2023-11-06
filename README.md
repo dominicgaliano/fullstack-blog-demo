@@ -58,6 +58,9 @@ docker-compose build
 # start
 docker-compose up -d
 
+# run local client
+npm run devClient
+
 # stop
 docker-compose down -v
 ```

@@ -10,7 +10,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - CLIENT_DOMAIN=${CLIENT_DOMAIN}
+      - CLIENT_DOMAIN="localhost"
       - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
       - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
       - DB_USER=${DB_USER}
@@ -25,7 +25,7 @@ services:
     ports:
       - "4001:4001"
     environment:
-      - CLIENT_DOMAIN=${CLIENT_DOMAIN}
+      - CLIENT_DOMAIN="localhost"
       - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
       - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
       - DB_USER=${DB_USER}

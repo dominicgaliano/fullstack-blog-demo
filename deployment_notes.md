@@ -4,9 +4,31 @@
 
 To run this project in production, you must:
 
-1. build the frontend and place it in the /server/public directory
-2. Switch all targets in compose.yaml from `dev` to `production
-3. build and deploy using `docker compose up --build -d`
+1. Clone repo to ec2 instance (or local any machine you want to run the server from)
+
+2. Install docker
+
+3. Build the frontend and place it in the /server/public directory 
+
+```bash
+npm run build:client
+cp -r client/dist server/public
+```
+
+4. Create .env file with the following information
+
+```.env
+ACCESS_TOKEN_SECRET
+REFRESH_TOKEN_SECRET
+DB_USER
+DB_PASS
+```
+
+5. Build and deploy 
+
+```bash
+docker compose -f compose.yml -f production.yml up --build -d
+```
 
 ## (Deprecated) Manual Deploy
 
