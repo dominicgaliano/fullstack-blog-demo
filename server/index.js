@@ -17,6 +17,10 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 // routes
+app.options("*", (_, res) => {
+    res.sendStatus(200);
+});
+
 app.use("/api/posts", verifyToken, require("./routes/posts"));
 
 // static files, required to ensure that react-router works
