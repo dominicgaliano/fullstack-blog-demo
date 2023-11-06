@@ -31,16 +31,6 @@ jobs:
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo "DB_PASS=${{ secrets.DB_PASS }}" >> .env
 
-      - name: Set up SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa $EC2_HOST >> ~/.ssh/known_hosts
-        env:
-            PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-            EC2_HOST: ${{ secrets.EC2_HOST }}
-
       - name: Push build to EC2 instance 
         run: |
           rsync -avz --exclude "configuration" -e "ssh -o StrictHostKeyChecking=no" -p ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/fullstack-blog-demo
