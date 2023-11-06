@@ -11,15 +11,43 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install node
+      - name: Setup Node
+        uses: actions/setup-node@v3
 
-      - name: Build frontend
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build project
+        run: |
+          npm run build:client
+          cp -r client/dist server/public
+
+      - name: Create .env file
+        run: |
+          echo "CLIENT_DOMAIN=${{ secrets.EC2_HOST }}" > .env
+          echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> .env
+          echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASS=${{ secrets.DB_PASS }}" >> .env
 
       - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa EC2_HOST >> ~/.ssh/known_hosts
+        env:
+            PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+            EC2_HOST: ${{ secrets.EC2_HOST }}
 
-      - name: SSH into EC2
-
-      - name: Install Docker
+      - name: Push build to EC2 instance 
+        run: |
+          rsync -avz --exclude "configuration" -e "ssh -o StrictHostKeyChecking=no" -p ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/ubuntu/fullstack-blog-demo
 
       - name: Run Docker Compose Script
-
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: docker compose -f compose.yml -f production.yml up --build -d
