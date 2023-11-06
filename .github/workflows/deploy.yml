@@ -30,6 +30,11 @@ jobs:
           echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> .env
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo "DB_PASS=${{ secrets.DB_PASS }}" >> .env
+      
+      - name: Setup ssh-agent
+        uses: webfactory/ssh-agent@v0.8.0 
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Push build to EC2 instance 
         run: |
