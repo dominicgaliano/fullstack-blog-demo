@@ -10,7 +10,11 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DEBUG: nodejs-docker-express:*
+      - CLIENT_DOMAIN=${CLIENT_DOMAIN}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
   auth:
     build:
       context: ./auth
@@ -21,7 +25,11 @@ services:
     ports:
       - "4001:4001"
     environment:
-      DEBUG: nodejs-docker-express:*
+      - CLIENT_DOMAIN=${CLIENT_DOMAIN}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     depends_on:
       - redis
   redis:
