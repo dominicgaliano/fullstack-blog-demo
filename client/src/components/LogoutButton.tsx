@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 import { logoutUser } from '../actions/authActions';
 import { useAppDispatch } from '../app/hooks';
 
@@ -8,5 +10,9 @@ export default function LogoutButton() {
     dispatch(logoutUser());
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <Button variant="contained" onClick={handleLogout}>
+      Logout
+    </Button>
+  );
 }
