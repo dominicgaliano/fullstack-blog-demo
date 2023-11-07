@@ -27,6 +27,7 @@ jobs:
 
       - name: Create .env file
         run: |
+          cd full-stack-blog/
           echo "CLIENT_DOMAIN=${{ secrets.EC2_HOST }}" > .env
           echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> .env
           echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> .env
@@ -50,4 +51,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd fullstack-blog-demo/
-            docker compose -f compose.yml -f production.yml up --build -d
+            sudo docker compose -f compose.yml -f production.yml up --build -d
