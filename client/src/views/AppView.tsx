@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
 function AppView() {
@@ -14,7 +14,9 @@ function AppView() {
           <Button color="inherit">Login</Button>
         </AppBar>
       </Box>
-      <Outlet />
+      <Container maxWidth="md">
+        <Outlet />
+      </Container>
     </>
   );
 }
