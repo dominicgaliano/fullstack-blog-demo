@@ -5,7 +5,6 @@ import LogoutButton from '../components/LogoutButton';
 function FeedView() {
   return (
     <>
-      Feed
       <FeedBody />
       <CreatePostButton />
       <LogoutButton />
