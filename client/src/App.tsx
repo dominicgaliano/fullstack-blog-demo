@@ -5,6 +5,7 @@ import { loadUser } from './actions/authActions';
 import { useAppDispatch } from './app/hooks';
 import SpinLoader from './components/SpinLoader';
 import PrivateRoute from './routes/PrivateRoute';
+import AppView from './views/AppView';
 const CreatePostView = lazy(() => import('./views/CreatePostView'));
 const ErrorPageView = lazy(() => import('./views/ErrorPageView'));
 const FeedView = lazy(() => import('./views/FeedView'));
@@ -23,25 +24,20 @@ function App() {
     <>
       <Suspense fallback={<SpinLoader />}>
         <Routes>
-          <Route path="/" element={<HomeView />} />
+          <Route index path="/" element={<HomeView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route
             path="/feed"
             element={
               <PrivateRoute>
-                <FeedView />
+                <AppView />
               </PrivateRoute>
             }
-          />
-          <Route
-            path="/feed/new"
-            element={
-              <PrivateRoute>
-                <CreatePostView />
-              </PrivateRoute>
-            }
-          />
+          >
+            <Route index path="/feed" element={<FeedView />} />
+            <Route path="/feed/new" element={<CreatePostView />} />
+          </Route>
           <Route path="*" element={<ErrorPageView />} />
         </Routes>
       </Suspense>
