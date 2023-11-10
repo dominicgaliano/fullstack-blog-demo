@@ -21,11 +21,7 @@ export default function FeedBody() {
         <img src={loadingGif} alt="loading gif"></img>
       ) : (
         <div>
-          <ul>
-            {posts && posts.map((post: Post) => <PostCard post={post} key={post._id} />)}
-          </ul>
-          {/* <img src={loadingGif} alt="loading gif" /> */}
-          {/* TODO: DEV HELP, REMOVE LATER */}
+          {posts && posts.map((post: Post) => <PostCard post={post} key={post._id} />)}
           <p>Error Message: {error || ''}</p>
         </div>
       )}
