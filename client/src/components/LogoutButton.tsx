@@ -11,7 +11,7 @@ export default function LogoutButton() {
   };
 
   return (
-    <Button variant="contained" onClick={handleLogout}>
+    <Button color="inherit" onClick={handleLogout}>
       Logout
     </Button>
   );
