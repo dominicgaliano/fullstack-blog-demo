@@ -1,21 +1,12 @@
-import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
-import LogoutButton from '../components/LogoutButton';
+import NavBar from '../components/NavBar';
 
 function AppView() {
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-              FULLSTACK BLOG
-            </Typography>
-            <LogoutButton />
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <NavBar />
       <Container maxWidth="md">
         <Outlet />
       </Container>
