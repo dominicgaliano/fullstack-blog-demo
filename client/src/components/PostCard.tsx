@@ -87,13 +87,25 @@ export default function PostCard({ post }: { post: Post }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            setIsEditing(true);
+          }}
+        >
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Update</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            if (window.confirm('Are you sure to delete this post?')) {
+              dispatch(deletePost(post._id));
+            }
+          }}
+        >
           <ListItemIcon>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
@@ -124,43 +136,22 @@ export default function PostCard({ post }: { post: Post }) {
           <p>{post.content}</p>
         )}
         <p>Likes: {post.likes}</p>
-        {!isEditing && (
-          <>
-            <button
-              onClick={() => {
-                setIsEditing(true);
-              }}
-            >
-              UPDATE
-            </button>
-            <button
-              onClick={() => {
-                if (window.confirm('Are you sure to delete this post?')) {
-                  dispatch(deletePost(post._id));
-                }
-              }}
-            >
-              DELETE
-            </button>
-            <hr />
-            <span>Comments:</span>
-            <ul>
-              {post.comments &&
-                post.comments.map((comment: CommentType) => (
-                  <CommentCard key={comment._id} postId={post._id} comment={comment} />
-                ))}
-            </ul>
-            {isCreatingComment && (
-              <CreateCommentForm
-                postId={post._id}
-                handleClose={() => setIsCreatingComment(false)}
-              />
-            )}
-            <button onClick={() => setIsCreatingComment(!isCreatingComment)}>
-              {isCreatingComment ? 'cancel' : 'create comment'}
-            </button>
-          </>
+        <span>Comments:</span>
+        <ul>
+          {post.comments &&
+            post.comments.map((comment: CommentType) => (
+              <CommentCard key={comment._id} postId={post._id} comment={comment} />
+            ))}
+        </ul>
+        {isCreatingComment && (
+          <CreateCommentForm
+            postId={post._id}
+            handleClose={() => setIsCreatingComment(false)}
+          />
         )}
+        <button onClick={() => setIsCreatingComment(!isCreatingComment)}>
+          {isCreatingComment ? 'cancel' : 'create comment'}
+        </button>
       </CardContent>
     </Card>
   );
