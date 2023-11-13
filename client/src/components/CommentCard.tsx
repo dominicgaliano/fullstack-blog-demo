@@ -1,5 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Box,
   IconButton,
@@ -8,8 +9,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { useState } from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { CSSProperties, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { deleteComment, updateComment } from '../actions/postActions';
@@ -27,8 +27,17 @@ export default function CommentCard({
   postId: string;
   comment: CommentType;
 }) {
+  const [style, setStyle] = useState({ display: 'none' });
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteComment({ postId: postId, commentId: comment._id }));
+  };
+
+  const handleUpdate = () => {
+    alert('not implemented');
+  };
 
   // form utilities
   const {
@@ -47,17 +56,6 @@ export default function CommentCard({
     dispatch(updateComment(commentChanges));
   };
 
-  const [style, setStyle] = useState({ display: 'none' });
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <Box
       display="flex"
@@ -72,46 +70,11 @@ export default function CommentCard({
       <div>
         {comment.author.email}: {comment.text}
       </div>
-      <IconButton
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-label="settings"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+      <CommentMenu
         style={style}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            alert('not implemented');
-          }}
-        >
-          <ListItemIcon>
-            <EditIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Update</ListItemText>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            alert('not implemented');
-          }}
-        >
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
-        </MenuItem>
-      </Menu>
+        handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
+      />
     </Box>
   );
   // return (
@@ -142,4 +105,66 @@ export default function CommentCard({
   //     </button>
   //   </Box>
   // );
+}
+
+type CommentMenuProps = {
+  style: CSSProperties;
+  handleDelete: () => void;
+  handleUpdate: () => void;
+};
+
+function CommentMenu({ style, handleDelete, handleUpdate }: CommentMenuProps) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <IconButton
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-label="settings"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        style={style}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            handleUpdate();
+          }}
+        >
+          <ListItemIcon>
+            <EditIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Update</ListItemText>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleDelete();
+          }}
+        >
+          <ListItemIcon>
+            <DeleteIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>
+      </Menu>
+    </>
+  );
 }
