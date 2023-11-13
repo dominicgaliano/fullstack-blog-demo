@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -149,9 +150,9 @@ export default function PostCard({ post }: { post: Post }) {
             handleClose={() => setIsCreatingComment(false)}
           />
         )}
-        <button onClick={() => setIsCreatingComment(!isCreatingComment)}>
+        <Button onClick={() => setIsCreatingComment(!isCreatingComment)}>
           {isCreatingComment ? 'cancel' : 'create comment'}
-        </button>
+        </Button>
       </CardContent>
     </Card>
   );
