@@ -1,8 +1,10 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {
   Avatar,
+  Box,
   Button,
   Card,
   CardContent,
@@ -12,6 +14,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Typography,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import React, { useState } from 'react';
@@ -136,7 +139,13 @@ export default function PostCard({ post }: { post: Post }) {
         ) : (
           <p>{post.content}</p>
         )}
-        <p>Likes: {post.likes}</p>
+        <Box display="flex" alignItems="center">
+          <Typography>{post.likes}</Typography>
+          <IconButton onClick={() => alert('not implemented')}>
+            <ThumbUpIcon />
+          </IconButton>
+        </Box>
+
         <span>Comments:</span>
         <ul>
           {post.comments &&
