@@ -147,12 +147,10 @@ export default function PostCard({ post }: { post: Post }) {
         </Box>
 
         <span>Comments:</span>
-        <ul>
-          {post.comments &&
-            post.comments.map((comment: CommentType) => (
-              <CommentCard key={comment._id} postId={post._id} comment={comment} />
-            ))}
-        </ul>
+        {post.comments &&
+          post.comments.map((comment: CommentType) => (
+            <CommentCard key={comment._id} postId={post._id} comment={comment} />
+          ))}
         {isCreatingComment && (
           <CreateCommentForm
             postId={post._id}
