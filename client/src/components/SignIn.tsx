@@ -1,10 +1,12 @@
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Alert } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 // import Checkbox from '@mui/material/Checkbox';
 // import FormControlLabel from '@mui/material/FormControlLabel';
+import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
@@ -30,7 +32,7 @@ const errorMessages = {
 
 export default function SignIn({ login }: { login: boolean }) {
   // redux utilities
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   // react router utilities
@@ -119,6 +121,10 @@ export default function SignIn({ login }: { login: boolean }) {
           {/*   control={<Checkbox value="remember" color="primary" />} */}
           {/*   label="Remember me" */}
           {/* /> */}
+          <Collapse in={error !== ''}>
+            <Alert severity="error">{error}</Alert>
+          </Collapse>
+          {/* {error && <Alert severity="error">{error}</Alert>} */}
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             {login ? 'Sign in' : 'Sign up'}
           </Button>
