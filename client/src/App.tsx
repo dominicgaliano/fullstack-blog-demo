@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { loadUser } from './actions/authActions';
 import { useAppDispatch } from './app/hooks';
+import SignIn from './components/SignIn';
 import SpinLoader from './components/SpinLoader';
 import PrivateRoute from './routes/PrivateRoute';
 import AppView from './views/AppView';
@@ -38,6 +39,7 @@ function App() {
             <Route index path="/feed" element={<FeedView />} />
             <Route path="/feed/new" element={<CreatePostView />} />
           </Route>
+          <Route path="/newlogin" element={<SignIn />} />
           <Route path="*" element={<ErrorPageView />} />
         </Routes>
       </Suspense>
