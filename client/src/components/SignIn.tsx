@@ -121,7 +121,7 @@ export default function SignIn({ login }: { login: boolean }) {
           {/*   control={<Checkbox value="remember" color="primary" />} */}
           {/*   label="Remember me" */}
           {/* /> */}
-          <Collapse in={error !== ''}>
+          <Collapse in={error != null}>
             <Alert severity="error">{error}</Alert>
           </Collapse>
           {/* {error && <Alert severity="error">{error}</Alert>} */}
@@ -136,11 +136,11 @@ export default function SignIn({ login }: { login: boolean }) {
             {/* </Grid> */}
             <Grid item>
               {login ? (
-                <Link href="login" variant="body2">
+                <Link href="register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               ) : (
-                <Link href="register" variant="body2">
+                <Link href="login" variant="body2">
                   {'Returning user? Sign In'}
                 </Link>
               )}
