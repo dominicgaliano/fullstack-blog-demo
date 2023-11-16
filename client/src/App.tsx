@@ -39,7 +39,8 @@ function App() {
             <Route index path="/feed" element={<FeedView />} />
             <Route path="/feed/new" element={<CreatePostView />} />
           </Route>
-          <Route path="/newlogin" element={<SignIn />} />
+          <Route path="/newlogin" element={<SignIn login={true} />} />
+          <Route path="/newregister" element={<SignIn login={false} />} />
           <Route path="*" element={<ErrorPageView />} />
         </Routes>
       </Suspense>

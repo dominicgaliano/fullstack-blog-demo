@@ -1,3 +1,4 @@
+import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -12,7 +13,7 @@ import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { loginUser } from '../actions/authActions';
+import { loginUser, registerUser } from '../actions/authActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import LoginInput from '../types/LoginInput';
 import Copyright from './Copyright';
@@ -45,7 +46,7 @@ export default function SignIn({ login }: { login: boolean }) {
   const { control, handleSubmit } = useForm<LoginInput>({ reValidateMode: 'onBlur' });
 
   const onSubmit: SubmitHandler<LoginInput> = async (loginInput) => {
-    dispatch(loginUser(loginInput));
+    login ? dispatch(loginUser(loginInput)) : dispatch(registerUser(loginInput));
   };
 
   return (
@@ -59,10 +60,10 @@ export default function SignIn({ login }: { login: boolean }) {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          {login ? <LockOutlinedIcon /> : <AppRegistrationOutlinedIcon />}{' '}
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {login ? 'Sign in' : 'Sign up'}
         </Typography>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <Controller
@@ -119,7 +120,7 @@ export default function SignIn({ login }: { login: boolean }) {
           {/*   label="Remember me" */}
           {/* /> */}
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Sign In
+            {login ? 'Sign in' : 'Sign up'}
           </Button>
           <Grid container>
             {/* <Grid item xs> */}
@@ -128,9 +129,15 @@ export default function SignIn({ login }: { login: boolean }) {
             {/*   </Link> */}
             {/* </Grid> */}
             <Grid item>
-              <Link href="login" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              {login ? (
+                <Link href="login" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              ) : (
+                <Link href="register" variant="body2">
+                  {'Returning user? Sign In'}
+                </Link>
+              )}
             </Grid>
           </Grid>
         </Box>
