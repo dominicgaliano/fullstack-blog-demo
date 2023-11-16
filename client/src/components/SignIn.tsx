@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../actions/authActions';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import LoginInput from '../types/LoginInput';
+import Copyright from './Copyright';
 
 const errorMessages = {
   email: {
@@ -26,20 +27,7 @@ const errorMessages = {
   },
 };
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://dgaliano.com">
-        Dominic Galiano
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-export default function SignIn() {
+export default function SignIn({ login }: { login: boolean }) {
   // redux utilities
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
