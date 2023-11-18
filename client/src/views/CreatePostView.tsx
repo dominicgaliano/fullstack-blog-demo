@@ -23,7 +23,6 @@ type Inputs = {
 const errorMessages = {
   content: {
     required: 'Post Content is Required',
-    pattern: 'Invalid Email Address',
   },
 };
 export default function CreatePostView() {
