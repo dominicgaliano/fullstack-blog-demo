@@ -25,9 +25,9 @@ function App() {
     <>
       <Suspense fallback={<SpinLoader />}>
         <Routes>
-          <Route index path="/" element={<HomeView />} />
+          {/* <Route index path="/" element={<HomeView />} /> */}
+          <Route path="/" element={<RegisterView />} />
           <Route path="/login" element={<LoginView />} />
-          <Route path="/register" element={<RegisterView />} />
           <Route
             path="/feed"
             element={

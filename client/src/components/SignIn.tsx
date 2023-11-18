@@ -136,7 +136,7 @@ export default function SignIn({ login }: { login: boolean }) {
             {/* </Grid> */}
             <Grid item>
               {login ? (
-                <Link href="register" variant="body2">
+                <Link href="/" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               ) : (
