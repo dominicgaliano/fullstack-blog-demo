@@ -1,12 +1,12 @@
-import './App.css';
-
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { loadUser } from './actions/authActions';
 import { useAppDispatch } from './app/hooks';
+import SignIn from './components/SignIn';
 import SpinLoader from './components/SpinLoader';
 import PrivateRoute from './routes/PrivateRoute';
+import AppView from './views/AppView';
 const CreatePostView = lazy(() => import('./views/CreatePostView'));
 const ErrorPageView = lazy(() => import('./views/ErrorPageView'));
 const FeedView = lazy(() => import('./views/FeedView'));
@@ -25,25 +25,20 @@ function App() {
     <>
       <Suspense fallback={<SpinLoader />}>
         <Routes>
-          <Route path="/" element={<HomeView />} />
+          {/* <Route index path="/" element={<HomeView />} /> */}
+          <Route path="/" element={<RegisterView />} />
           <Route path="/login" element={<LoginView />} />
-          <Route path="/register" element={<RegisterView />} />
           <Route
             path="/feed"
             element={
               <PrivateRoute>
-                <FeedView />
+                <AppView />
               </PrivateRoute>
             }
-          />
-          <Route
-            path="/feed/new"
-            element={
-              <PrivateRoute>
-                <CreatePostView />
-              </PrivateRoute>
-            }
-          />
+          >
+            <Route index path="/feed" element={<FeedView />} />
+            <Route path="/feed/new" element={<CreatePostView />} />
+          </Route>
           <Route path="*" element={<ErrorPageView />} />
         </Routes>
       </Suspense>

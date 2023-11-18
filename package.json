@@ -10,7 +10,8 @@
     "auth": "npm --prefix auth run start",
     "devServer": "npm --prefix server run dev",
     "devAuth": "npm --prefix auth run dev",
-    "devClient": "npm --prefix client run dev"
+    "devClient": "npm --prefix client run dev",
+    "dev": "docker compose up -d && npm run devClient"
   },
   "keywords": [],
   "author": "",
