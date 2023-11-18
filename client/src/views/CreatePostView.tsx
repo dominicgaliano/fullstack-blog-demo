@@ -57,7 +57,9 @@ export default function CreatePostView() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><CreateIcon /></Avatar>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <CreateIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Create Post
           </Typography>
