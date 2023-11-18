@@ -23,7 +23,13 @@ This repo contains all the code needed to run a blog locally or on a remote inst
 
 For local development:
 
-1. Create a .env file with the following variables defined:
+1. Clone this repo to your local machine
+
+```bash
+git clone https://github.com/dominicgaliano/fullstack-blog-demo
+```
+
+2. Create a .env file in the project directory with the following variables defined:
 
 ```txt
 DOMAIN="localhost"
@@ -33,7 +39,7 @@ DB_USER=
 DB_PASS=
 ```
 
-2. Run the following commands to start and stop the local docker instances, respectively.
+3. Run the following commands to start and stop the local docker instances, respectively.
 
 ```bash
 # start
@@ -59,7 +65,7 @@ EC2_SSH_KEY
 EC2_USERNAME
 ```
 
-3. Run build and deploy actions
+3. Run build and deploy action
 
 Requires manual activation
 
