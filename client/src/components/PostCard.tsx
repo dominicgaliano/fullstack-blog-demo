@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { SxProps } from '@mui/material';
 import {
   Avatar,
   Box,
@@ -31,7 +32,7 @@ type Input = {
   content: string;
 };
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({ post, sx }: { post: Post; sx?: SxProps }) {
   const dispatch = useAppDispatch();
 
   // form utilities
@@ -61,7 +62,7 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <Card>
+    <Card sx={sx}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
