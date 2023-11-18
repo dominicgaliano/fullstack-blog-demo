@@ -1,4 +1,13 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Collapse,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { createPost } from '../actions/postActions';
@@ -10,6 +19,12 @@ type Inputs = {
   content: string;
 };
 
+const errorMessages = {
+  content: {
+    required: 'Post Content is Required',
+    pattern: 'Invalid Email Address',
+  },
+};
 export default function CreatePostView() {
   // redux utilities
   const { loading, error } = useAppSelector((state) => state.post);
@@ -19,11 +34,7 @@ export default function CreatePostView() {
   const navigate = useNavigate();
 
   // react-hook-form setup
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { control, handleSubmit } = useForm<Inputs>({ reValidateMode: 'onBlur' });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     dispatch(createPost(data.content)).then((res) => {
@@ -37,13 +48,61 @@ export default function CreatePostView() {
       {loading ? (
         <SpinLoader />
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <textarea {...register('content', { required: true })} />
-          {errors.content && <li>This field is required</li>}
-          <input type="submit" value="Create Post" />
-          {loading && <p>LOADING...</p>}
-          {error || <p>{error}</p>}
-        </form>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>C</Avatar>
+          <Typography component="h1" variant="h5">
+            Create Post
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{
+              mt: 1,
+              maxWidth: '95%',
+              width: '600px',
+            }}
+          >
+            <Controller
+              control={control}
+              name="content"
+              defaultValue=""
+              rules={{
+                required: true,
+              }}
+              render={({ field, fieldState: { error } }) => {
+                return (
+                  <TextField
+                    {...field}
+                    type="text"
+                    label="Post Content"
+                    placeholder="Type your post content here"
+                    rows={5}
+                    fullWidth
+                    multiline
+                    error={error !== undefined}
+                    // TODO: Fix this ts error
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    helperText={error ? errorMessages.content[error.type] : ''}
+                  />
+                );
+              }}
+            />
+            <Collapse in={error != null}>
+              <Alert severity="error">{error}</Alert>
+            </Collapse>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              Create Post
+            </Button>
+          </Box>
+        </Box>
       )}
     </>
   );
