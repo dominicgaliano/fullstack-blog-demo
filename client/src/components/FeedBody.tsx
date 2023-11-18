@@ -25,7 +25,6 @@ export default function FeedBody() {
             posts.map((post: Post) => (
               <PostCard post={post} sx={{ mt: 1 }} key={post._id} />
             ))}
-          <p>Error Message: {error || ''}</p>
         </div>
       )}
     </>
