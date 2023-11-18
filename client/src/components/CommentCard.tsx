@@ -8,6 +8,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Typography,
 } from '@mui/material';
 import { CSSProperties, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -66,10 +67,11 @@ export default function CommentCard({
       onMouseLeave={() => {
         setStyle({ display: 'none' });
       }}
+      sx={{ mt: 1 }}
     >
-      <div>
+      <Typography sx={{ wordBreak: 'break-word' }}>
         {comment.author.email}: {comment.text}
-      </div>
+      </Typography>
       <CommentMenu
         style={style}
         handleDelete={handleDelete}
