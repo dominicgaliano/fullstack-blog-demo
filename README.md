@@ -19,63 +19,66 @@ This project is a fullstack blog application built with React and Express. My ul
 
 ## Installation
 
-This repo contains both the frontend and backend code which can be run separate or together. Future plans include containerizing the entire project.
+This repo contains all the code needed to run a blog locally or on a remote instance.
 
-To run this project locally, follow the following commands (npm required):
+For local development:
 
-1. Clone the repo
+1. Create a .env file with the following variables defined:
 
-   ```sh
-   git clone https://github.com/dominicgaliano/fullstack-blog-demo.git
-   cd {repo-name}/
-   ```
+```txt
+DOMAIN="localhost"
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+DB_USER=
+DB_PASS=
+```
 
-2. Install NPM packages in parent, server, and client directories.
-
-   ```sh
-   npm i
-   cd client
-   npm i
-   cd ../server
-   npm i
-   ```
-
-3. Run local development server from parent directory
-
-   ```sh
-   cd ..
-   npm run dev
-   ```
-
-### Docker Instructions
-
-- For local development:
+2. Run the following commands to start and stop the local docker instances, respectively.
 
 ```bash
-# build
-docker-compose build
-
 # start
-docker-compose up -d
-
-# run local client
-npm run devClient
+npm run dev
 
 # stop
 docker-compose down -v
 ```
 
+For remote production deployment:
+
+1. Fork this repo
+
+2. Define all of the following variables as [Github enviroment secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
+
+```text
+ACCESS_TOKEN_SECRET
+REFRESH_TOKEN_SECRET
+DB_PASS
+DB_USER
+EC2_HOST
+EC2_SSH_KEY
+EC2_USERNAME
+```
+
+3. Run build and deploy actions
+
+Requires manual activation
+
+Actions Tab > Build and Deploy > Run Workflow > Run Workflow on Branch Main 
+
 ## Credits
 
-Frameworks and Packages:
+Frameworks, Packages, and Tools:
 
-Frontend:
+Front End:
 
 [![React][React.js]][React-url]
 [![Typescript][Typescript.js]][Typescript-url]
 [![Vite][Vite.js]][Vite-url]
+[![Redux][Redux]][Redux-url]
+[![Material-UI][Material-UI]][Material-UI-url]
+[![React Router][React Router]][React Router-url]
 
-Backend:
+Back End:
 
 [![express][express.js]][express-url]
 [![bcrypt][bcrypt.js]][bcrypt-url]
@@ -86,11 +89,15 @@ Backend:
 [![mongoose][mongoose.js]][mongoose-url]
 [![validator][validator.js]][validator-url]
 
-Additional Packages:
+Additional:
 
 [![mongo][mongodb]][mongodb-url]
 [![redis][redis.js]][redis-url]
-[![concurrently][concurrently.js]][concurrently-url]
+[![nginx][nginx]][nginx-url]
+[![docker][docker]][docker-url]
+[![eslint][eslint]][eslint-url]
+[![Postman][Postman]][Postman-url]
+[![Amazon AWS][Amazon AWS]][Amazon AWS-url]
 
 ## License
 
@@ -100,15 +107,15 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 
 ### Implemented
 
-Frontend
+Front End
 
-- [x] Draft proof frontend of concept
+- [x] Front end styling implemented using [Material UI]('https://mui.com/material-ui/')
 - [x] Login and registration
 - [x] Feed view with all posts
-- [x] CRUD for posts
-- [x] CRUD for comments
+- [x] Create, read, update, delete actions for posts
+- [x] Create, read, delete actions for comments
 
-Backend
+Back End
 
 - [x] Node-based backend with dedicated authentication server
 - [x] Authentication using Blowfish encryption algorithm
@@ -117,30 +124,30 @@ Backend
 - [x] Partial MongoDB CRUD operations implemented using Mongoose
 - [x] Login and registration validation using joi and validator
 - [x] Server-side logging using morgan
-- [x] CRUD routes for posts
-- [x] CRUD routes for comments
+- [x] Create, read, update, delete routes for posts
+- [x] Create, read, update, delete routes for comments
 
-Database
+Infrastructure/Other
 
+- [x] Reverse proxy implemented using nginx
+- [x] All processes containerized using Docker (main server, authentication server, reverse proxy, and redis cache)
 - [x] User data and post data stored in MongoDB Atlas cluster
+- [x] Implemented Github action to automate deployment to an EC2 instance
 
 ### Future Plans/Todo
 
-Frontend
+Front End
 
-- [ ] Frontend Styling
-- [ ] Frontend refactoring
+- [ ] Update action for comments
 
-Backend
+Back End
 
 - [ ] Full coverage of http-error package
 - [ ] Convert to TS for better dev process
-- [ ] (Maybe) Server Side Rendering
-
-Other
-
-- [ ] Containerization
-- [ ] Deploy App
+- [ ] Server Side Rendering
+- [ ] Implement like route
+- [ ] Implement optional 'Remember Me' with session cookies
+- [ ] Send user information with login/refresh routes
 
 ### Issues
 
@@ -170,7 +177,7 @@ Don't forget to give the project a star! Thanks again!
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/dominic-galiano
 [tech-shield]: https://img.shields.io/github/languages/top/dominicgaliano/fullstack-blog-demo.svg?style=for-the-badge
-[github-status-shield]: https://img.shields.io/github/actions/workflow/status/dominicgaliano/fullstack-blog-demo/main.yml.svg?style=for-the-badge
+[github-status-shield]: https://img.shields.io/github/actions/workflow/status/dominicgaliano/fullstack-blog-demo/deploy.yml.svg?style=for-the-badge
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Typescript.js]: https://shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=61DAFB
@@ -197,5 +204,19 @@ Don't forget to give the project a star! Thanks again!
 [validator-url]: https://www.npmjs.com/package/validator
 [mongodb]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 [mongodb-url]: https://mongodb.com
-[concurrently.js]: https://shields.io/badge/concurrently-20232A?style=for-the-badge
-[concurrently-url]: https://www.npmjs.com/package/concurrently
+[nginx]: https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white
+[nginx-url]: https://www.nginx.com/
+[docker]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white  
+[docker-url]: https://www.docker.com/
+[eslint]: https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white
+[eslint-url]: https://eslint.org/
+[Redux]: https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white
+[Material-UI]: https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white
+[React Router]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
+[Redux-url]: https://redux.js.org/
+[Material-UI-url]: https://mui.com/material-ui/ 
+[React Router-url]: https://reactrouter.com/en/main
+[Postman]: https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white
+[Amazon AWS]: https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white
+[Postman-url]: https://www.postman.com/
+[Amazon AWS-url]: https://aws.amazon.com/ 
